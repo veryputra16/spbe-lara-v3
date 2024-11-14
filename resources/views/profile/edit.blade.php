@@ -26,7 +26,8 @@
                                     <div class="slash"></div> Web Developer
                                 </div>
                             </div>
-                            Hai, <b>{{ auth()->user()->name }}</b> dengan email <b>{{ auth()->user()->email }}</b> merupakan
+                            Hai, <b>{{ auth()->user()->name }}</b> dengan
+                            user <b>okkymahes</b> dan email <b>{{ auth()->user()->email }}</b> merupakan
                             role
                             <b>Web Developer</b>
                             dari Perangkat Daerah <b>AAAAA</b> Group User

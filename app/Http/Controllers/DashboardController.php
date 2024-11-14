@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -21,9 +21,18 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function aplikasi()
     {
-        return view('home');
+        return view('dashboard.aplikasi.d-app', [
+            'title' => 'Dashboard Aplikasi'
+        ]);
+    }
+
+    public function spbe()
+    {
+        return view('dashboard.spbe.d-spbe', [
+            'title' => 'Dashboard SPBE'
+        ]);
     }
 
     public function blank()

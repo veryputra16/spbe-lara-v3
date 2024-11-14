@@ -9,8 +9,13 @@
             </div>
             <ul class="sidebar-menu">
                 <li class="menu-header">Dashboard</li>
-                <li class="{{ Request::is('home') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('home') }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <li class="{{ Request::is('dashboard-app') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard-app') }}"><i class="fas fa-fire"></i><span>Dashboard
+                            Aplikasi</span></a>
+                </li>
+                <li class="{{ Request::is('dashboard-spbe') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard-spbe') }}"><i class="fas fa-fire"></i><span>Dashboard
+                            SPBE</span></a>
                 </li>
                 @if (Auth::user()->role == 'superadmin')
                     <li class="menu-header">Hak Akses</li>
