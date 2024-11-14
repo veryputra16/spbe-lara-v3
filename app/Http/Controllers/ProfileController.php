@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,7 +10,10 @@ class ProfileController extends Controller
 {
     public function edit()
     {
-        return view('profile.edit', ['user' => Auth::user()]);
+        return view('profile.edit', [
+            'user' => Auth::user(),
+            'title' => 'Profile'
+        ]);
     }
 
     public function update(Request $request)
@@ -24,19 +28,21 @@ class ProfileController extends Controller
 
     public function changepassword()
     {
-        return view('profile.changepassword', ['user' => Auth::user()]);
+        return view('profile.changepassword', [
+            'user' => Auth::user(),
+            'title' => 'Ganti Password'
+        ]);
     }
 
     public function password(Request $request)
-    {
-        {
+    { {
             $request->validate([
                 'current_password' => ['required', 'string'],
                 'new_password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
-    
+
             $user = Auth::user();
-    
+
             if (!Hash::check($request->current_password, $user->password)) {
                 return back()->withErrors(['current_password' => 'Password Sebelumnya Salah!']);
             }
@@ -44,7 +50,7 @@ class ProfileController extends Controller
             $user->fill([
                 'password' => Hash::make($request->new_password)
             ])->save();
-    
+
             return back()->with('status', 'Password berhasil Diubah!');
         }
     }

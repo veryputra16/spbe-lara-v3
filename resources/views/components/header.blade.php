@@ -19,8 +19,11 @@
                     <div class="dropdown-title">
                         Selamat Datang, {{ auth()->user()->name }}
                     </div>
-                    <a class="dropdown-item has-icon edit-profile" href="{{ route('profile.edit') }}">
-                        <i class="fa fa-user"></i> Edit Profile
+                    <a class="dropdown-item has-icon" href="{{ route('profile.edit') }}">
+                        <i class="fa fa-user"></i> Profile
+                    </a>
+                    <a class="dropdown-item has-icon" href="{{ route('profile.change-password') }}">
+                        <i class="fa fa-key"></i> Ganti Password
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger"
