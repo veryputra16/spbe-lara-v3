@@ -14,27 +14,7 @@
         <div class="section-body">
 
             <div class="row mt-sm-4">
-                <div class="col-12 col-md-12 col-lg-5">
-                    <div class="card profile-widget">
-                        <div class="profile-widget-header">
-                            <img alt="image" src="{{ asset('img/avatar/avatar-1.png') }}"
-                                class="rounded-circle profile-widget-picture">
-                        </div>
-                        <div class="profile-widget-description">
-                            <div class="profile-widget-name">{{ auth()->user()->name }} <div
-                                    class="text-muted d-inline font-weight-normal">
-                                    <div class="slash"></div> Web Developer
-                                </div>
-                            </div>
-                            Hai, <b>{{ auth()->user()->name }}</b> dengan
-                            user <b>okkymahes</b> dan email <b>{{ auth()->user()->email }}</b> merupakan
-                            role
-                            <b>Web Developer</b>
-                            dari Perangkat Daerah <b>AAAAA</b> Group User
-                            dari <b>Aplikasi</b>.
-                        </div>
-                    </div>
-                </div>
+                @include('profile.bio')
                 <div class="col-12 col-md-12 col-lg-7">
                     <div class="card">
                         <form method="post" class="needs-validation" novalidate="" action="{{ route('profile.update') }}">
@@ -59,7 +39,21 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-7 col-12">
+                                    <div class="form-group col-md-6 col-12">
+                                        <label>{{ __('Username') }}</label>
+                                        <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                            name="username" value="{{ old('username', $user->username) }}"
+                                            autocomplete="username" disabled>
+
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6 col-12">
                                         <label>{{ __('E-Mail Address') }}</label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror"
                                             name="email" value="{{ old('email', $user->email) }}" autocomplete="email">

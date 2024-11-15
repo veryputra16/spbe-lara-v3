@@ -14,26 +14,7 @@
         <div class="section-body">
 
             <div class="row mt-sm-4">
-                <div class="col-12 col-md-12 col-lg-5">
-                    <div class="card profile-widget">
-                        <div class="profile-widget-header">
-                            <img alt="image" src="{{ asset('img/avatar/avatar-1.png') }}"
-                                class="rounded-circle profile-widget-picture">
-                        </div>
-                        <div class="profile-widget-description">
-                            <div class="profile-widget-name">{{ auth()->user()->name }} <div
-                                    class="text-muted d-inline font-weight-normal">
-                                    <div class="slash"></div> Web Developer
-                                </div>
-                            </div>
-                            Hai, <b>{{ auth()->user()->name }}</b> dengan email <b>{{ auth()->user()->email }}</b> merupakan
-                            role
-                            <b>Web Developer</b>
-                            dari Perangkat Daerah <b>AAAAA</b> Group User
-                            dari <b>Aplikasi</b>.
-                        </div>
-                    </div>
-                </div>
+                @include('profile.bio')
                 <div class="col-12 col-md-12 col-lg-7">
                     <div class="card">
                         <form method="post" class="needs-validation" novalidate=""
