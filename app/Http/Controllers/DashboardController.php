@@ -34,9 +34,4 @@ class DashboardController extends Controller
             'title' => 'Dashboard SPBE'
         ]);
     }
-
-    public function blank()
-    {
-        return view('layouts.blank-page');
-    }
 }

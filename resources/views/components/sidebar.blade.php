@@ -24,21 +24,18 @@
                                 Akses</span></a>
                     </li>
                 @endif
-                <!-- profile ganti password -->
-                <li class="menu-header">Profile</li>
-                <li class="{{ Request::is('profile/edit') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('profile/edit') }}"><i class="far fa-user"></i>
-                        <span>Profile</span></a>
+
+                <li class="menu-header">Master Data</li>
+                <li class="nav-item dropdown {{ Request::is('masterapp/*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-archway"></i>
+                        <span>Master Aplikasi</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('masterapp/katapp*') ? 'active' : '' }}"><a class="nav-link"
+                                href="{{ url('masterapp/katapp') }}">Kategori Aplikasi</a>
+                        </li>
                 </li>
-                <li class="{{ Request::is('profile/change-password') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('profile/change-password') }}"><i class="fas fa-key"></i> <span>Ganti
-                            Password</span></a>
-                </li>
-                <li class="menu-header">Starter</li>
-                <li class="{{ Request::is('blank-page') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('blank-page') }}"><i class="far fa-square"></i> <span>Blank
-                            Page</span></a>
-                </li>
+            </ul>
+            </li>
             </ul>
         </aside>
     </div>

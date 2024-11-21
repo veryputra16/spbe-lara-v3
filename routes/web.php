@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HakaksesController;
+use App\Http\Controllers\KatappController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
     Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
-    Route::get('/blank-page', [DashboardController::class, 'blank'])->name('blank');
+    Route::prefix('masterapp')->name('masterapp.')->group(function () {
+        Route::resource('katapp', KatappController::class);
+    });
 
     Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');
     Route::get('/hakakses/edit/{id}', [HakaksesController::class, 'edit'])->name('hakakses.edit')->middleware('superadmin');
