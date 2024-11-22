@@ -32,6 +32,9 @@
                         <li class="{{ Request::is('masterapp/katserver*') ? 'active' : '' }}"><a class="nav-link"
                                 href="{{ url('masterapp/katserver') }}">Kategori Server</a>
                         </li>
+                        <li class="{{ Request::is('masterapp/katplatform*') ? 'active' : '' }}"><a class="nav-link"
+                                href="{{ url('masterapp/katplatform') }}">Kategori Platform</a>
+                        </li>
                 </li>
 
                 @if (Auth::user()->role == 'superadmin')
