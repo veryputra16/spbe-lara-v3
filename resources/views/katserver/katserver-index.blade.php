@@ -24,27 +24,28 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('masterapp.katdb.create') }}" class="btn btn-primary mb-3"><i
+                            <a href="{{ route('masterapp.katserver.create') }}" class="btn btn-primary mb-3"><i
                                     class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Database</th>
+                                            <th>Server</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($katdbs as $katdb)
+                                        @foreach ($katservers as $katserver)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $katdb->kategori_database }}</td>
+                                                <td>{{ $katserver->kategori_server }}</td>
 
                                                 <td>
-                                                    <a href="{{ route('masterapp.katdb.edit', $katdb->id) }}"
+                                                    <a href="{{ route('masterapp.katserver.edit', $katserver->id) }}"
                                                         class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                                    <form action="{{ route('masterapp.katdb.destroy', $katdb->id) }}"
+                                                    <form
+                                                        action="{{ route('masterapp.katserver.destroy', $katserver->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')

@@ -17,13 +17,6 @@
                     <a class="nav-link" href="{{ url('dashboard-spbe') }}"><i class="fas fa-fire"></i><span>Dashboard
                             SPBE</span></a>
                 </li>
-                @if (Auth::user()->role == 'superadmin')
-                    <li class="menu-header">Hak Akses</li>
-                    <li class="{{ Request::is('hakakses') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('hakakses') }}"><i class="fas fa-user-shield"></i> <span>Hak
-                                Akses</span></a>
-                    </li>
-                @endif
 
                 <li class="menu-header">Master Data</li>
                 <li class="nav-item dropdown {{ Request::is('masterapp/*') ? 'active' : '' }}">
@@ -36,7 +29,18 @@
                         <li class="{{ Request::is('masterapp/katdb*') ? 'active' : '' }}"><a class="nav-link"
                                 href="{{ url('masterapp/katdb') }}">Kategori Database</a>
                         </li>
+                        <li class="{{ Request::is('masterapp/katserver*') ? 'active' : '' }}"><a class="nav-link"
+                                href="{{ url('masterapp/katserver') }}">Kategori Server</a>
+                        </li>
                 </li>
+
+                @if (Auth::user()->role == 'superadmin')
+                    <li class="menu-header">Hak Akses</li>
+                    <li class="{{ Request::is('hakakses') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('hakakses') }}"><i class="fas fa-user-shield"></i> <span>Hak
+                                Akses</span></a>
+                    </li>
+                @endif
             </ul>
             </li>
             </ul>

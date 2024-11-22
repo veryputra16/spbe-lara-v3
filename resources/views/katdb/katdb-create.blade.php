@@ -25,7 +25,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-4 col-12">
-                                        <label>{{ __('Kategori Database') }}</label>
+                                        <label>{{ __('Database') }}</label>
                                         <input type="text"
                                             class="form-control @error('kategori_database') is-invalid @enderror"
                                             name="kategori_database" value="{{ old('kategori_database') }}" required
