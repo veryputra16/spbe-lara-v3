@@ -33,6 +33,9 @@
                         <li class="{{ Request::is('masterapp/katapp*') ? 'active' : '' }}"><a class="nav-link"
                                 href="{{ url('masterapp/katapp') }}">Kategori Aplikasi</a>
                         </li>
+                        <li class="{{ Request::is('masterapp/katdb*') ? 'active' : '' }}"><a class="nav-link"
+                                href="{{ url('masterapp/katdb') }}">Kategori Database</a>
+                        </li>
                 </li>
             </ul>
             </li>

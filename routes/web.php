@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HakaksesController;
 use App\Http\Controllers\KatappController;
+use App\Http\Controllers\KatdbController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('masterapp')->name('masterapp.')->group(function () {
         Route::resource('katapp', KatappController::class);
+        Route::resource('katdb', KatdbController::class);
     });
 
     Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');
