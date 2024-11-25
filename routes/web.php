@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HakaksesController;
 use App\Http\Controllers\KatappController;
 use App\Http\Controllers\KatdbController;
+use App\Http\Controllers\KatpenggunaController;
 use App\Http\Controllers\KatplatformController;
 use App\Http\Controllers\KatserverController;
 use App\Http\Controllers\LokasiserverController;
@@ -37,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('katdb', KatdbController::class);
         Route::resource('katserver', KatserverController::class);
         Route::resource('katplatform', KatplatformController::class);
+        Route::resource('katpengguna', KatpenggunaController::class);
     });
 
     Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');
