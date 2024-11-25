@@ -38,6 +38,9 @@
                         <li class="{{ Request::is('masterapp/katpengguna*') ? 'active' : '' }}"><a class="nav-link"
                                 href="{{ url('masterapp/katpengguna') }}">Kategori Penggunaan</a>
                         </li>
+                        <li class="{{ Request::is('masterapp/bahasaprogram*') ? 'active' : '' }}"><a class="nav-link"
+                                href="{{ url('masterapp/bahasaprogram') }}">Bahasa Pemrograman</a>
+                        </li>
                 </li>
 
                 @if (Auth::user()->role == 'superadmin')
