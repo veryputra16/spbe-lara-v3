@@ -6,7 +6,8 @@ SPBE merupakan singkatan dari Sistem Pemerintahan Berbasis Elektronik, Sistem Pe
 - Laravel 11
 - Template Stisla 
 - Breeze
-- Bootstrap 5
+- Bootstrap 4
+- Sweetalert
 
 ## Installation Guide
 
