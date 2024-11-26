@@ -41,6 +41,10 @@
                         <li class="{{ Request::is('masterapp/bahasaprogram*') ? 'active' : '' }}"><a class="nav-link"
                                 href="{{ url('masterapp/bahasaprogram') }}">Bahasa Pemrograman</a>
                         </li>
+                        <li class="{{ Request::is('masterapp/frameworkapp*') ? 'active' : '' }}"><a class="nav-link"
+                                href="{{ url('masterapp/frameworkapp') }}">Framework Aplikasi</a>
+                        </li>
+                    </ul>
                 </li>
 
                 @if (Auth::user()->role == 'superadmin')
@@ -50,8 +54,6 @@
                                 Akses</span></a>
                     </li>
                 @endif
-            </ul>
-            </li>
             </ul>
         </aside>
     </div>
