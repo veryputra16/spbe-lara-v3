@@ -10,6 +10,7 @@ use App\Http\Controllers\KatdbController;
 use App\Http\Controllers\KatpenggunaController;
 use App\Http\Controllers\KatplatformController;
 use App\Http\Controllers\KatserverController;
+use App\Http\Controllers\LayananappController;
 use App\Http\Controllers\LokasiserverController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -43,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('katpengguna', KatpenggunaController::class);
         Route::resource('bahasaprogram', BahasaprogramController::class);
         Route::resource('frameworkapp', FrameworkappController::class);
+        Route::resource('layananapp', LayananappController::class);
     });
 
     Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');

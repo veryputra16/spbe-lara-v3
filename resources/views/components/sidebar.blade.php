@@ -44,6 +44,9 @@
                         <li class="{{ Request::is('masterapp/frameworkapp*') ? 'active' : '' }}"><a class="nav-link"
                                 href="{{ url('masterapp/frameworkapp') }}">Framework Aplikasi</a>
                         </li>
+                        <li class="{{ Request::is('masterapp/layananapp*') ? 'active' : '' }}"><a class="nav-link"
+                                href="{{ url('masterapp/layananapp') }}">Layanan Aplikasi</a>
+                        </li>
                     </ul>
                 </li>
 
