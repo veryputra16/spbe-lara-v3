@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BahasaprogramController;
 use App\Http\Controllers\DashboardController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\KatpenggunaController;
 use App\Http\Controllers\KatplatformController;
 use App\Http\Controllers\KatserverController;
 use App\Http\Controllers\LayananappController;
-use App\Http\Controllers\LokasiserverController;
+use App\Http\Controllers\OpdController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
     Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
+    Route::resource('aplikasi', ApplicationController::class);
+
     Route::prefix('masterapp')->name('masterapp.')->group(function () {
         Route::resource('katapp', KatappController::class);
         Route::resource('katdb', KatdbController::class);
@@ -45,6 +48,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('bahasaprogram', BahasaprogramController::class);
         Route::resource('frameworkapp', FrameworkappController::class);
         Route::resource('layananapp', LayananappController::class);
+    });
+
+    Route::prefix('settings')->name('settings.')->group(function () {
+        Route::resource('opd', OpdController::class);
     });
 
     Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');

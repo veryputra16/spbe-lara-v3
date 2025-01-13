@@ -18,6 +18,12 @@
                             SPBE</span></a>
                 </li>
 
+                <li class="menu-header">Aplikasi</li>
+                <li class="{{ Request::is('aplikasi*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('aplikasi') }}"><i class="fas fa-globe"></i><span>Data
+                            Aplikasi</span></a>
+                </li>
+
                 <li class="menu-header">Master Data</li>
                 <li class="nav-item dropdown {{ Request::is('masterapp/*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-archway"></i>
@@ -48,6 +54,15 @@
                                 href="{{ url('masterapp/layananapp') }}">Layanan Aplikasi</a>
                         </li>
                     </ul>
+                </li>
+
+                <li class="menu-header">Settings</li>
+                <li class="{{ Request::is('settings*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('settings/opd') }}"><i class="fas fa-building"></i><span>Perangkat
+                            Daerah</span></a>
+                </li>
+                <li class="{{ Request::is('settings*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('settings/opd') }}"><i class="fas fa-users"></i><span>Users</span></a>
                 </li>
 
                 @if (Auth::user()->role == 'superadmin')
