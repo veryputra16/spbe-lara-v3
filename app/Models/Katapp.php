@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Katapp extends Model
 {
@@ -12,4 +13,9 @@ class Katapp extends Model
     protected $fillable = [
         'kategori_aplikasi',
     ];
+
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
+    }
 }

@@ -9,19 +9,23 @@
             </div>
             <ul class="sidebar-menu">
                 <li class="menu-header">Dashboard</li>
-                <li class="{{ Request::is('dashboard-app') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('dashboard-app') }}"><i class="fas fa-fire"></i><span>Dashboard
+                <li class="{{ Request::is('dashboard/d-app') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard/d-app') }}"><i class="fas fa-fire"></i><span>Dashboard
                             Aplikasi</span></a>
                 </li>
-                <li class="{{ Request::is('dashboard-spbe') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('dashboard-spbe') }}"><i class="fas fa-fire"></i><span>Dashboard
+                <li class="{{ Request::is('dashboard/d-spbe') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard/d-spbe') }}"><i class="fas fa-fire"></i><span>Dashboard
                             SPBE</span></a>
                 </li>
 
-                <li class="menu-header">Aplikasi</li>
-                <li class="{{ Request::is('aplikasi*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('aplikasi') }}"><i class="fas fa-globe"></i><span>Data
+                <li class="menu-header">System</li>
+                <li class="{{ Request::is('system/aplikasi*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('system/aplikasi') }}"><i class="fas fa-globe"></i><span>Data
                             Aplikasi</span></a>
+                </li>
+                <li class="{{ Request::is('system/subdomain*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('system/subdomain') }}"><i class="fas fa-dungeon"></i><span>Portal
+                            Subdomain</span></a>
                 </li>
 
                 <li class="menu-header">Master Data</li>
@@ -57,12 +61,13 @@
                 </li>
 
                 <li class="menu-header">Settings</li>
-                <li class="{{ Request::is('settings*') ? 'active' : '' }}">
+                <li class="{{ Request::is('settings/opd') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('settings/opd') }}"><i class="fas fa-building"></i><span>Perangkat
                             Daerah</span></a>
                 </li>
-                <li class="{{ Request::is('settings*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('settings/opd') }}"><i class="fas fa-users"></i><span>Users</span></a>
+                <li class="{{ Request::is('settings/user*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('settings/user') }}"><i
+                            class="fas fa-users"></i><span>Users</span></a>
                 </li>
 
                 @if (Auth::user()->role == 'superadmin')

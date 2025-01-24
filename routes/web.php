@@ -15,6 +15,8 @@ use App\Http\Controllers\LayananappController;
 use App\Http\Controllers\OpdController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubdomainController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -28,16 +30,23 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+    // jangan lupa untuk dihapus
     Route::get('/dashboard', [DashboardController::class, 'aplikasi'])->name('dashboard');
-    Route::get('/dashboard-app', [DashboardController::class, 'aplikasi'])->name('dashboard-app');
-    Route::get('/dashboard-spbe', [DashboardController::class, 'spbe'])->name('dashboard-spbe');
+
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/d-app', [DashboardController::class, 'aplikasi'])->name('dashboard-app');
+        Route::get('/d-spbe', [DashboardController::class, 'spbe'])->name('dashboard-spbe');
+    });
 
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
     Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
-    Route::resource('aplikasi', ApplicationController::class);
+    Route::prefix('system')->name('system.')->group(function () {
+        Route::resource('aplikasi', ApplicationController::class);
+        Route::resource('subdomain', SubdomainController::class);
+    });
 
     Route::prefix('masterapp')->name('masterapp.')->group(function () {
         Route::resource('katapp', KatappController::class);
@@ -52,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('settings')->name('settings.')->group(function () {
         Route::resource('opd', OpdController::class);
+        Route::resource('user', UserController::class);
     });
 
     Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Katapp>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Katserver>
  */
-class KatappFactory extends Factory
+class KatserverFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class KatappFactory extends Factory
     public function definition(): array
     {
         return [
-            'kategori_aplikasi' => fake()->word(1),
+            'kategori_server' => $this->faker->word(),
         ];
     }
 }

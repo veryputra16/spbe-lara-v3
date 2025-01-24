@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Frameworkapp;
+use App\Models\Katserver;
+use App\Models\Subdomain;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,13 +16,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Katserver::factory(10)->create();
+        Frameworkapp::factory(10)->create();
+        Subdomain::factory(2)->create();
 
         User::factory()->create([
             'name' => 'Super Admin',
             'username' => 'superadmin',
             'password' => bcrypt('123456789'),
             'role' => 'superadmin',
+        ]);
+
+        $this->call([
+            LayananappSeeder::class,
+            KatappSeeder::class,
+            KatplatformSeeder::class,
+            KatpenggunaSeeder::class,
+            KatdbSeeder::class,
+            BahasaprogramSeeder::class,
         ]);
     }
 }
