@@ -128,7 +128,7 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $("#myTable").dataTable({
-            "searching": false
+            "searching": true
         });
     </script>
 @endpush
