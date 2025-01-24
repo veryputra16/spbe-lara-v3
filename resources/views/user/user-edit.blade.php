@@ -17,31 +17,83 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <form method="post" class="needs-validation" novalidate=""
-                            action="{{ route('masterapp.katdb.update', $katdb) }}">
+                            action="{{ route('settings.user.update', $user) }}">
                             @csrf
                             @method('PUT')
                             {{-- <div class="card-header">
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="form-group col-md-4 col-12">
-                                        <label>{{ __('Database') }}</label>
-                                        <input type="text"
-                                            class="form-control @error('kategori_database') is-invalid @enderror"
-                                            name="kategori_database"
-                                            value="{{ old('kategori_database', $katdb->kategori_database) }}" required
-                                            autocomplete="name">
-                                        @error('kategori_database')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label>{{ __('Nama') }}</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        name="name" value="{{ old('name', $user->name) }}" required autocomplete="name"
+                                        placeholder="{{ __('Nama') }}">
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 col-12">
+                                    <label>{{ __('Username') }}</label>
+                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                        name="username" value="{{ old('username', $user->username) }}" required
+                                        autocomplete="username" placeholder="{{ __('Username') }}">
+                                    @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 col-12">
+                                    <label>{{ __('Email') }}</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        name="email" value="{{ old('email', $user->email) }}" autocomplete="email"
+                                        placeholder="{{ __('Email') }}">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label>{{ __('Passsword') }}</label>
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        name="password" value="{{ old('password') }}" autocomplete="password"
+                                        placeholder="{{ __('Password') }}">
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label>{{ __('Konfirmasi Passsword') }}</label>
+                                    <input type="password"
+                                        class="form-control @error('confirm_password') is-invalid @enderror"
+                                        name="confirm_password" value="{{ old('confirm_password') }}" required
+                                        autocomplete="confirm_password" placeholder="{{ __('Konfirmasi Password') }}">
+                                    @error('confirm_password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 col-12">
+                                    <label>{{ __('Role') }}</label>
+                                    <input type="text" class="form-control @error('role') is-invalid @enderror"
+                                        name="role" value="{{ old('role', $user->role) }}" required autocomplete="role"
+                                        placeholder="{{ __('Role') }}">
+                                    @error('role')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="card-footer text-left">
-                                <a href="{{ route('masterapp.katdb.index') }}"" class="btn btn-dark">{{ __('Back') }}</a>
+                                <a href="{{ route('settings.user.index') }}"" class="btn btn-dark">{{ __('Back') }}</a>
                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                             </div>
                         </form>

@@ -45,7 +45,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                {{-- <div class="form-group col-md-4 col-12">
+                                <div class="form-group col-md-4 col-12">
                                     <label>{{ __('Email') }}</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         name="email" value="{{ old('email') }}" autocomplete="email"
@@ -55,13 +55,25 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div> --}}
-                                <div class="form-group col-md-4 col-12">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
                                     <label>{{ __('Passsword') }}</label>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror"
                                         name="password" value="{{ old('password') }}" required autocomplete="password"
                                         placeholder="{{ __('Password') }}">
                                     @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label>{{ __('Konfirmasi Passsword') }}</label>
+                                    <input type="password"
+                                        class="form-control @error('confirm_password') is-invalid @enderror"
+                                        name="confirm_password" value="{{ old('confirm_password') }}" required
+                                        autocomplete="confirm_password" placeholder="{{ __('Konfirmasi Password') }}">
+                                    @error('confirm_password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
