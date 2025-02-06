@@ -34,7 +34,7 @@
                                             <th>Action</th>
                                             <th>Nama</th>
                                             <th>Username</th>
-                                            <th>Perangkat Daerah</th>
+                                            <th>Status</th>
                                             <th>Role</th>
                                         </tr>
                                     </thead>
@@ -56,7 +56,13 @@
                                                 </td>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->username }}</td>
-                                                <td>nama opd</td>
+                                                <td>
+                                                    @if ($user->status == 1)
+                                                        <span class="badge badge-success">Aktif</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Tidak Aktif</span>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $user->role }}</td>
                                             </tr>
                                         @endforeach

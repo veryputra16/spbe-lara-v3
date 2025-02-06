@@ -25,9 +25,10 @@ class UpdateUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'min:4', 'max:255'],
             'email' => ['nullable', 'email:dns',  'max:255', 'unique:users'],
-            'password' => ['sometimes', 'required_with:confirm_password', 'same:confirm_password', 'min:8', 'max:255'],
-            'confirm_password' => ['sometimes', 'min:8', 'max:255'],
+            'password' => ['sometimes', 'required_with:confirm_password', 'same:confirm_password', 'max:255'],
+            'confirm_password' => ['sometimes', 'max:255'],
             'role' => ['required', 'string', 'max:255'],
+            'status' => ['required'],
         ];
     }
 }

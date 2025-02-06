@@ -28,6 +28,7 @@ class StoreUserRequest extends FormRequest
             'password' => ['required', 'required_with:confirm_password', 'same:confirm_password', 'min:8', 'max:255'],
             'confirm_password' => ['required', 'min:8', 'max:255'],
             'role' => ['required', 'string', 'max:255'],
+            'status' => ['required'],
         ];
     }
 }

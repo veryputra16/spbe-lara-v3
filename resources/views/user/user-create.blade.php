@@ -90,6 +90,19 @@
                                         </span>
                                     @enderror
                                 </div>
+                                <div class="form-group col-md-2 col-12">
+                                    <label>{{ __('Status') }}</label>
+                                    <select class="form-control select2 @error('status') is-invalid @enderror"
+                                        name="status" required autocomplete="status">
+                                        <option value="1">Aktif</option>
+                                        <option value="0">Tidak Aktif</option>
+                                    </select>
+                                    @error('status')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="card-footer text-left">
                                 <a href="{{ route('settings.user.index') }}"" class="btn btn-dark">{{ __('Back') }}</a>

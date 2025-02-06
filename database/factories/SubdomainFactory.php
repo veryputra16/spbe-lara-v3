@@ -21,7 +21,7 @@ class SubdomainFactory extends Factory
             'status' => $this->faker->numberBetween(0, 1),
             'op_teknis' => $this->faker->word(),
             'kontak_teknis' => $this->faker->phoneNumber(),
-            'opd_pengelola' => $this->faker->numberBetween(1, 150),
+            'opd_id' => $this->faker->numberBetween(1, 105),
             'keterangan' => $this->faker->text(20),
         ];
     }

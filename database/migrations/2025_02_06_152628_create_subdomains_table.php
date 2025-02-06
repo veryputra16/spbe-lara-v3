@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('opds', function (Blueprint $table) {
+        Schema::create('subdomains', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('singkatan')->nullable();
+            $table->string('url');
+            $table->integer('status');
+            $table->string('op_teknis')->nullable();
+            $table->string('kontak_teknis')->nullable();
+            $table->foreignId('opd_id')->constrained()->onDelete('cascade');
+            $table->text('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('opds');
+        Schema::dropIfExists('subdomains');
     }
 };

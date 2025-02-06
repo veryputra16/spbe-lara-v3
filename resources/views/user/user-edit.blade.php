@@ -39,7 +39,7 @@
                                     <label>{{ __('Username') }}</label>
                                     <input type="text" class="form-control @error('username') is-invalid @enderror"
                                         name="username" value="{{ old('username', $user->username) }}" required
-                                        autocomplete="username" placeholder="{{ __('Username') }}">
+                                        autocomplete="username" disabled placeholder="{{ __('Username') }}">
                                     @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -72,7 +72,7 @@
                                     <label>{{ __('Konfirmasi Passsword') }}</label>
                                     <input type="password"
                                         class="form-control @error('confirm_password') is-invalid @enderror"
-                                        name="confirm_password" value="{{ old('confirm_password') }}" required
+                                        name="confirm_password" value="{{ old('confirm_password') }}"
                                         autocomplete="confirm_password" placeholder="{{ __('Konfirmasi Password') }}">
                                     @error('confirm_password')
                                         <span class="invalid-feedback" role="alert">
@@ -86,6 +86,21 @@
                                         name="role" value="{{ old('role', $user->role) }}" required autocomplete="role"
                                         placeholder="{{ __('Role') }}">
                                     @error('role')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-2 col-12">
+                                    <label>{{ __('Status') }}</label>
+                                    <select class="form-control select2 @error('status') is-invalid @enderror"
+                                        name="status" required autocomplete="status">
+                                        <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Aktif
+                                        </option>
+                                        <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Tidak Aktif
+                                        </option>
+                                    </select>
+                                    @error('status')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
