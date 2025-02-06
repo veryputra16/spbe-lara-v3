@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('monevapps', function (Blueprint $table) {
+        Schema::create('opds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('application_id')->constrained()->onDelete('cascade');
-            $table->date('tgl_monev');
-            $table->text('bukti_monev')->nullable();
-            $table->text('ket_monev')->nullable();
-            $table->softDeletes();
+            $table->string('nama');
+            $table->string('singkatan')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('monevapps');
+        Schema::dropIfExists('opds');
     }
 };
