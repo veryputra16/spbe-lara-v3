@@ -17,31 +17,38 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <form method="post" class="needs-validation" novalidate=""
-                            action="{{ route('masterapp.katdb.update', $katdb) }}">
+                            action="{{ route('settings.opd.update', $opd) }}">
                             @csrf
                             @method('PUT')
                             {{-- <div class="card-header">
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="form-group col-md-4 col-12">
-                                        <label>{{ __('Database') }}</label>
-                                        <input type="text"
-                                            class="form-control @error('kategori_database') is-invalid @enderror"
-                                            name="kategori_database"
-                                            value="{{ old('kategori_database', $katdb->kategori_database) }}" required
-                                            autocomplete="name">
-                                        @error('kategori_database')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-md-8 col-12">
+                                    <label>{{ __('Nama Perangkat Daerah') }}</label>
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                        name="nama" value="{{ old('nama', $opd->nama) }}"
+                                        placeholder="{{ __('Nama Perangkat Daerah') }}" required autocomplete="name">
+                                    @error('nama')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 col-12">
+                                    <label>{{ __('Singkatan Perangkat Daerah') }}</label>
+                                    <input type="text" class="form-control @error('singkatan') is-invalid @enderror"
+                                        name="singkatan" value="{{ old('singkatan', $opd->singkatan) }}"
+                                        placeholder="{{ __('Singkatan Perangkat Daerah') }}" autocomplete="name">
+                                    @error('singkatan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="card-footer text-left">
-                                <a href="{{ route('masterapp.katdb.index') }}"" class="btn btn-dark">{{ __('Back') }}</a>
+                                <a href="{{ route('settings.opd.index') }}"" class="btn btn-dark">{{ __('Back') }}</a>
                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                             </div>
                         </form>

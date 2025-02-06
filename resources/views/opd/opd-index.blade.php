@@ -24,13 +24,14 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            {{-- <a href="{{ route('masterapp.katdb.create') }}" class="btn btn-primary mb-3"><i
-                                    class="fas fa-plus"></i> Add</a> --}}
+                            <a href="{{ route('settings.opd.create') }}" class="btn btn-primary mb-3"><i
+                                    class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Action</th>
                                             <th>Nama Perangkat Daerah</th>
                                             <th>Singkatan Perangkat Daerah </th>
                                         </tr>
@@ -39,11 +40,22 @@
                                         @foreach ($opds as $opd)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $opd['nama'] }}</td>
-                                                {{-- <td>{{ $opd['nama'] }}</td> --}}
                                                 <td>
-                                                    @if ($opd['singkatan'])
-                                                        {{ $opd['singkatan'] }}
+                                                    <a href="{{ route('settings.opd.edit', $opd->id) }}"
+                                                        class="btn btn-light btn-sm" title="Edit"><i
+                                                            class="fas fa-edit"></i></a>
+                                                    <form action="{{ route('settings.opd.destroy', $opd->id) }}"
+                                                        method="POST" style="display: inline-block;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                            title="Delete"><i class="fas fa-trash"></i></button>
+                                                    </form>
+                                                </td>
+                                                <td>{{ $opd->nama }}</td>
+                                                <td>
+                                                    @if ($opd->singkatan)
+                                                        {{ $opd->singkatan }}
                                                     @else
                                                         {{ '-' }}
                                                     @endif

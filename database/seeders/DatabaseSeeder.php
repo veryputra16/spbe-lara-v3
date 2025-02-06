@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Frameworkapp;
 use App\Models\Katserver;
+use App\Models\Opd;
 use App\Models\Subdomain;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
         Katserver::factory(10)->create();
         Frameworkapp::factory(10)->create();
         Subdomain::factory(2)->create();
+        Opd::factory(2)->create();
 
         User::factory()->create([
             'name' => 'Super Admin',

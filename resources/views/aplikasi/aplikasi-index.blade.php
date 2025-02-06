@@ -24,7 +24,7 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('aplikasi.create') }}" class="btn btn-primary mb-3"><i
+                            <a href="{{ route('system.aplikasi.create') }}" class="btn btn-primary mb-3"><i
                                     class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
@@ -32,7 +32,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nama Aplikasi</th>
-                                            <th>Perangkat Daerah</th>
+                                            <th>OPD Pengelola</th>
                                             <th>Sifat</th>
                                             <th>Tahun Pembuatan</th>
                                             <th>Status</th>
@@ -50,9 +50,9 @@
                                                 <td>{{ $application->status }}</td>
 
                                                 <td>
-                                                    <a href="{{ route('aplikasi.edit', $application->id) }}"
+                                                    <a href="{{ route('system.aplikasi.edit', $application->id) }}"
                                                         class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                                    <form action="{{ route('aplikasi.destroy', $application->id) }}"
+                                                    <form action="{{ route('system.aplikasi.destroy', $application->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')

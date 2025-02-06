@@ -44,7 +44,7 @@ class ApplicationController extends Controller
         $katservers = Katserver::all();
         $bahasaprograms = Bahasaprogram::all();
         $frameworkapps = Frameworkapp::all();
-        $layananapps = Layananapp::all();aaaaaaaaaa
+        $layananapps = Layananapp::all();
 
         $response = Http::get('https://splp.denpasarkota.go.id/index.php/dev/master/opd');
         $opds = $response->json(['entry']);

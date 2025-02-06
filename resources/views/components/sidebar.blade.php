@@ -61,7 +61,7 @@
                 </li>
 
                 <li class="menu-header">Settings</li>
-                <li class="{{ Request::is('settings/opd') ? 'active' : '' }}">
+                <li class="{{ Request::is('settings/opd*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('settings/opd') }}"><i class="fas fa-building"></i><span>Perangkat
                             Daerah</span></a>
                 </li>
