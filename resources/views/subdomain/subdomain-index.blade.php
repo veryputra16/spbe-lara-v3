@@ -79,7 +79,7 @@
                                                         -
                                                     @endif
                                                 </td>
-                                                <td>{{ $subdomain->opd_pengelola }}</td>
+                                                <td>{{ $subdomain->opd->nama }}</td>
                                                 <td>
                                                     @if ($subdomain->keterangan)
                                                         {{ $subdomain->keterangan }}
