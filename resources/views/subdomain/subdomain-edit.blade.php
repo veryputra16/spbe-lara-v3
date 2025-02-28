@@ -24,7 +24,7 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                             <div class="card-body">
-                                <div class="form-group col-md-6 col-12">
+                                <div class="form-group col-md-5 col-12">
                                     <label>{{ __('URL') }}</label>
                                     <input type="text" class="form-control @error('url') is-invalid @enderror"
                                         name="url" value="{{ old('url', $subdomain->url) }}" required autocomplete="URL"
@@ -50,7 +50,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-8 col-12">
+                                <div class="form-group col-md-6 col-12">
                                     <label>{{ __('Operator Teknis') }}</label>
                                     <input type="text" class="form-control @error('op_teknis') is-invalid @enderror"
                                         name="op_teknis" value="{{ old('op_teknis', $subdomain->op_teknis) }}"
@@ -61,7 +61,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-8 col-12">
+                                <div class="form-group col-md-4 col-12">
                                     <label>{{ __('Kontak Teknis') }}</label>
                                     <input type="text" class="form-control @error('kontak_teknis') is-invalid @enderror"
                                         name="kontak_teknis" value="{{ old('kontak_teknis', $subdomain->kontak_teknis) }}"
@@ -74,19 +74,19 @@
                                 </div>
                                 <div class="form-group col-md-8 col-12">
                                     <label>{{ __('Perangkat Daerah') }}</label>
-                                    <select class="form-control select2 @error('opd_pengelola') is-invalid @enderror"
-                                        name="opd_pengelola" required autocomplete="opd_pengelola">
+                                    <select class="form-control select2 @error('opd_id') is-invalid @enderror"
+                                        name="opd_id" required autocomplete="opd_id">
                                         <option value="">-</option>
                                         @forelse ($opds as $opd)
                                             <option value="{{ $opd['id'] }}"
-                                                {{ $opd['id'] == $subdomain->opd_pengelola ? 'selected' : '' }}>
+                                                {{ $opd['id'] == $subdomain->opd_id ? 'selected' : '' }}>
                                                 {{ $opd['nama'] }}</option>
                                             {{-- <option value="{{ $opd->id }}" {{ ( $opd->id == $users->opd_id) ? 'selected' : '' }}>{{ $opd->nama_opd }}</option> --}}
                                         @empty
                                             <option value="">Tidak Ada Data</option>
                                         @endforelse
                                     </select>
-                                    @error('opd_pengelola')
+                                    @error('opd_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

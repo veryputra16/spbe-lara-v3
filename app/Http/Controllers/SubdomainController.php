@@ -70,6 +70,8 @@ class SubdomainController extends Controller
         // $response = Http::get('https://splp.denpasarkota.go.id/index.php/dev/master/opd');
         // $opds = $response->json(['entry']);
 
+        $opds = Opd::all();
+
         return view('subdomain.subdomain-edit', compact('subdomain', 'opds'), [
             'title' => 'Data Portal Subdomain'
         ]);

@@ -26,7 +26,7 @@ class UpdateSubdomainRequest extends FormRequest
             'status' => ['required'],
             'op_teknis' => ['nullable', 'string', 'max:255'],
             'kontak_teknis' => ['nullable', 'digits_between:9,14', 'max:255'],
-            'opd_pengelola' => ['required', 'max:255'],
+            'opd_id' => ['required', 'max:255'],
             'keterangan' => ['nullable', 'string', 'max:255'],
         ];
     }
