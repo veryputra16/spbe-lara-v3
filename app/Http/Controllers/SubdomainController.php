@@ -20,7 +20,7 @@ class SubdomainController extends Controller
         $subdomains = Subdomain::all();
 
         return view('subdomain.subdomain-index', compact('subdomains'), [
-            'title' => 'Data Portal Subdomain'
+            'title' => 'Data Portal CMS'
         ]);
     }
 
@@ -35,7 +35,7 @@ class SubdomainController extends Controller
         $opds = Opd::all();
 
         return view('subdomain.subdomain-create', compact('opds'), [
-            'title' => 'Data Portal Subdomain'
+            'title' => 'Data Portal CMS'
         ]);
     }
 
@@ -73,7 +73,7 @@ class SubdomainController extends Controller
         $opds = Opd::all();
 
         return view('subdomain.subdomain-edit', compact('subdomain', 'opds'), [
-            'title' => 'Data Portal Subdomain'
+            'title' => 'Data Portal CMS'
         ]);
     }
 

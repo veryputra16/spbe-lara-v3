@@ -25,7 +25,7 @@
                 </li>
                 <li class="{{ Request::is('system/subdomain*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('system/subdomain') }}"><i class="fas fa-dungeon"></i><span>Portal
-                            Subdomain</span></a>
+                            CMS</span></a>
                 </li>
 
                 <li class="menu-header">Master Data</li>
