@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('role')->default('user');
             // $table->foreignId('opd_id');
-            $table->string('status');
+            $table->string('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
