@@ -23,14 +23,13 @@ class DatabaseSeeder extends Seeder
         Subdomain::factory(2)->create();
         // User::factory(1)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Super Admin',
-        //     'email' => 'Super Admin',
-        //     'username' => 'superadmin',
-        //     'password' => bcrypt('123456789'),
-        // 'role' => 'superadmin',
-        //     'status' => 1,
-        // ]);
+        User::factory()->create([
+            'name' => 'Kota Denpasar',
+            'username' => 'superadmin',
+            'password' => bcrypt('123456789'),
+            'role' => 'superadmin',
+            'status' => 1,
+        ]);
 
 
         $this->call([
