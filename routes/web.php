@@ -19,13 +19,13 @@ use App\Http\Controllers\SubdomainController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Route::get('/', function () {
-//     return redirect('/login');
+//     return view('welcome');
 // });
+
+Route::get('/', function () {
+    return redirect('/login');
+});
 
 Auth::routes();
 
@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
     Route::prefix('system')->name('system.')->group(function () {
-        Route::resource('aplikasi', ApplicationController::class);
+        // Route::resource('aplikasi', ApplicationController::class);
         Route::resource('subdomain', SubdomainController::class);
     });
 
