@@ -20,13 +20,14 @@
                             SPBE</span></a>
                 </li>
 
-                <li class="menu-header">System</li>
-                {{-- <li class="{{ Request::is('system/aplikasi*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('system.aplikasi.index') }}"><i class="fas fa-globe"></i><span>Data
+                <li class="menu-header">Aplikasi</li>
+                <li class="{{ Request::is('aplikasi/data-aplikasi*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('aplikasi.data-aplikasi.index') }}"><i
+                            class="fas fa-globe"></i><span>Data
                             Aplikasi</span></a>
-                </li> --}}
-                <li class="{{ Request::is('system/subdomain*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('system.subdomain.index') }}"><i
+                </li>
+                <li class="{{ Request::is('aplikasi/subdomain*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('aplikasi.subdomain.index') }}"><i
                             class="fas fa-dungeon"></i><span>Portal
                             CMS</span></a>
                 </li>

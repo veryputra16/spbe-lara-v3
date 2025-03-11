@@ -51,7 +51,7 @@ class SubdomainController extends Controller
         });
 
         flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('system.subdomain.index');
+        return redirect()->route('aplikasi.subdomain.index');
     }
 
     /**
@@ -89,7 +89,7 @@ class SubdomainController extends Controller
         });
 
         flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('system.subdomain.index');
+        return redirect()->route('aplikasi.subdomain.index');
     }
 
     /**
@@ -102,6 +102,6 @@ class SubdomainController extends Controller
         });
 
         flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('system.subdomain.index');
+        return redirect()->route('aplikasi.subdomain.index');
     }
 }

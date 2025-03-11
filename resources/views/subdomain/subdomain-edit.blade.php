@@ -17,7 +17,7 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <form method="post" class="needs-validation" novalidate=""
-                            action="{{ route('system.subdomain.update', $subdomain) }}">
+                            action="{{ route('aplikasi.subdomain.update', $subdomain) }}">
                             @csrf
                             @method('PUT')
                             {{-- <div class="card-header">
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-left">
-                                <a href="{{ route('system.subdomain.index') }}""
+                                <a href="{{ route('aplikasi.subdomain.index') }}""
                                     class="btn btn-dark">{{ __('Back') }}</a>
                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                             </div>

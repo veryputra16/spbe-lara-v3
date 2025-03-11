@@ -20,7 +20,8 @@
             <div class="row mt-sm-4">
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
-                        <form method="post" class="needs-validation" novalidate="" action="{{ route('aplikasi.store') }}">
+                        <form method="post" class="needs-validation" novalidate=""
+                            action="{{ route('aplikasi.data-aplikasi.store') }}">
                             @csrf
                             {{-- <div class="card-header">
                             <h4>{{ __($title) }}</h4>
@@ -457,7 +458,8 @@
                                 </div>
                             </div>
                             <div class="card-footer text-left">
-                                <a href="{{ route('aplikasi.index') }}"" class="btn btn-dark">{{ __('Back') }}</a>
+                                <a href="{{ route('aplikasi.data-aplikasi.index') }}""
+                                    class="btn btn-dark">{{ __('Back') }}</a>
                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                             </div>
                         </form>

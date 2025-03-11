@@ -43,8 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
     Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
-    Route::prefix('system')->name('system.')->group(function () {
-        // Route::resource('aplikasi', ApplicationController::class);
+    Route::prefix('aplikasi')->name('aplikasi.')->group(function () {
+        Route::resource('data-aplikasi', ApplicationController::class);
         Route::resource('subdomain', SubdomainController::class);
     });
 
