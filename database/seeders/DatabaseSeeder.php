@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Application;
 use App\Models\Frameworkapp;
 use App\Models\Katserver;
 use App\Models\Opd;
@@ -32,5 +33,7 @@ class DatabaseSeeder extends Seeder
             BahasaprogramSeeder::class,
             RolePermissionSeeder::class,
         ]);
+
+        Application::factory(1)->create();
     }
 }
