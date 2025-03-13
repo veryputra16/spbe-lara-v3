@@ -31,35 +31,39 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Action</th>
                                             <th>Nama Aplikasi</th>
                                             <th>OPD Pengelola</th>
-                                            <th>Sifat</th>
                                             <th>Tahun Pembuatan</th>
                                             <th>Status</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($applications as $application)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $application->judul }}</td>
-                                                <td>{{ $application->judul }}</td>
-                                                <td>{{ $application->tahun_buat }}</td>
-                                                <td>{{ $application->tahun_buat }}</td>
-                                                <td>{{ $application->status }}</td>
-
                                                 <td>
                                                     <a href="{{ route('admin.data-aplikasi.edit', $application->id) }}"
-                                                        class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                        class="btn btn-light btn-sm" title="Edit"><i
+                                                            class="fas fa-edit"></i></a>
                                                     <form
                                                         action="{{ route('admin.data-aplikasi.destroy', $application->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger show_confirm"><i
-                                                                class="fas fa-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                            title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
+                                                </td>
+                                                <td>{{ $application->nama_app }}</td>
+                                                <td>{{ $application->opd->nama }}</td>
+                                                <td>{{ $application->tahun_buat }}</td>
+                                                <td>
+                                                    @if ($application->status == 1)
+                                                        <span class="badge badge-success">Aktif</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Tidak Aktif</span>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

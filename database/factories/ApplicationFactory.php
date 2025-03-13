@@ -26,7 +26,7 @@ class ApplicationFactory extends Factory
             'tahun_buat' => $this->faker->year(),
             'buku_manual' => $this->faker->text(50),
             'repositori' => $this->faker->url(),
-            'status' => $this->faker->numberBetween(1, 2),
+            'status' => $this->faker->numberBetween(0, 1),
             'alasan_nonaktif' => $this->faker->word(),
             'katplatform_id' => $this->faker->numberBetween(1, 2),
             'katapp_id' => $this->faker->numberBetween(1, 2),
