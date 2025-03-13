@@ -30,25 +30,25 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    // jangan lupa untuk dihapus
-    Route::get('/dashboard', [DashboardController::class, 'aplikasi'])->name('dashboard');
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::get('/d-app', [DashboardController::class, 'aplikasi'])->name('dashboard-app');
-        Route::get('/d-spbe', [DashboardController::class, 'spbe'])->name('dashboard-spbe');
+        // dashbaord
+        Route::get('d-app', [DashboardController::class, 'aplikasi'])->name('d-app');
+        Route::get('d-spbe', [DashboardController::class, 'spbe'])->name('d-spbe');
     });
 
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
-    Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
-
-    Route::prefix('aplikasi')->name('aplikasi.')->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        // aplikasi
         Route::resource('data-aplikasi', ApplicationController::class);
         Route::resource('subdomain', SubdomainController::class);
+
+        // Settings
+        Route::resource('opd', OpdController::class);
+        Route::resource('user', UserController::class);
     });
 
     Route::prefix('masterapp')->name('masterapp.')->group(function () {
+        // master aplikasi
         Route::resource('katapp', KatappController::class);
         Route::resource('katdb', KatdbController::class);
         Route::resource('katserver', KatserverController::class);
@@ -59,10 +59,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('layananapp', LayananappController::class);
     });
 
-    Route::prefix('settings')->name('settings.')->group(function () {
-        Route::resource('opd', OpdController::class);
-        Route::resource('user', UserController::class);
-    });
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
+    Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
     Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');
     Route::get('/hakakses/edit/{id}', [HakaksesController::class, 'edit'])->name('hakakses.edit')->middleware('superadmin');

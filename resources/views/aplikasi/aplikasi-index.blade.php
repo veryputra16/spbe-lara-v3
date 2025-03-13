@@ -24,7 +24,7 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('aplikasi.data-aplikasi.create') }}" class="btn btn-primary mb-3"><i
+                            <a href="{{ route('admin.data-aplikasi.create') }}" class="btn btn-primary mb-3"><i
                                     class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
@@ -50,10 +50,10 @@
                                                 <td>{{ $application->status }}</td>
 
                                                 <td>
-                                                    <a href="{{ route('aplikasi.data-aplikasi.edit', $application->id) }}"
+                                                    <a href="{{ route('admin.data-aplikasi.edit', $application->id) }}"
                                                         class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
                                                     <form
-                                                        action="{{ route('aplikasi.data-aplikasi.destroy', $application->id) }}"
+                                                        action="{{ route('admin.data-aplikasi.destroy', $application->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')

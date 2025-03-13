@@ -71,7 +71,7 @@ class ApplicationController extends Controller
         });
 
         flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('aplikasi.data-aplikasi');
+        return redirect()->route('admin.data-aplikasi');
     }
 
     /**

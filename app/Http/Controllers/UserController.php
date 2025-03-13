@@ -47,7 +47,7 @@ class UserController extends Controller
         });
 
         flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('settings.user.index');
+        return redirect()->route('admin.user.index');
     }
 
     /**
@@ -82,7 +82,7 @@ class UserController extends Controller
         });
 
         flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('settings.user.index');
+        return redirect()->route('admin.user.index');
     }
 
     /**
@@ -95,6 +95,6 @@ class UserController extends Controller
         });
 
         flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('settings.user.index');
+        return redirect()->route('admin.user.index');
     }
 }

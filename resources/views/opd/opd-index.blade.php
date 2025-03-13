@@ -24,7 +24,7 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('settings.opd.create') }}" class="btn btn-primary mb-3"><i
+                            <a href="{{ route('admin.opd.create') }}" class="btn btn-primary mb-3"><i
                                     class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
@@ -41,11 +41,11 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ route('settings.opd.edit', $opd->id) }}"
+                                                    <a href="{{ route('admin.opd.edit', $opd->id) }}"
                                                         class="btn btn-light btn-sm" title="Edit"><i
                                                             class="fas fa-edit"></i></a>
-                                                    <form action="{{ route('settings.opd.destroy', $opd->id) }}"
-                                                        method="POST" style="display: inline-block;">
+                                                    <form action="{{ route('admin.opd.destroy', $opd->id) }}" method="POST"
+                                                        style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-light btn-sm show_confirm"

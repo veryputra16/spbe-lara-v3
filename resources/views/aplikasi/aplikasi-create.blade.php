@@ -21,7 +21,7 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <form method="post" class="needs-validation" novalidate=""
-                            action="{{ route('aplikasi.data-aplikasi.store') }}">
+                            action="{{ route('admin.data-aplikasi.store') }}">
                             @csrf
                             {{-- <div class="card-header">
                             <h4>{{ __($title) }}</h4>
@@ -51,9 +51,9 @@
                                     <input type="text" class="form-control @error('judul') is-invalid @enderror"
                                         name="judul" value="{{ old('judul') }}" required autocomplete="name"
                                         placeholder="{{ __('Nama Aplikasi') }}">
-                                    <small id="passwordHelpBlock" class="form-text text-muted">
+                                    {{-- <small id="passwordHelpBlock" class="form-text text-muted">
                                         Nama Aplikasi
-                                    </small>
+                                    </small> --}}
                                     @error('judul')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -176,9 +176,10 @@
                                 <div class="form-group col-md-8 col-12">
                                     <label>{{ __('Alasan Nonaktif') }}</label>
                                     <textarea class="form-control @error('alasan_nonaktif') is-invalid @enderror" name="alasan_nonaktif"
-                                        autocomplete="alasan_nonaktif" placeholder="{{ __('Alasan Nonaktif') }}" style="height: 200px;resize: vertical">{{ old('alasan_nonaktif') }}</textarea>
+                                        autocomplete="alasan_nonaktif" placeholder="{{ __('Alasan Non-aktif') }}"
+                                        style="height: 200px;resize: vertical">{{ old('alasan_nonaktif') }}</textarea>
                                     <small id="passwordHelpBlock" class="form-text text-muted">
-                                        Menjelaskan alasan mengapa aplikasi di nonaktifkan
+                                        Menjelaskan alasan mengapa aplikasi di non-aktifkan
                                     </small>
                                     @error('alasan_nonaktif')
                                         <span class="invalid-feedback" role="alert">
@@ -378,7 +379,7 @@
                                     <input type="file" class="form-control @error('judul') is-invalid @enderror"
                                         name="judul" required autocomplete="name">
                                     <small id="passwordHelpBlock" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
+                                        file ekstensi .jpg/.jpeg/.png dengan maksimal size 100MB
                                     </small>
                                     @error('judul')
                                         <span class="invalid-feedback" role="alert">
@@ -391,7 +392,7 @@
                                     <input type="file" class="form-control @error('judul') is-invalid @enderror"
                                         name="judul" required autocomplete="name">
                                     <small id="passwordHelpBlock" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
+                                        file ekstensi .jpg/.jpeg/.png dengan maksimal size 100MB
                                     </small>
                                     @error('judul')
                                         <span class="invalid-feedback" role="alert">
@@ -400,7 +401,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Buku Manual') }}</label>
+                                    <label>{{ __('Buku Manual *)') }}</label>
                                     <input type="file" class="form-control @error('judul') is-invalid @enderror"
                                         name="judul" required autocomplete="name">
                                     <small id="passwordHelpBlock" class="form-text text-muted">
@@ -458,7 +459,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-left">
-                                <a href="{{ route('aplikasi.data-aplikasi.index') }}""
+                                <a href="{{ route('admin.data-aplikasi.index') }}""
                                     class="btn btn-dark">{{ __('Back') }}</a>
                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                             </div>

@@ -10,30 +10,28 @@
             <ul class="sidebar-menu">
                 <li class="menu-header">Dashboard</li>
                 <li class="{{ Request::is('dashboard/d-app') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('dashboard.dashboard-app') }}"><i
-                            class="fas fa-fire"></i><span>Dashboard
+                    <a class="nav-link" href="{{ route('dashboard.d-app') }}"><i class="fas fa-fire"></i><span>Dashboard
                             Aplikasi</span></a>
                 </li>
                 <li class="{{ Request::is('dashboard/d-spbe') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('dashboard.dashboard-spbe') }}"><i
-                            class="fas fa-fire"></i><span>Dashboard
+                    <a class="nav-link" href="{{ route('dashboard.d-spbe') }}"><i class="fas fa-fire"></i><span>Dashboard
                             SPBE</span></a>
                 </li>
 
                 <li class="menu-header">Aplikasi</li>
-                <li class="{{ Request::is('aplikasi/data-aplikasi*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('aplikasi.data-aplikasi.index') }}"><i
+                <li class="{{ Request::is('admin/data-aplikasi*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.data-aplikasi.index') }}"><i
                             class="fas fa-globe"></i><span>Data
                             Aplikasi</span></a>
                 </li>
-                <li class="{{ Request::is('aplikasi/subdomain*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('aplikasi.subdomain.index') }}"><i
+                <li class="{{ Request::is('admin/subdomain*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.subdomain.index') }}"><i
                             class="fas fa-dungeon"></i><span>Portal
                             CMS</span></a>
                 </li>
 
                 <li class="menu-header">Master Data</li>
-                <li class="nav-item dropdown {{ Request::is('masterapp/*') ? 'active' : '' }}">
+                <li class="nav-item dropdown {{ Request::is('masterapp*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-archway"></i>
                         <span>Master Aplikasi</span></a>
                     <ul class="dropdown-menu">
@@ -65,13 +63,13 @@
                 </li>
 
                 <li class="menu-header">Settings</li>
-                <li class="{{ Request::is('settings/opd*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('settings.opd.index') }}"><i
+                <li class="{{ Request::is('admin/opd*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.opd.index') }}"><i
                             class="fas fa-building"></i><span>Perangkat
                             Daerah</span></a>
                 </li>
-                <li class="{{ Request::is('settings/user*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('settings.user.index') }}"><i
+                <li class="{{ Request::is('admin/user*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.user.index') }}"><i
                             class="fas fa-users"></i><span>Users</span></a>
                 </li>
 
