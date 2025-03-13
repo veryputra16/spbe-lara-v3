@@ -30,6 +30,15 @@ class RolePermissionSeeder extends Seeder
         $opapp = Role::create([
             'name' => 'operator-aplikasi'
         ]);
+        $ekse = Role::create([
+            'name' => 'eksekutif' // fitur evaluasi SPBE
+        ]);
+        $ekseplus = Role::create([
+            'name' => 'eksekutif-plus' // fitur penilaian SPBE dan data aplikasi , portal cms
+        ]);
+        $guest = Role::create([
+            'name' => 'viewer'
+        ]);
 
         // membuat user default
         $userSuperadmin = User::create([
