@@ -14,6 +14,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    {{-- Icon --}}
+    <link rel="shortcut icon" href="{{ asset('img/Lambang_Kota_Denpasar.png') }}" type="image/x-icon">
+
     <!-- Bootstrap CSS (Bootstrap 4) -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 

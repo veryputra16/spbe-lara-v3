@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('admin')->name('admin.')->group(function () {
         // aplikasi
-        Route::resource('data-aplikasi', ApplicationController::class);
+        Route::resource('application', ApplicationController::class);
         Route::resource('subdomain', SubdomainController::class);
 
         // Settings

@@ -19,9 +19,8 @@
                 </li>
 
                 <li class="menu-header">Aplikasi</li>
-                <li class="{{ Request::is('admin/data-aplikasi*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('admin.data-aplikasi.index') }}"><i
-                            class="fas fa-globe"></i><span>Data
+                <li class="{{ Request::is('admin/application*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.application.index') }}"><i class="fas fa-globe"></i><span>Data
                             Aplikasi</span></a>
                 </li>
                 <li class="{{ Request::is('admin/subdomain*') ? 'active' : '' }}">
