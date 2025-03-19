@@ -46,8 +46,7 @@ class UserController extends Controller
             $newUser = User::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('admin.user.index');
+        return redirect()->route('admin.user.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -81,8 +80,7 @@ class UserController extends Controller
             $user->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('admin.user.index');
+        return redirect()->route('admin.user.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -94,7 +92,6 @@ class UserController extends Controller
             $user->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('admin.user.index');
+        return redirect()->route('admin.user.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

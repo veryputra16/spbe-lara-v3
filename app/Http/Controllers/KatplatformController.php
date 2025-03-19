@@ -44,8 +44,7 @@ class KatplatformController extends Controller
             $newKatplatform = Katplatform::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('masterapp.katplatform.index');
+        return redirect()->route('masterapp.katplatform.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -77,8 +76,7 @@ class KatplatformController extends Controller
             $katplatform->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('masterapp.katplatform.index');
+        return redirect()->route('masterapp.katplatform.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -90,7 +88,6 @@ class KatplatformController extends Controller
             $katplatform->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('masterapp.katplatform.index');
+        return redirect()->route('masterapp.katplatform.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

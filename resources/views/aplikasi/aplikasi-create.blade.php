@@ -33,7 +33,7 @@
                                 <div class="section-title mt-0">Umum</div>
                                 <hr>
                                 <div class="form-group col-md-6 col-12">
-                                    <label>{{ __('Perangkat Daerah/Perumda *)') }}</label>
+                                    <label>{{ __('Perangkat Daerah/Perumda/Kelurahan/Desa *)') }}</label>
                                     <select class="form-control select2 @error('opd_pengelola') is-invalid @enderror"
                                         name="opd_pengelola" required autocomplete="opd_pengelola">
                                         <option value="">-</option>

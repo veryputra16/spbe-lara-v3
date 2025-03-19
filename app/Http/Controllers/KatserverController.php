@@ -44,8 +44,7 @@ class KatserverController extends Controller
             $newKatserver = Katserver::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('masterapp.katserver.index');
+        return redirect()->route('masterapp.katserver.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -77,8 +76,7 @@ class KatserverController extends Controller
             $katserver->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('masterapp.katserver.index');
+        return redirect()->route('masterapp.katserver.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -90,7 +88,6 @@ class KatserverController extends Controller
             $katserver->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('masterapp.katserver.index');
+        return redirect()->route('masterapp.katserver.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

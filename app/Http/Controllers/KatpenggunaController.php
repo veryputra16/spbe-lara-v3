@@ -44,8 +44,7 @@ class KatpenggunaController extends Controller
             $newKatpengguna = Katpengguna::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('masterapp.katpengguna.index');
+        return redirect()->route('masterapp.katpengguna.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -77,8 +76,7 @@ class KatpenggunaController extends Controller
             $katpengguna->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('masterapp.katpengguna.index');
+        return redirect()->route('masterapp.katpengguna.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -90,7 +88,6 @@ class KatpenggunaController extends Controller
             $katpengguna->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('masterapp.katpengguna.index');
+        return redirect()->route('masterapp.katpengguna.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

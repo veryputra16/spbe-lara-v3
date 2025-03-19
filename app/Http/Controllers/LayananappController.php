@@ -44,8 +44,7 @@ class LayananappController extends Controller
             $newLayananapp = Layananapp::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('masterapp.layananapp.index');
+        return redirect()->route('masterapp.layananapp.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -77,8 +76,7 @@ class LayananappController extends Controller
             $layananapp->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('masterapp.layananapp.index');
+        return redirect()->route('masterapp.layananapp.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -90,7 +88,6 @@ class LayananappController extends Controller
             $layananapp->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('masterapp.layananapp.index');
+        return redirect()->route('masterapp.layananapp.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

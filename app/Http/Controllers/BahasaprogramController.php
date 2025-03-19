@@ -44,8 +44,7 @@ class BahasaprogramController extends Controller
             $newBhsprogram = Bahasaprogram::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('masterapp.bahasaprogram.index');
+        return redirect()->route('masterapp.bahasaprogram.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -77,8 +76,7 @@ class BahasaprogramController extends Controller
             $bahasaprogram->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('masterapp.bahasaprogram.index');
+        return redirect()->route('masterapp.bahasaprogram.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -90,7 +88,6 @@ class BahasaprogramController extends Controller
             $bahasaprogram->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('masterapp.bahasaprogram.index');
+        return redirect()->route('masterapp.bahasaprogram.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

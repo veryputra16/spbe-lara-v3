@@ -50,8 +50,7 @@ class SubdomainController extends Controller
             $newSubdomain = Subdomain::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('admin.subdomain.index');
+        return redirect()->route('admin.subdomain.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -88,8 +87,7 @@ class SubdomainController extends Controller
             $subdomain->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('admin.subdomain.index');
+        return redirect()->route('admin.subdomain.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -101,7 +99,6 @@ class SubdomainController extends Controller
             $subdomain->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('admin.subdomain.index');
+        return redirect()->route('admin.subdomain.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

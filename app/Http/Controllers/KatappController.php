@@ -44,8 +44,7 @@ class KatappController extends Controller
             $newKatapp = Katapp::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('masterapp.katapp.index');
+        return redirect()->route('masterapp.katapp.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -77,8 +76,7 @@ class KatappController extends Controller
             $katapp->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('masterapp.katapp.index');
+        return redirect()->route('masterapp.katapp.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -90,7 +88,6 @@ class KatappController extends Controller
             $katapp->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('masterapp.katapp.index');
+        return redirect()->route('masterapp.katapp.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

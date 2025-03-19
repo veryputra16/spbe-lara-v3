@@ -44,8 +44,7 @@ class KatdbController extends Controller
             $newKatdb = Katdb::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('masterapp.katdb.index');
+        return redirect()->route('masterapp.katdb.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -77,8 +76,7 @@ class KatdbController extends Controller
             $katdb->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('masterapp.katdb.index');
+        return redirect()->route('masterapp.katdb.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -90,7 +88,6 @@ class KatdbController extends Controller
             $katdb->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('masterapp.katdb.index');
+        return redirect()->route('masterapp.katdb.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

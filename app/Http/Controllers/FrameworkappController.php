@@ -44,8 +44,7 @@ class FrameworkappController extends Controller
             $newFrameworkapp = Frameworkapp::create($validated);
         });
 
-        flash()->success('Data telah tersimpan dengan sukses!');
-        return redirect()->route('masterapp.frameworkapp.index');
+        return redirect()->route('masterapp.frameworkapp.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -77,8 +76,7 @@ class FrameworkappController extends Controller
             $frameworkapp->update($validated);
         });
 
-        flash()->success('Perubahan data telah berhasil dilakukan.');
-        return redirect()->route('masterapp.frameworkapp.index');
+        return redirect()->route('masterapp.frameworkapp.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -90,7 +88,6 @@ class FrameworkappController extends Controller
             $frameworkapp->delete();
         });
 
-        flash()->success('Penghapusan data sukses dilakukan.');
-        return redirect()->route('masterapp.frameworkapp.index');
+        return redirect()->route('masterapp.frameworkapp.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }
