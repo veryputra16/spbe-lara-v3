@@ -64,6 +64,10 @@ SPBE merupakan singkatan dari Sistem Pemerintahan Berbasis Elektronik, Sistem Pe
     php artisan migrate
     ```
 
+    ```bash
+    php artisan migrate:refresh --seed
+    ```
+
 8. Start the development server:
     ```bash
     php artisan serve
