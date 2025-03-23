@@ -2,7 +2,13 @@
 
 SPBE merupakan singkatan dari Sistem Pemerintahan Berbasis Elektronik, Sistem Pemerintahan Berbasis Elektronik (SPBE) adalah penyelenggaraan pemerintahan yang memanfaatkan teknologi informasi dan komunikasi untuk memberikan layanan kepada Pengguna SPBE.
 
-### Feature System
+### Application Features
+
+-   Evaluasi Penilaian SPBE
+-   Data Aplikasi
+-   Portal CMS
+
+### Technology Features
 
 -   Laravel 11
 -   Template Stisla
@@ -18,7 +24,7 @@ SPBE merupakan singkatan dari Sistem Pemerintahan Berbasis Elektronik, Sistem Pe
 -   PHP >= 8.2
 -   Composer
 -   Node.js
--   npm
+-   NPM
 
 ### Installation Steps
 
