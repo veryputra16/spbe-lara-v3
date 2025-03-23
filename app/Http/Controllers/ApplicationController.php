@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Bahasaprogram;
 use App\Models\Frameworkapp;
 use App\Models\Katapp;
@@ -56,9 +58,60 @@ class ApplicationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreApplicationRequest $request)
     {
-        //
+        DB::transaction(function () use ($request) {
+            $validated = $request->validated();
+
+            if ($request->hasFile('dasar_hukum')) {
+                $dasar_hukumPath = $request->file('dasar_hukum')->store('dasar-hukums', 'public');
+                $validated['dasar_hukum'] = $dasar_hukumPath;
+            }
+            if ($request->hasFile('nda')) {
+                $ndaPath = $request->file('nda')->store('ndas', 'public');
+                $validated['nda'] = $ndaPath;
+            }
+            if ($request->hasFile('sop')) {
+                $sopPath = $request->file('sop')->store('sops', 'public');
+                $validated['sop'] = $sopPath;
+            }
+            if ($request->hasFile('kak')) {
+                $kakPath = $request->file('kak')->store('kaks', 'public');
+                $validated['kak'] = $kakPath;
+            }
+            if ($request->hasFile('capture_frontend')) {
+                $capturefrontendPath = $request->file('capture_frontend')->store('capture-frontends', 'public');
+                $validated['capture_frontend'] = $capturefrontendPath;
+            }
+            if ($request->hasFile('buku_manual')) {
+                $capturebackendPath = $request->file('capture_backend')->store('capture-backends', 'public');
+                $validated['capture_backend'] = $capturebackendPath;
+            }
+            if ($request->hasFile('buku_manual')) {
+                $buku_manualPath = $request->file('buku_manual')->store('buku-manuals', 'public');
+                $validated['buku_manual'] = $buku_manualPath;
+            }
+            if ($request->hasFile('dokumen_perancangan')) {
+                $dokumen_perancanganPath = $request->file('dokumen_perancangan')->store('dokumen-perancangans', 'public');
+                $validated['dokumen_perancangan'] = $dokumen_perancanganPath;
+            }
+            if ($request->hasFile('surat_mohon')) {
+                $surat_mohonPath = $request->file('surat_mohon')->store('surat-mohons', 'public');
+                $validated['surat_mohon'] = $surat_mohonPath;
+            }
+            if ($request->hasFile('implemen_app')) {
+                $implemen_appPath = $request->file('implemen_app')->store('implemen-apps', 'public');
+                $validated['implemen_app'] = $implemen_appPath;
+            }
+            if ($request->hasFile('lapor_pentest')) {
+                $lapor_pentestPath = $request->file('lapor_pentest')->store('lapor-pentests', 'public');
+                $validated['lapor_pentest'] = $lapor_pentestPath;
+            }
+
+            $newApplication = Application::create($validated);
+        });
+
+        return redirect()->route('admin.application.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -80,7 +133,7 @@ class ApplicationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Application $application)
+    public function update(UpdateApplicationRequest $request, Application $application)
     {
         //
     }

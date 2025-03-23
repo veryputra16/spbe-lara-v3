@@ -33,7 +33,7 @@
                                             <th>#</th>
                                             <th>Action</th>
                                             <th>Nama Aplikasi</th>
-                                            <th>OPD Pengelola</th>
+                                            <th>OPD/Perumda/Kelurahan/Desa</th>
                                             <th>Tahun Pembuatan</th>
                                             <th>Status</th>
                                         </tr>

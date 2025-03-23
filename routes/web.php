@@ -19,13 +19,13 @@ use App\Http\Controllers\SubdomainController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Route::get('/', function () {
-//     return redirect('/login');
+//     return view('welcome');
 // });
+
+Route::get('/', function () {
+    return view('auth.login');
+});
 
 Auth::routes();
 

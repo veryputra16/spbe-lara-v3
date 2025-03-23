@@ -13,7 +13,8 @@
             <div class="form-group">
                 <label for="username">{{ __('Username') }}</label>
                 <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
-                    name="username" value="{{ old('username') }}" tabindex="1" required autocomplete="username" autofocus>
+                    name="username" value="{{ old('username') }}" tabindex="1" required autocomplete="username"
+                    placeholder="{{ __('Username') }}" autofocus>
                 @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -26,7 +27,8 @@
                     <label for="password" class="control-label">{{ __('Password') }}</label>
                 </div>
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                    name="password" tabindex="2" required autocomplete="current-password">
+                    name="password" tabindex="2" required autocomplete="current-password"
+                    placeholder="{{ __('Password') }}">
                 @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

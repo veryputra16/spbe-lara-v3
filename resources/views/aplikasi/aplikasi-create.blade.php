@@ -21,14 +21,14 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <form method="post" class="needs-validation" novalidate=""
-                            action="{{ route('admin.application.store') }}">
+                            action="{{ route('admin.application.store') }}" enctype="multipart/form-data" autocomplete="on">
                             @csrf
                             {{-- <div class="card-header">
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                             <div class="card-body">
-                                <input type="text" class="form-control @error('user_id') is-invalid @enderror"
-                                    name="user_id" value="{{ old('user_id', auth()->user()->username) }}" required readonly
+                                <input type="hidden" class="form-control @error('user_id') is-invalid @enderror"
+                                    name="user_id" value="{{ old('user_id', auth()->user()->id) }}" required readonly
                                     autocomplete="user_id" placeholder="{{ __('ID User') }}">
                                 <div class="section-title mt-0">Umum</div>
                                 <hr>
@@ -38,7 +38,10 @@
                                         name="opd_pengelola" required autocomplete="opd_pengelola">
                                         <option value="">-</option>
                                         @forelse ($opds as $opd)
-                                            <option value="{{ $opd['id'] }}">{{ $opd['nama'] }}</option>
+                                            <option value="{{ $opd['id'] }}"
+                                                {{ old('opd_pengelola') == $opd['id'] ? 'selected' : '' }}>
+                                                {{ $opd['nama'] }}
+                                            </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
                                         @endforelse
@@ -92,7 +95,7 @@
                                 <div class="form-group col-md-8 col-12">
                                     <label>{{ __('Url') }}</label>
                                     <input type="text" class="form-control @error('url') is-invalid @enderror"
-                                        name="url" value="{{ old('url') }}" required autocomplete="url"
+                                        name="url" value="{{ old('url') }}" autocomplete="url"
                                         placeholder="{{ __('Url') }}">
                                     <small id="url" class="form-text text-muted">
                                         Link website atau link mobile dari Playstore maupun Appstore
@@ -108,8 +111,10 @@
                                     <select class="form-control select2 @error('tahun_buat') is-invalid @enderror"
                                         name="tahun_buat" required autocomplete="tahun_buat">
                                         <option>-</option>
-                                        @for ($i = 2005; $i <= date('Y'); $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @for ($i = date('Y'); $i >= 2005; $i--)
+                                            <option value="{{ $i }}"
+                                                {{ old('tahun_buat') == $i ? 'selected' : '' }}>
+                                                {{ $i }}</option>
                                         @endfor
                                     </select>
                                     @error('tahun_buat')
@@ -121,8 +126,8 @@
                                 <div class="form-group col-md-8 col-12">
                                     <label>{{ __('Repositori') }}</label>
                                     <input type="text" class="form-control @error('repositori') is-invalid @enderror"
-                                        name="repositori" value="{{ old('repositori') }}" required
-                                        autocomplete="repositori" placeholder="{{ __('Repositori') }}">
+                                        name="repositori" value="{{ old('repositori') }}" autocomplete="repositori"
+                                        placeholder="{{ __('Repositori') }}">
                                     <small id="repositori" class="form-text text-muted">
                                         Link dari github, gitlab atau yang lainnya
                                     </small>
@@ -132,13 +137,15 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-2 col-12">
+                                <div class="form-group col-md-4 col-12">
                                     <label>{{ __('Layanan Aplikasi *)') }}</label>
                                     <select class="form-control select2 @error('layananapp_id') is-invalid @enderror"
                                         name="layananapp_id" required autocomplete="layananapp_id">
                                         <option value="">-</option>
                                         @forelse ($layananapps as $layananapp)
-                                            <option value="{{ $layananapp->id }}">{{ $layananapp->layanan_app }}
+                                            <option value="{{ $layananapp->id }}"
+                                                {{ old('layananapp_id') == $layananapp->id ? 'selected' : '' }}>
+                                                {{ $layananapp->layanan_app }}
                                             </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
@@ -154,8 +161,11 @@
                                     <label>{{ __('Jaringan Intra *)') }}</label>
                                     <select class="form-control select2 @error('jaringan_intra') is-invalid @enderror"
                                         name="jaringan_intra" required autocomplete="jaringan_intra">
-                                        <option>Internet</option>
-                                        <option>Intranet</option>
+                                        <option value="">-</option>
+                                        <option value="1" {{ old('jaringan_intra') == '1' ? 'selected' : '' }}>
+                                            Internet</option>
+                                        <option value="2" {{ old('jaringan_intra') == '2' ? 'selected' : '' }}>
+                                            Intranet</option>
                                     </select>
                                     @error('jaringan_intra')
                                         <span class="invalid-feedback" role="alert">
@@ -166,9 +176,11 @@
                                 <div class="form-group col-md-2 col-12">
                                     <label>{{ __('Status *)') }}</label>
                                     <select class="form-control select2 @error('status') is-invalid @enderror"
-                                        name="status" required autocomplete="status">
-                                        <option value="1">Aktif</option>
-                                        <option value="0">Tidak Aktif</option>
+                                        name="status" id="status" required autocomplete="status">
+                                        <option value="">-</option>
+                                        <option value="1"{{ old('status') == '1' ? 'selected' : '' }}>Aktif</option>
+                                        <option value="0"{{ old('status') == '0' ? 'selected' : '' }}>Tidak Aktif
+                                        </option>
                                     </select>
                                     @error('status')
                                         <span class="invalid-feedback" role="alert">
@@ -176,10 +188,10 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-8 col-12">
+                                <div id="alasan_nonaktif" class="form-group col-md-8 col-12" style="display: none">
                                     <label>{{ __('Alasan Nonaktif') }}</label>
                                     <textarea class="form-control @error('alasan_nonaktif') is-invalid @enderror" name="alasan_nonaktif"
-                                        autocomplete="alasan_nonaktif" placeholder="{{ __('Alasan Non-aktif') }}"
+                                        id="alasan_nonaktif" autocomplete="alasan_nonaktif" placeholder="{{ __('Alasan Non-aktif') }}"
                                         style="height: 200px;resize: vertical">{{ old('alasan_nonaktif') }}</textarea>
                                     <small id="alasan_nonaktif" class="form-text text-muted">
                                         Menjelaskan alasan mengapa aplikasi di non-aktifkan
@@ -199,7 +211,9 @@
                                         name="katpengguna_id" required autocomplete="katpengguna_id">
                                         <option value="">-</option>
                                         @forelse ($katpenggunas as $katpengguna)
-                                            <option value="{{ $katpengguna->id }}">{{ $katpengguna->kategori_pengguna }}
+                                            <option value="{{ $katpengguna->id }}"
+                                                {{ old('katpengguna_id') == $katpengguna->id ? 'selected' : '' }}>
+                                                {{ $katpengguna->kategori_pengguna }}
                                             </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
@@ -217,7 +231,9 @@
                                         name="katapp_id" required autocomplete="katapp_id">
                                         <option value="">-</option>
                                         @forelse ($katapps as $katapp)
-                                            <option value="{{ $katapp->id }}">{{ $katapp->kategori_aplikasi }}</option>
+                                            <option value="{{ $katapp->id }}"
+                                                {{ old('katapp_id') == $katapp->id ? 'selected' : '' }}>
+                                                {{ $katapp->kategori_aplikasi }}</option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
                                         @endforelse
@@ -234,7 +250,9 @@
                                         name="katplatform_id" required autocomplete="katplatform_id">
                                         <option value="">-</option>
                                         @forelse ($katplatforms as $katplatform)
-                                            <option value="{{ $katplatform->id }}">{{ $katplatform->kategori_platform }}
+                                            <option value="{{ $katplatform->id }}"
+                                                {{ old('katplatform_id') == $katplatform->id ? 'selected' : '' }}>
+                                                {{ $katplatform->kategori_platform }}
                                             </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
@@ -252,7 +270,9 @@
                                         name="katdb_id" required autocomplete="katdb_id">
                                         <option value="">-</option>
                                         @forelse ($katdbs as $katdb)
-                                            <option value="{{ $katdb->id }}">{{ $katdb->kategori_database }}
+                                            <option value="{{ $katdb->id }}"
+                                                {{ old('katdb_id') == $katdb->id ? 'selected' : '' }}>
+                                                {{ $katdb->kategori_database }}
                                             </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
@@ -270,7 +290,9 @@
                                         name="katserver_id" required autocomplete="katserver_id">
                                         <option value="">-</option>
                                         @forelse ($katservers as $katserver)
-                                            <option value="{{ $katserver->id }}">{{ $katserver->kategori_server }}
+                                            <option value="{{ $katserver->id }}"
+                                                {{ old('katserver_id') == $katserver->id ? 'selected' : '' }}>
+                                                {{ $katserver->kategori_server }}
                                             </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
@@ -288,7 +310,9 @@
                                         name="bahasaprogram_id" required autocomplete="bahasaprogram_id">
                                         <option value="">-</option>
                                         @forelse ($bahasaprograms as $bahasaprogram)
-                                            <option value="{{ $bahasaprogram->id }}">{{ $bahasaprogram->bhs_program }}
+                                            <option value="{{ $bahasaprogram->id }}"
+                                                {{ old('bahasaprogram_id') == $bahasaprogram->id ? 'selected' : '' }}>
+                                                {{ $bahasaprogram->bhs_program }}
                                             </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
@@ -306,7 +330,9 @@
                                         name="frameworkapp_id" required autocomplete="frameworkapp_id">
                                         <option>-</option>
                                         @forelse ($frameworkapps as $frameworkapp)
-                                            <option value="{{ $frameworkapp->id }}">{{ $frameworkapp->framework_app }}
+                                            <option value="{{ $frameworkapp->id }}"
+                                                {{ old('frameworkapp_id') == $frameworkapp->id ? 'selected' : '' }}>
+                                                {{ $frameworkapp->framework_app }}
                                             </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
@@ -322,9 +348,9 @@
                                 <div class="section-title mt-0">Regulasi</div>
                                 <hr>
                                 <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Dasar Hukum *)') }}</label>
+                                    <label>{{ __('Dasar Hukum') }}</label>
                                     <input type="file" class="form-control @error('dasar_hukum') is-invalid @enderror"
-                                        name="dasar_hukum" required autocomplete="dasar_hukum">
+                                        name="dasar_hukum" autocomplete="dasar_hukum">
                                     <small id="dasar_hukum" class="form-text text-muted">
                                         file ekstensi .pdf dengan maksimal size 100MB
                                     </small>
@@ -335,9 +361,9 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('NDA *)') }}</label>
+                                    <label>{{ __('NDA') }}</label>
                                     <input type="file" class="form-control @error('nda') is-invalid @enderror"
-                                        name="nda" required autocomplete="nda">
+                                        name="nda" autocomplete="nda">
                                     <small id="nda" class="form-text text-muted">
                                         file ekstensi .pdf dengan maksimal size 100MB
                                     </small>
@@ -361,9 +387,9 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('KAK *)') }}</label>
+                                    <label>{{ __('KAK') }}</label>
                                     <input type="file" class="form-control @error('kak') is-invalid @enderror"
-                                        name="kak" required autocomplete="kak">
+                                        name="kak" autocomplete="kak">
                                     <small id="kak" class="form-text text-muted">
                                         file ekstensi .pdf dengan maksimal size 100MB
                                     </small>
@@ -405,9 +431,9 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Buku Manual *)') }}</label>
+                                    <label>{{ __('Buku Manual') }}</label>
                                     <input type="file" class="form-control @error('buku_manual') is-invalid @enderror"
-                                        name="buku_manual" required autocomplete="buku_manual">
+                                        name="buku_manual" autocomplete="buku_manual">
                                     <small id="buku_manual" class="form-text text-muted">
                                         file ekstensi .pdf dengan maksimal size 100MB
                                     </small>
@@ -418,10 +444,10 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Dokumen Perancangan *)') }}</label>
+                                    <label>{{ __('Dokumen Perancangan') }}</label>
                                     <input type="file"
                                         class="form-control @error('dokumen_perancangan') is-invalid @enderror"
-                                        name="dokumen_perancangan" required autocomplete="dokumen_perancangan">
+                                        name="dokumen_perancangan" autocomplete="dokumen_perancangan">
                                     <small id="dokumen_perancangan" class="form-text text-muted">
                                         file ekstensi .pdf dengan maksimal size 100MB
                                     </small>
@@ -432,9 +458,9 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Surat Permohonan *)') }}</label>
+                                    <label>{{ __('Surat Permohonan') }}</label>
                                     <input type="file" class="form-control @error('surat_mohon') is-invalid @enderror"
-                                        name="surat_mohon" required autocomplete="surat_mohon">
+                                        name="surat_mohon" autocomplete="surat_mohon">
                                     <small id="surat_mohon" class="form-text text-muted">
                                         file ekstensi .pdf dengan maksimal size 100MB
                                     </small>
@@ -445,10 +471,10 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Implementasi Aplikasi *)') }}</label>
+                                    <label>{{ __('Implementasi Aplikasi') }}</label>
                                     <input type="file"
                                         class="form-control @error('implemen_app') is-invalid @enderror"
-                                        name="implemen_app" required autocomplete="implemen_app">
+                                        name="implemen_app" autocomplete="implemen_app">
                                     <small id="implemen_app" class="form-text text-muted">
                                         file ekstensi .pdf dengan maksimal size 100MB
                                     </small>
@@ -459,10 +485,10 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Laporan Pentesting *)') }}</label>
+                                    <label>{{ __('Laporan Pentesting') }}</label>
                                     <input type="file"
                                         class="form-control @error('lapor_pentest') is-invalid @enderror"
-                                        name="lapor_pentest" required autocomplete="lapor_pentest">
+                                        name="lapor_pentest" autocomplete="lapor_pentest">
                                     <small id="lapor_pentest" class="form-text text-muted">
                                         file ekstensi .pdf dengan maksimal size 100MB
                                     </small>
@@ -478,10 +504,13 @@
                                 <div class="form-group col-md-2 col-12">
                                     <label>{{ __('Aset Tak Berwujud *)') }}</label>
                                     <select class="form-control select2 @error('aset_takberwujud') is-invalid @enderror"
-                                        name="aset_takberwujud" required autocomplete="aset_takberwujud">
+                                        name="aset_takberwujud" autocomplete="aset_takberwujud">
                                         <option value="">-</option>
-                                        <option value="1">Ya</option>
-                                        <option value="0">Tidak</option>
+                                        <option value="0" {{ old('aset_takberwujud') == '0' ? 'selected' : '' }}>
+                                            Tidak</option>
+                                        <option value="1" {{ old('aset_takberwujud') == '1' ? 'selected' : '' }}>Ya
+                                        </option>
+
                                     </select>
                                     @error('aset_takberwujud')
                                         <span class="invalid-feedback" role="alert">
@@ -493,7 +522,7 @@
                                     <label>{{ __('Video Pengguna') }}</label>
                                     <input type="text"
                                         class="form-control @error('video_pengguna') is-invalid @enderror"
-                                        name="video_pengguna" value="{{ old('video_pengguna') }}" required
+                                        name="video_pengguna" value="{{ old('video_pengguna') }}"
                                         autocomplete="video_pengguna" placeholder="{{ __('Video Pengguna') }}">
                                     <small id="video_pengguna" class="form-text text-muted">
                                         Sertakan Link Video disini jika ada
@@ -518,4 +547,29 @@
 
 @push('scripts')
     <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+
+    {{-- <script>
+        $('document').ready(function() {
+            $("#status").change(function() {
+                var data = $(this).val();
+                if (data == 1) {
+                    $('#alasan_nonaktif').hide();
+                } else {
+                    $('#alasan_nonaktif').show();
+                }
+            });
+        });
+    </script> --}}
+
+    <script>
+        $(document).ready(function() {
+            $('#status').change(function() {
+                if ($(this).val() === '0') {
+                    $('#alasan_nonaktif').show();
+                } else {
+                    $('#alasan_nonaktif').hide();
+                }
+            });
+        });
+    </script>
 @endpush
