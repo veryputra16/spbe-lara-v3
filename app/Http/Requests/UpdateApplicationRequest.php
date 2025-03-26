@@ -11,7 +11,7 @@ class UpdateApplicationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -43,10 +43,10 @@ class UpdateApplicationRequest extends FormRequest
             'frameworkapp_id' => ['required'],
             'dasar_hukum' => ['nullable', 'file', 'mimes:pdf', 'max:100000'],
             'nda' => ['nullable', 'file', 'mimes:pdf', 'max:100000'],
-            'sop' => ['required', 'file', 'mimes:pdf', 'max:100000'],
+            'sop' => ['sometimes', 'file', 'mimes:pdf', 'max:100000'],
             'kak' => ['nullable', 'file', 'mimes:pdf', 'max:100000'],
-            'capture_frontend' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:10000'],
-            'capture_backend' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:10000'],
+            'capture_frontend' => ['sometimes', 'image', 'mimes:jpg,jpeg,png', 'max:10000'],
+            'capture_backend' => ['sometimes', 'image', 'mimes:jpg,jpeg,png', 'max:10000'],
             'buku_manual' => ['nullable', 'file', 'mimes:pdf', 'max:100000'],
             'dokumen_perancangan' => ['nullable', 'file', 'mimes:pdf', 'max:100000'],
             'surat_mohon' => ['nullable', 'file', 'mimes:pdf', 'max:100000'],

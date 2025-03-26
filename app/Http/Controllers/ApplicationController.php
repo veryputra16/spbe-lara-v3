@@ -17,6 +17,7 @@ use App\Models\Layananapp;
 use App\Models\Opd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
 {
@@ -83,7 +84,7 @@ class ApplicationController extends Controller
                 $capturefrontendPath = $request->file('capture_frontend')->store('capture-frontends', 'public');
                 $validated['capture_frontend'] = $capturefrontendPath;
             }
-            if ($request->hasFile('buku_manual')) {
+            if ($request->hasFile('capture_backend')) {
                 $capturebackendPath = $request->file('capture_backend')->store('capture-backends', 'public');
                 $validated['capture_backend'] = $capturebackendPath;
             }
@@ -127,7 +128,19 @@ class ApplicationController extends Controller
      */
     public function edit(Application $application)
     {
-        //
+        $katapps = Katapp::all();
+        $katpenggunas = Katpengguna::all();
+        $katplatforms = Katplatform::all();
+        $katdbs = Katdb::all();
+        $katservers = Katserver::all();
+        $bahasaprograms = Bahasaprogram::all();
+        $frameworkapps = Frameworkapp::all();
+        $layananapps = Layananapp::all();
+        $opds = Opd::all();
+
+        return view('aplikasi.aplikasi-edit', compact('application', 'katapps', 'katpenggunas', 'katplatforms', 'katdbs', 'katservers', 'bahasaprograms', 'frameworkapps', 'layananapps', 'opds'), [
+            'title' => 'Data Aplikasi'
+        ]);
     }
 
     /**
@@ -135,7 +148,80 @@ class ApplicationController extends Controller
      */
     public function update(UpdateApplicationRequest $request, Application $application)
     {
-        //
+        DB::transaction(function () use ($request, $application) {
+            $validated = $request->validated();
+
+            if ($request->hasFile('dasar_hukum')) {
+                Storage::disk('public')->delete($application->dasar_hukum);
+
+                $dasar_hukumPath = $request->file('dasar_hukum')->store('dasar-hukums', 'public');
+                $validated['dasar_hukum'] = $dasar_hukumPath;
+            }
+            if ($request->hasFile('nda')) {
+                Storage::disk('public')->delete($application->nda);
+
+                $ndaPath = $request->file('nda')->store('ndas', 'public');
+                $validated['nda'] = $ndaPath;
+            }
+            if ($request->hasFile('sop')) {
+                Storage::disk('public')->delete($application->sop);
+
+                $sopPath = $request->file('sop')->store('sops', 'public');
+                $validated['sop'] = $sopPath;
+            }
+            if ($request->hasFile('kak')) {
+                Storage::disk('public')->delete($application->kak);
+
+                $kakPath = $request->file('kak')->store('kaks', 'public');
+                $validated['kak'] = $kakPath;
+            }
+            if ($request->hasFile('capture_frontend')) {
+                Storage::disk('public')->delete($application->capture_frontend);
+
+                $capturefrontendPath = $request->file('capture_frontend')->store('capture-frontends', 'public');
+                $validated['capture_frontend'] = $capturefrontendPath;
+            }
+            if ($request->hasFile('capture_backend')) {
+                Storage::disk('public')->delete($application->capture_backend);
+
+                $capturebackendPath = $request->file('capture_backend')->store('capture-backends', 'public');
+                $validated['capture_backend'] = $capturebackendPath;
+            }
+            if ($request->hasFile('buku_manual')) {
+                Storage::disk('public')->delete($application->buku_manual);
+
+                $buku_manualPath = $request->file('buku_manual')->store('buku-manuals', 'public');
+                $validated['buku_manual'] = $buku_manualPath;
+            }
+            if ($request->hasFile('dokumen_perancangan')) {
+                Storage::disk('public')->delete($application->dokumen_perancangan);
+
+                $dokumen_perancanganPath = $request->file('dokumen_perancangan')->store('dokumen-perancangans', 'public');
+                $validated['dokumen_perancangan'] = $dokumen_perancanganPath;
+            }
+            if ($request->hasFile('surat_mohon')) {
+                Storage::disk('public')->delete($application->surat_mohon);
+
+                $surat_mohonPath = $request->file('surat_mohon')->store('surat-mohons', 'public');
+                $validated['surat_mohon'] = $surat_mohonPath;
+            }
+            if ($request->hasFile('implemen_app')) {
+                Storage::disk('public')->delete($application->implemen_app);
+
+                $implemen_appPath = $request->file('implemen_app')->store('implemen-apps', 'public');
+                $validated['implemen_app'] = $implemen_appPath;
+            }
+            if ($request->hasFile('lapor_pentest')) {
+                Storage::disk('public')->delete($application->lapor_pentest);
+
+                $lapor_pentestPath = $request->file('lapor_pentest')->store('lapor-pentests', 'public');
+                $validated['lapor_pentest'] = $lapor_pentestPath;
+            }
+
+            $application->update($validated);
+        });
+
+        return redirect()->route('admin.application.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**

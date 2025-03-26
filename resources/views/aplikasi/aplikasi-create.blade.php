@@ -2,10 +2,6 @@
 
 @section('title', $title)
 
-@push('css')
-    <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
-@endpush
-
 @section('content')
     <section class="section">
         <div class="section-header">
@@ -510,7 +506,6 @@
                                             Tidak</option>
                                         <option value="1" {{ old('aset_takberwujud') == '1' ? 'selected' : '' }}>Ya
                                         </option>
-
                                     </select>
                                     @error('aset_takberwujud')
                                         <span class="invalid-feedback" role="alert">
@@ -533,11 +528,12 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="card-footer text-left">
-                                    <a href="{{ route('admin.application.index') }}""
-                                        class="btn btn-dark">{{ __('Back') }}</a>
-                                    <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
-                                </div>
+                            </div>
+                            <div class="card-footer text-left">
+                                <a href="{{ route('admin.application.index') }}""
+                                    class="btn btn-dark">{{ __('Back') }}</a>
+                                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -545,21 +541,12 @@
     </section>
 @endsection
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+@endpush
+
 @push('scripts')
     <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
-
-    {{-- <script>
-        $('document').ready(function() {
-            $("#status").change(function() {
-                var data = $(this).val();
-                if (data == 1) {
-                    $('#alasan_nonaktif').hide();
-                } else {
-                    $('#alasan_nonaktif').show();
-                }
-            });
-        });
-    </script> --}}
 
     <script>
         $(document).ready(function() {
