@@ -24,7 +24,7 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3"><i
+                            <a href="{{ route('admin.role.create') }}" class="btn btn-primary mb-3"><i
                                     class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
@@ -32,25 +32,18 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Action</th>
-                                            <th>Nama Aplikasi</th>
-                                            <th>OPD/Perumda/Kelurahan/Desa</th>
-                                            <th>Tahun Pembuatan</th>
-                                            <th>Status</th>
+                                            <th>Name Role</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($applications as $application)
+                                        @foreach ($roles as $role)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.application.show', $application->id) }}"
-                                                        class="btn btn-secondary btn-sm" title="Detail"><i
-                                                            class="fas fa-info-circle"></i></a>
-                                                    <a href="{{ route('admin.application.edit', $application->id) }}"
+                                                    <a href="{{ route('admin.role.edit', $role->id) }}"
                                                         class="btn btn-light btn-sm" title="Edit"><i
                                                             class="fas fa-edit"></i></a>
-                                                    <form
-                                                        action="{{ route('admin.application.destroy', $application->id) }}"
+                                                    <form action="{{ route('admin.role.destroy', $role->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
@@ -58,16 +51,8 @@
                                                             title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
-                                                <td>{{ $application->nama_app }}</td>
-                                                <td>{{ $application->opd->nama }}</td>
-                                                <td>{{ $application->tahun_buat }}</td>
-                                                <td>
-                                                    @if ($application->status == 1)
-                                                        <span class="badge badge-success">Aktif</span>
-                                                    @else
-                                                        <span class="badge badge-danger">Tidak Aktif</span>
-                                                    @endif
-                                                </td>
+                                                <td>{{ $role->name }}</td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>

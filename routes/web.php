@@ -15,6 +15,7 @@ use App\Http\Controllers\LayananappController;
 use App\Http\Controllers\OpdController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubdomainController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
         // Settings
         Route::resource('opd', OpdController::class);
         Route::resource('user', UserController::class);
+        Route::resource('role', RoleController::class);
     });
 
     Route::prefix('masterapp')->name('masterapp.')->group(function () {

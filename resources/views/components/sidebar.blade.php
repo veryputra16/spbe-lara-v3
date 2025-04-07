@@ -71,6 +71,10 @@
                     <a class="nav-link" href="{{ route('admin.user.index') }}"><i
                             class="fas fa-users"></i><span>Users</span></a>
                 </li>
+                <li class="{{ Request::is('admin/role*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.role.index') }}"><i
+                            class="fas fa-user-cog"></i><span>Roles</span></a>
+                </li>
 
                 @if (Auth::user()->role == 'superadmin')
                     <li class="menu-header">Hak Akses</li>
