@@ -24,7 +24,7 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3"><i
+                            <a href="{{ route('admin.monevapp.create', $application->id) }}" class="btn btn-primary mb-3"><i
                                     class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
@@ -32,28 +32,29 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Action</th>
-                                            <th>Nama Aplikasi</th>
-                                            <th>OPD/Perumda/Kelurahan/Desa</th>
-                                            <th>Tahun Pembuatan</th>
-                                            <th>Status</th>
+                                            <th>Aplikasi</th>
+                                            <th>Tanggal Monev</th>
+                                            <th>Bukti Monev</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($applications as $application)
+                                        @foreach ($monevapps as $monevapp)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.monevapp.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="Monev Aplikasi"><i
-                                                            class="fas fa-file-alt"></i></a>
-                                                    <a href="{{ route('admin.application.show', $application->id) }}"
+                                                    {{-- <a href="{{ route('admin.monevapp.show', ['application' => $application->id, 'monevapp' => $monevapp->id]) }}"
                                                         class="btn btn-dark btn-sm" title="Detail"><i
-                                                            class="fas fa-info-circle"></i></a>
-                                                    <a href="{{ route('admin.application.edit', $application->id) }}"
+                                                            class="fas fa-info-circle"></i></a> --}}
+                                                    <button type="button" class="btn btn-dark btn-sm monevappClass"
+                                                        data-toggle="modal" data-target="#monevappModal"
+                                                        data-id="{{ $monevapp->id }}" title="Detail">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </button>
+                                                    <a href="{{ route('admin.monevapp.edit', ['application' => $application->id, 'monevapp' => $monevapp->id]) }}"
                                                         class="btn btn-light btn-sm" title="Edit"><i
                                                             class="fas fa-edit"></i></a>
                                                     <form
-                                                        action="{{ route('admin.application.destroy', $application->id) }}"
+                                                        action="{{ route('admin.monevapp.destroy', ['application' => $application->id, 'monevapp' => $monevapp->id]) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
@@ -61,14 +62,14 @@
                                                             title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
-                                                <td>{{ $application->nama_app }}</td>
-                                                <td>{{ $application->opd->nama }}</td>
-                                                <td>{{ $application->tahun_buat }}</td>
+                                                <td>{{ $monevapp->app->nama_app }}</td>
+                                                <td>{{ $monevapp->tgl_monev->locale('id')->translatedFormat('d F Y') }}</td>
                                                 <td>
-                                                    @if ($application->status == 1)
-                                                        <span class="badge badge-success">Aktif</span>
+                                                    @if ($monevapp->bukti_monev)
+                                                        <a href="{{ asset(Storage::url($monevapp->bukti_monev)) }}"
+                                                            target="_blank">View Dokumen Bukti Monev</a>
                                                     @else
-                                                        <span class="badge badge-danger">Tidak Aktif</span>
+                                                        {{ '-' }}
                                                     @endif
                                                 </td>
                                             </tr>
@@ -82,6 +83,7 @@
             </div>
         </div>
     </section>
+    @include('monevapp/monevapp-modal')
 @endsection
 
 @push('scripts')
@@ -112,7 +114,26 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $("#myTable").dataTable({
-            "searching": false
+            "searching": true
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '.monevappClass', function() {
+            var id = $(this).data('id');
+
+            $.ajax({
+                url: "{{ URL::to('/masternilai/indikator/json/data') }}",
+                type: 'post',
+                data: {
+                    id: id,
+                    "_token": "{{ csrf_token() }}",
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $('#ket_indikator').html(response.ket_indikator);
+                }
+            });
         });
     </script>
 @endpush

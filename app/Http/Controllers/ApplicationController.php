@@ -65,47 +65,47 @@ class ApplicationController extends Controller
             $validated = $request->validated();
 
             if ($request->hasFile('dasar_hukum')) {
-                $dasar_hukumPath = $request->file('dasar_hukum')->store('dasar-hukums', 'public');
+                $dasar_hukumPath = $request->file('dasar_hukum')->store('aplikasi/dasar-hukums', 'public');
                 $validated['dasar_hukum'] = $dasar_hukumPath;
             }
             if ($request->hasFile('nda')) {
-                $ndaPath = $request->file('nda')->store('ndas', 'public');
+                $ndaPath = $request->file('nda')->store('aplikasi/ndas', 'public');
                 $validated['nda'] = $ndaPath;
             }
             if ($request->hasFile('sop')) {
-                $sopPath = $request->file('sop')->store('sops', 'public');
+                $sopPath = $request->file('sop')->store('aplikasi/sops', 'public');
                 $validated['sop'] = $sopPath;
             }
             if ($request->hasFile('kak')) {
-                $kakPath = $request->file('kak')->store('kaks', 'public');
+                $kakPath = $request->file('kak')->store('aplikasi/kaks', 'public');
                 $validated['kak'] = $kakPath;
             }
             if ($request->hasFile('capture_frontend')) {
-                $capturefrontendPath = $request->file('capture_frontend')->store('capture-frontends', 'public');
+                $capturefrontendPath = $request->file('capture_frontend')->store('aplikasi/capture-frontends', 'public');
                 $validated['capture_frontend'] = $capturefrontendPath;
             }
             if ($request->hasFile('capture_backend')) {
-                $capturebackendPath = $request->file('capture_backend')->store('capture-backends', 'public');
+                $capturebackendPath = $request->file('capture_backend')->store('aplikasi/capture-backends', 'public');
                 $validated['capture_backend'] = $capturebackendPath;
             }
             if ($request->hasFile('buku_manual')) {
-                $buku_manualPath = $request->file('buku_manual')->store('buku-manuals', 'public');
+                $buku_manualPath = $request->file('buku_manual')->store('aplikasi/buku-manuals', 'public');
                 $validated['buku_manual'] = $buku_manualPath;
             }
             if ($request->hasFile('dokumen_perancangan')) {
-                $dokumen_perancanganPath = $request->file('dokumen_perancangan')->store('dokumen-perancangans', 'public');
+                $dokumen_perancanganPath = $request->file('dokumen_perancangan')->store('aplikasi/dokumen-perancangans', 'public');
                 $validated['dokumen_perancangan'] = $dokumen_perancanganPath;
             }
             if ($request->hasFile('surat_mohon')) {
-                $surat_mohonPath = $request->file('surat_mohon')->store('surat-mohons', 'public');
+                $surat_mohonPath = $request->file('surat_mohon')->store('aplikasi/surat-mohons', 'public');
                 $validated['surat_mohon'] = $surat_mohonPath;
             }
             if ($request->hasFile('implemen_app')) {
-                $implemen_appPath = $request->file('implemen_app')->store('implemen-apps', 'public');
+                $implemen_appPath = $request->file('implemen_app')->store('aplikasi/implemen-apps', 'public');
                 $validated['implemen_app'] = $implemen_appPath;
             }
             if ($request->hasFile('lapor_pentest')) {
-                $lapor_pentestPath = $request->file('lapor_pentest')->store('lapor-pentests', 'public');
+                $lapor_pentestPath = $request->file('lapor_pentest')->store('aplikasi/lapor-pentests', 'public');
                 $validated['lapor_pentest'] = $lapor_pentestPath;
             }
 

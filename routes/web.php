@@ -12,6 +12,7 @@ use App\Http\Controllers\KatpenggunaController;
 use App\Http\Controllers\KatplatformController;
 use App\Http\Controllers\KatserverController;
 use App\Http\Controllers\LayananappController;
+use App\Http\Controllers\MonevappController;
 use App\Http\Controllers\OpdController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -42,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
         // aplikasi
         Route::resource('application', ApplicationController::class);
         Route::resource('subdomain', SubdomainController::class);
+        Route::resource('application/{application}/monevapp', MonevappController::class);
 
         // Settings
         Route::resource('opd', OpdController::class);
