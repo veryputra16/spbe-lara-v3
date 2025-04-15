@@ -17,6 +17,7 @@ use App\Http\Controllers\OpdController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SdmTechnicController;
 use App\Http\Controllers\SubdomainController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('application', ApplicationController::class);
         Route::resource('subdomain', SubdomainController::class);
         Route::resource('application/{application}/monevapp', MonevappController::class);
+        Route::resource('application/{application}/sdmteknic', SdmTechnicController::class);
 
         // Settings
         Route::resource('opd', OpdController::class);

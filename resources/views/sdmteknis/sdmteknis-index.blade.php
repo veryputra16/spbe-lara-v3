@@ -24,47 +24,33 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3"><i
-                                    class="fas fa-plus"></i> Add</a>
+                            <a href="{{ route('admin.sdmteknic.create', $application->id) }}"
+                                class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Action</th>
-                                            <th>Nama Aplikasi</th>
-                                            <th>OPD/Perumda/Kelurahan/Desa</th>
-                                            <th>Tahun Pembuatan</th>
-                                            <th>Status</th>
+                                            <th>Aplikasi</th>
+                                            <th>NIP Tenaga Teknis</th>
+                                            <th>Nama Tenaga Teknis</th>
+                                            <th>Jabatan Tenaga Teknis</th>
+                                            <th>No Handphone</th>
+                                            <th>Email Tenaga Teknis</th>
+                                            <th>Status Tenaga Teknis</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($applications as $application)
+                                        @foreach ($sdmteknics as $sdmteknis)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.monevapp.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="Monev Aplikasi"><i
-                                                            class="fas fa-file-alt"></i></a>
-                                                    <a href="{{ route('admin.sdmteknic.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="SDM Teknis"><i
-                                                            class="fas fa-user"></i></a>
-                                                    <button type="button" class="btn btn-dark btn-sm indi"
-                                                        data-toggle="modal" data-target="#applicationModal"
-                                                        data-id="{{ $application->id }}" title="Detail">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-
-                                                    {{-- ini yang dibawah bakal dihapus --}}
-                                                    {{-- <a href="{{ route('admin.application.show', $application->id) }}"
-                                                        class="btn btn-dark btn-sm" title="Detail"><i
-                                                            class="fas fa-info-circle"></i></a> --}}
-
-                                                    <a href="{{ route('admin.application.edit', $application->id) }}"
+                                                    <a href="{{ route('admin.sdmteknic.edit', ['application' => $application->id, 'sdmteknic' => $sdmteknis->id]) }}"
                                                         class="btn btn-light btn-sm" title="Edit"><i
                                                             class="fas fa-edit"></i></a>
                                                     <form
-                                                        action="{{ route('admin.application.destroy', $application->id) }}"
+                                                        action="{{ route('admin.sdmteknic.destroy', ['application' => $application->id, 'sdmteknic' => $sdmteknis->id]) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
@@ -72,15 +58,18 @@
                                                             title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
-                                                <td>{{ $application->nama_app }}</td>
-                                                <td>{{ $application->opd->nama }}</td>
-                                                <td>{{ $application->tahun_buat }}</td>
-                                                <td>
-                                                    @if ($application->status == 1)
-                                                        <span class="badge badge-success">Aktif</span>
-                                                    @else
-                                                        <span class="badge badge-danger">Tidak Aktif</span>
-                                                    @endif
+                                                <td>{{ $sdmteknis->app->nama_app }}</td>
+                                                <td>{{ $sdmteknis->nip_jabatan_tenaga_technic ? $sdmteknis->nip_jabatan_tenaga_technic : '-' }}
+                                                </td>
+                                                <td>{{ $sdmteknis->nama_tenaga_technic }}</td>
+                                                <td>{{ $sdmteknis->jabatan_tenaga_technic ? $sdmteknis->jabatan_tenaga_technic : '-' }}
+                                                </td>
+                                                <td>{{ $sdmteknis->nohp_tenaga_technic ? $sdmteknis->nohp_tenaga_technic : '-' }}
+                                                </td>
+                                                <td>{{ $sdmteknis->email_tenaga_technic ? $sdmteknis->email_tenaga_technic : '-' }}
+                                                </td>
+                                                <td><span
+                                                        class="badge badge-dark">{{ $sdmteknis->status_tenaga_technic ? ucfirst(strtolower($sdmteknis->status_tenaga_technic)) : '-' }}</span>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -93,7 +82,7 @@
             </div>
         </div>
     </section>
-    @include('aplikasi.aplikasi-modal')
+    @include('monevapp/monevapp-modal')
 @endsection
 
 @push('scripts')
@@ -124,7 +113,26 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $("#myTable").dataTable({
-            "searching": false
+            "searching": true
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '.monevappClass', function() {
+            var id = $(this).data('id');
+
+            $.ajax({
+                url: "{{ URL::to('/masternilai/indikator/json/data') }}",
+                type: 'post',
+                data: {
+                    id: id,
+                    "_token": "{{ csrf_token() }}",
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $('#ket_indikator').html(response.ket_indikator);
+                }
+            });
         });
     </script>
 @endpush
