@@ -49,6 +49,9 @@
                                                     <a href="{{ route('admin.sdmteknic.index', $application->id) }}"
                                                         class="btn btn-primary btn-sm" title="SDM Teknis"><i
                                                             class="fas fa-user"></i></a>
+                                                    <a href="{{ route('admin.sdmpengembang.index', $application->id) }}"
+                                                        class="btn btn-primary btn-sm" title="Vendor"><i
+                                                            class="fas fa-user"></i></a>
                                                     <button type="button" class="btn btn-dark btn-sm indi"
                                                         data-toggle="modal" data-target="#applicationModal"
                                                         data-id="{{ $application->id }}" title="Detail">

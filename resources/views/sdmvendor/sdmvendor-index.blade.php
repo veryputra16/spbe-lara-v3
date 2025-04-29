@@ -24,7 +24,7 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('admin.sdmteknic.create', $application->id) }}"
+                            <a href="{{ route('admin.sdmpengembang.create', $application->id) }}"
                                 class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
@@ -33,24 +33,23 @@
                                             <th>#</th>
                                             <th>Action</th>
                                             <th>Aplikasi</th>
-                                            <th>NIP Tenaga Teknis</th>
-                                            <th>Nama Tenaga Teknis</th>
-                                            <th>Jabatan Tenaga Teknis</th>
+                                            <th>Nama Vendor</th>
+                                            <th>Alamat Vendor</th>
                                             <th>No Handphone</th>
-                                            <th>Email Tenaga Teknis</th>
-                                            <th>Status Tenaga Teknis</th>
+                                            <th>No Kantor</th>
+                                            <th>Email Vendor</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($sdmteknics as $sdmteknis)
+                                        @foreach ($sdmpengembangs as $sdmpengembang)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.sdmteknic.edit', ['application' => $application->id, 'sdmteknic' => $sdmteknis->id]) }}"
+                                                    <a href="{{ route('admin.sdmpengembang.edit', ['application' => $application->id, 'sdmpengembang' => $sdmpengembang->id]) }}"
                                                         class="btn btn-light btn-sm" title="Edit"><i
                                                             class="fas fa-edit"></i></a>
                                                     <form
-                                                        action="{{ route('admin.sdmteknic.destroy', ['application' => $application->id, 'sdmteknic' => $sdmteknis->id]) }}"
+                                                        action="{{ route('admin.sdmpengembang.destroy', ['application' => $application->id, 'sdmpengembang' => $sdmpengembang->id]) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
@@ -58,18 +57,13 @@
                                                             title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
-                                                <td>{{ $sdmteknis->app->nama_app }}</td>
-                                                <td>{{ $sdmteknis->nip_jabatan_tenaga_technic ? $sdmteknis->nip_jabatan_tenaga_technic : '-' }}
+                                                <td>{{ $sdmpengembang->app->nama_app }}</td>
+                                                <td>{{ $sdmpengembang->nama_pengembang }}</td>
+                                                <td>{{ $sdmpengembang->alamat_pengembang ? $sdmpengembang->alamat_pengembang : '-' }}
+                                                <td>{{ $sdmpengembang->nohp_pengembang }}</td>
+                                                <td>{{ $sdmpengembang->nokantor_pengembang ? $sdmpengembang->nokantor_pengembang : '-' }}
                                                 </td>
-                                                <td>{{ $sdmteknis->nama_tenaga_technic }}</td>
-                                                <td>{{ $sdmteknis->jabatan_tenaga_technic ? $sdmteknis->jabatan_tenaga_technic : '-' }}
-                                                </td>
-                                                <td>{{ $sdmteknis->nohp_tenaga_technic ? $sdmteknis->nohp_tenaga_technic : '-' }}
-                                                </td>
-                                                <td>{{ $sdmteknis->email_tenaga_technic ? $sdmteknis->email_tenaga_technic : '-' }}
-                                                </td>
-                                                <td><span
-                                                        class="badge badge-dark">{{ $sdmteknis->status_tenaga_technic ? ucfirst(strtolower($sdmteknis->status_tenaga_technic)) : '-' }}</span>
+                                                <td>{{ $sdmpengembang->email_pengembang ? $sdmpengembang->email_pengembang : '-' }}
                                                 </td>
                                             </tr>
                                         @endforeach
