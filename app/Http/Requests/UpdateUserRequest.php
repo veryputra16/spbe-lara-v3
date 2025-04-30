@@ -28,7 +28,6 @@ class UpdateUserRequest extends FormRequest
             'password' => ['sometimes', 'required_with:confirm_password', 'same:confirm_password', 'max:255'],
             'confirm_password' => ['sometimes', 'max:255'],
             'role' => ['required', 'string', 'max:255'],
-            'status' => ['required'],
         ];
     }
 }
