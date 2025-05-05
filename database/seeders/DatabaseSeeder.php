@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             KatdbSeeder::class,
             BahasaprogramSeeder::class,
             RolePermissionSeeder::class,
+            FaqSeeder::class,
         ]);
 
         Application::factory(10)->create();

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Faq;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreFaqRequest;
+use App\Http\Requests\UpdateFaqRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FaqController extends Controller
 {
@@ -13,7 +16,11 @@ class FaqController extends Controller
      */
     public function index()
     {
-        //
+        $faqs = Faq::all();
+
+        return view('faq.faq-index', compact('faqs'), [
+            'title' => 'FAQ'
+        ]);
     }
 
     /**
@@ -21,15 +28,23 @@ class FaqController extends Controller
      */
     public function create()
     {
-        //
+        return view('faq.faq-create', [
+            'title' => 'FAQ'
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFaqRequest $request)
     {
-        //
+        DB::transaction(function () use ($request) {
+            $validated = $request->validated();
+
+            $newFaq = Faq::create($validated);
+        });
+
+        return redirect()->route('admin.faq.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -45,15 +60,23 @@ class FaqController extends Controller
      */
     public function edit(Faq $faq)
     {
-        //
+        return view('faq.faq-edit', compact('faq'), [
+            'title' => 'FAQ'
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Faq $faq)
+    public function update(UpdateFaqRequest $request, Faq $faq)
     {
-        //
+        DB::transaction(function () use ($request, $faq) {
+            $validated = $request->validated();
+
+            $faq->update($validated);
+        });
+
+        return redirect()->route('admin.faq.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -61,6 +84,10 @@ class FaqController extends Controller
      */
     public function destroy(Faq $faq)
     {
-        //
+        DB::transaction(function () use ($faq) {
+            $faq->delete();
+        });
+
+        return redirect()->route('admin.faq.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

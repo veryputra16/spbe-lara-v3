@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->text('ket_interop')->nullable();
+            $table->string('caption');
+            $table->text('desc');
             $table->softDeletes();
             $table->timestamps();
         });

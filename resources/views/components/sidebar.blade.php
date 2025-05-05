@@ -61,6 +61,12 @@
                     </ul>
                 </li>
 
+                <li class="menu-header">Add On</li>
+                <li class="{{ Request::is('admin/faq*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.faq.index') }}"><i
+                            class="fas fa-info-circle"></i><span>FAQ</span></a>
+                </li>
+
                 <li class="menu-header">Settings</li>
                 <li class="{{ Request::is('admin/opd*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.opd.index') }}"><i

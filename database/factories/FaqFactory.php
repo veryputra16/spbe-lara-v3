@@ -17,7 +17,8 @@ class FaqFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'caption' => $this->faker->sentence(),
+            'desc' => $this->faker->paragraph(),
         ];
     }
 }
