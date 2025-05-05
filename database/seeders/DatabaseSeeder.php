@@ -7,7 +7,6 @@ use App\Models\Frameworkapp;
 use App\Models\Katserver;
 use App\Models\Opd;
 use App\Models\Subdomain;
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -33,6 +32,7 @@ class DatabaseSeeder extends Seeder
             BahasaprogramSeeder::class,
             RolePermissionSeeder::class,
             FaqSeeder::class,
+            ChangelogSeeder::class,
         ]);
 
         Application::factory(10)->create();

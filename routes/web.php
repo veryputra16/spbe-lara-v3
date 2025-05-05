@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BahasaprogramController;
+use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FrameworkappController;
@@ -52,8 +53,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('application/{application}/sdmpengembang', SdmpengembangController::class);
         Route::resource('application/{application}/interop', InteropController::class);
 
-        // faq
+        // helper
         Route::resource('faq', FaqController::class);
+        Route::resource('changelog', ChangelogController::class);
 
         // Settings
         Route::resource('opd', OpdController::class);

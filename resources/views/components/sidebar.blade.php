@@ -66,6 +66,10 @@
                     <a class="nav-link" href="{{ route('admin.faq.index') }}"><i
                             class="fas fa-info-circle"></i><span>FAQ</span></a>
                 </li>
+                <li class="{{ Request::is('admin/changelog*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.changelog.index') }}"><i
+                            class="fas fa-history"></i><span>Change Log</span></a>
+                </li>
 
                 <li class="menu-header">Settings</li>
                 <li class="{{ Request::is('admin/opd*') ? 'active' : '' }}">
