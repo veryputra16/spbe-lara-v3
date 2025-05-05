@@ -39,7 +39,7 @@
                                         <form action="{{ route('hakakses.index') }}" method="GET">
                                             <div class="input-group">
                                                 <input type="text" name="search" class="form-control"
-                                                    placeholder="Cari Berdasarkan ID...">
+                                                    placeholder="Cari Berdasarkan Nama...">
                                                 <div class="input-group-append">
                                                     <button class="btn btn-primary" style="margin-left:5px;"
                                                         type="submit">Search</button>
@@ -52,8 +52,9 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Username</th>
                                             <th>Nama</th>
-                                            <th>Email</th>
+                                            {{-- <th>Email</th> --}}
                                             <th>Role</th>
                                             <th>Action</th>
                                         </tr>
@@ -62,8 +63,9 @@
                                         @foreach ($hakakses as $item)
                                             <tr>
                                                 <td>{{ $item->id }}</td>
+                                                <td>{{ $item->username }}</td>
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->email }}</td>
+                                                {{-- <td>{{ $item->email }}</td> --}}
                                                 <td>{{ $item->role }}</td>
 
                                                 <td>

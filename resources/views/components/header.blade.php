@@ -8,6 +8,15 @@
 
         <!-- Right Side Navbar Items -->
         <ul class="navbar-nav ml-auto">
+            <li class="dropdown dropdown-list-toggle">
+                <a href="#" class="nav-link notification-toggle nav-link-lg beep" title="Change Log">
+                    <i class="fas fa-history"></i>
+                </a>
+            </li>
+            <li class="dropdown dropdown-list-toggle">
+                <a href="#" class="nav-link notification-toggle nav-link-lg" title="FAQ">
+                    <i class="fas fa-question-circle"></i></a>
+            </li>
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                     <img alt="image" src="{{ asset('img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">

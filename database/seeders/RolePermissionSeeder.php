@@ -24,29 +24,45 @@ class RolePermissionSeeder extends Seeder
         $adminapp = Role::create([
             'name' => 'admin-aplikasi'
         ]);
-        $opspbe = Role::create([
-            'name' => 'operator-spbe'
-        ]);
         $opapp = Role::create([
             'name' => 'operator-aplikasi'
+        ]);
+        $opspbe = Role::create([
+            'name' => 'operator-spbe'
         ]);
         $ekse = Role::create([
             'name' => 'eksekutif' // fitur evaluasi SPBE
         ]);
         $ekseplus = Role::create([
-            'name' => 'eksekutif-plus' // fitur penilaian SPBE dan data aplikasi , portal cms
+            'name' => 'eksekutif-plus' // fitur penilaian SPBE dan data aplikasi , portal cms dll
         ]);
         $guest = Role::create([
             'name' => 'viewer'
         ]);
 
-        // membuat user default
+        // membuat user superadmin default
         $userSuperadmin = User::create([
             'name' => 'Kota Denpasar',
-            'username' => 'superadmin',
+            'username' => 'matadewa',
             'password' => bcrypt('123456789'),
+            'role' => 'superadmin',
         ]);
-
         $userSuperadmin->assignRole($superadmin);
+
+        // membuat user admin aplikasi default
+        $userAdminApps = User::create([
+            'name' => 'Admin Aplikasi',
+            'username' => 'adminapps',
+            'password' => bcrypt('kominfo2021'),
+        ]);
+        $userAdminApps->assignRole($adminapp);
+
+        // membuat user admin spbe default
+        $userAdminSPBE = User::create([
+            'name' => 'Admin SPBE',
+            'username' => 'adminspbe',
+            'password' => bcrypt('kominfo2021'),
+        ]);
+        $userAdminSPBE->assignRole($adminspbe);
     }
 }

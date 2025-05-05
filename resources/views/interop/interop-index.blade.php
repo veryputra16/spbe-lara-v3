@@ -24,7 +24,7 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3"><i
+                            <a href="{{ route('admin.interop.create', $application->id) }}" class="btn btn-primary mb-3"><i
                                     class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
@@ -32,42 +32,21 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Action</th>
-                                            <th>Nama Aplikasi</th>
-                                            <th>OPD/Perumda/Kelurahan/Desa</th>
-                                            <th>Tahun Pembuatan</th>
-                                            <th>Status</th>
+                                            <th>Aplikasi</th>
+                                            <th>Dokumen Integrasi</th>
+                                            <th>Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($applications as $application)
+                                        @foreach ($interops as $interop)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    {{-- button sementara --}}
-                                                    <a href="{{ route('admin.monevapp.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="Monev Aplikasi"><i
-                                                            class="fas fa-file-alt"></i></a>
-                                                    <a href="{{ route('admin.sdmteknic.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="SDM Teknis"><i
-                                                            class="fas fa-hard-hat"></i></a>
-                                                    <a href="{{ route('admin.sdmpengembang.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="Vendor"><i
-                                                            class="fas fa-handshake"></i></a>
-                                                    <a href="{{ route('admin.interop.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="Interopability"><i
-                                                            class="fas fa-puzzle-piece"></i></a>
-                                                    {{-- end button sementara --}}
-
-                                                    <button type="button" class="btn btn-dark btn-sm indi"
-                                                        data-toggle="modal" data-target="#applicationModal"
-                                                        data-id="{{ $application->id }}" title="Detail">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <a href="{{ route('admin.application.edit', $application->id) }}"
+                                                    <a href="{{ route('admin.interop.edit', ['application' => $application->id, 'interop' => $interop->id]) }}"
                                                         class="btn btn-light btn-sm" title="Edit"><i
                                                             class="fas fa-edit"></i></a>
                                                     <form
-                                                        action="{{ route('admin.application.destroy', $application->id) }}"
+                                                        action="{{ route('admin.interop.destroy', ['application' => $application->id, 'interop' => $interop->id]) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
@@ -75,16 +54,11 @@
                                                             title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
-                                                <td>{{ $application->nama_app }}</td>
-                                                <td>{{ $application->opd->nama }}</td>
-                                                <td>{{ $application->tahun_buat }}</td>
-                                                <td>
-                                                    @if ($application->status == 1)
-                                                        <span class="badge badge-success">Aktif</span>
-                                                    @else
-                                                        <span class="badge badge-danger">Tidak Aktif</span>
-                                                    @endif
-                                                </td>
+                                                <td>{{ $interop->app->nama_app }}</td>
+                                                <td><a href="{{ Storage::url($interop->doc_interop) }}"
+                                                        target="_blank">Dokumen
+                                                        Integrasi</a></td>
+                                                <td>{{ $interop->ket_interop }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -96,7 +70,6 @@
             </div>
         </div>
     </section>
-    @include('aplikasi.aplikasi-modal')
 @endsection
 
 @push('scripts')
@@ -127,7 +100,7 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $("#myTable").dataTable({
-            "searching": false
+            "searching": true
         });
     </script>
 @endpush

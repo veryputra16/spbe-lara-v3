@@ -34,6 +34,6 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
         ]);
 
-        Application::factory(1)->create();
+        Application::factory(10)->create();
     }
 }
