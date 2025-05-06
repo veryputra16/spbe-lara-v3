@@ -9,12 +9,12 @@
         <!-- Right Side Navbar Items -->
         <ul class="navbar-nav ml-auto">
             <li class="dropdown dropdown-list-toggle">
-                <a href="#" class="nav-link notification-toggle nav-link-lg beep" title="Change Log">
+                <a href="{{ route('helper.helper.changelog') }}" class="nav-link nav-link-lg beep" title="Change Log">
                     <i class="fas fa-history"></i>
                 </a>
             </li>
             <li class="dropdown dropdown-list-toggle">
-                <a href="#" class="nav-link notification-toggle nav-link-lg" title="FAQ">
+                <a href="{{ route('helper.helper.faq') }}" class="nav-link nav-link-lg" title="FAQ">
                     <i class="fas fa-question-circle"></i></a>
             </li>
             <li class="dropdown">

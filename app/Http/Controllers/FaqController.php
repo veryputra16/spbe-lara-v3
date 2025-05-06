@@ -90,4 +90,13 @@ class FaqController extends Controller
 
         return redirect()->route('admin.faq.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
+
+    public function faqHelper()
+    {
+        $faqs = Faq::all();
+
+        return view('faq.faq-helper', compact('faqs'), [
+            'title' => 'Pertanyaan yang Sering Diajukan'
+        ]);
+    }
 }

@@ -45,7 +45,7 @@ class RolePermissionSeeder extends Seeder
             'name' => 'Kota Denpasar',
             'username' => 'matadewa',
             'password' => bcrypt('123456789'),
-            'role' => 'superadmin',
+            // 'role' => 'superadmin',
         ]);
         $userSuperadmin->assignRole($superadmin);
 

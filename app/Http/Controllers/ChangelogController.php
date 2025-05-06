@@ -90,4 +90,13 @@ class ChangelogController extends Controller
 
         return redirect()->route('admin.changelog.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
+
+    public function changeLogHelper()
+    {
+        $changelogs = Changelog::all();
+
+        return view('changelog.changelog-helper', compact('changelogs'), [
+            'title' => 'Changelog'
+        ]);
+    }
 }

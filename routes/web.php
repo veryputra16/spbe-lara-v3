@@ -75,6 +75,12 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('layananapp', LayananappController::class);
     });
 
+    Route::prefix('helper')->name('helper.')->group(function () {
+        // FAQ
+        Route::get('faq', [FaqController::class, 'faqHelper'])->name('helper.faq');
+        Route::get('changelog', [ChangelogController::class, 'changeLogHelper'])->name('helper.changelog');
+    });
+
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
