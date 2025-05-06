@@ -79,12 +79,18 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 col-12">
+                                <div class="form-group col-md-3 col-12">
                                     <label>{{ __('Role') }}</label>
-                                    <input type="text" class="form-control @error('role') is-invalid @enderror"
-                                        name="role" value="{{ old('role') }}" required autocomplete="role"
-                                        placeholder="{{ __('Role') }}">
-                                    @error('role')
+                                    <select class="form-control select2 @error('role_id') is-invalid @enderror"
+                                        name="role_id" required autocomplete="role_id">
+                                        <option value="">-</option>
+                                        @forelse ($roles as $role)
+                                            <option value="{{ $role['name'] }}">{{ $role['name'] }}</option>
+                                        @empty
+                                            <option value="">Tidak Ada Data</option>
+                                        @endforelse
+                                    </select>
+                                    @error('role_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

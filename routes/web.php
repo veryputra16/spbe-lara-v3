@@ -40,18 +40,26 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         // dashbaord
-        Route::get('aplikasi', [DashboardController::class, 'aplikasi'])->name('aplikasi')->middleware('role:superadmin|admin-aplikasi');
-        Route::get('spbe', [DashboardController::class, 'spbe'])->name('spbe')->middleware('role:superadmin|admin-spbe');
+        Route::get('aplikasi', [DashboardController::class, 'aplikasi'])->name('aplikasi')
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::get('spbe', [DashboardController::class, 'spbe'])->name('spbe')
+            ->middleware('role:superadmin|admin-spbe');
     });
 
     Route::prefix('admin')->name('admin.')->group(function () {
         // aplikasi
-        Route::resource('application', ApplicationController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('subdomain', SubdomainController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('application/{application}/monevapp', MonevappController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('application/{application}/sdmteknic', SdmTechnicController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('application/{application}/sdmpengembang', SdmpengembangController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('application/{application}/interop', InteropController::class)->middleware('role:superadmin|admin-aplikasi');
+        Route::resource('application', ApplicationController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('subdomain', SubdomainController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('application/{application}/monevapp', MonevappController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('application/{application}/sdmteknic', SdmTechnicController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('application/{application}/sdmpengembang', SdmpengembangController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('application/{application}/interop', InteropController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
 
         // helper
         Route::resource('faq', FaqController::class)->middleware('role:superadmin');
@@ -65,14 +73,22 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('masterapp')->name('masterapp.')->group(function () {
         // master aplikasi
-        Route::resource('katapp', KatappController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('katdb', KatdbController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('katserver', KatserverController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('katplatform', KatplatformController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('katpengguna', KatpenggunaController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('bahasaprogram', BahasaprogramController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('frameworkapp', FrameworkappController::class)->middleware('role:superadmin|admin-aplikasi');
-        Route::resource('layananapp', LayananappController::class)->middleware('role:superadmin|admin-aplikasi');
+        Route::resource('katapp', KatappController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('katdb', KatdbController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('katserver', KatserverController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('katplatform', KatplatformController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('katpengguna', KatpenggunaController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('bahasaprogram', BahasaprogramController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('frameworkapp', FrameworkappController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('layananapp', LayananappController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
     });
 
     Route::prefix('helper')->name('helper.')->group(function () {

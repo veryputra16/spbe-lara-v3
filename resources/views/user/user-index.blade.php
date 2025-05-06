@@ -57,7 +57,16 @@
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->username }}</td>
                                                 <td>{{ 'OPD/Perumda/Kelurahan/Desa' }}</td>
-                                                <td>{{ $user->role }}</td>
+                                                {{-- <td>{{ $user->role }}</td> --}}
+                                                <td>
+                                                    @if ($user->roles->isNotEmpty())
+                                                        @foreach ($user->getRoleNames() as $role)
+                                                            {{ $role }}
+                                                        @endforeach
+                                                    @else
+                                                        {{ '-' }}
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

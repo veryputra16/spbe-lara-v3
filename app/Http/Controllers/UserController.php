@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -16,7 +17,19 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        if (auth()->user()->hasRole('admin-aplikasi')) {
+            $users = User::whereHas('roles', function ($query) {
+                $query->where('name', 'like', '%aplikasi%')
+                    ->where('name', 'not like', '%admin%');
+            })->with('roles')->get();
+        } else if (auth()->user()->hasRole('admin-spbe')) {
+            $users = User::whereHas('roles', function ($query) {
+                $query->where('name', 'like', '%spbe%')
+                    ->where('name', 'not like', '%admin%');
+            })->with('roles')->get();
+        } else {
+            $users = User::with('roles')->get();
+        }
 
         return view('user.user-index', compact('users'), [
             'title' => 'Data User'
@@ -28,7 +41,19 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.user-create', [
+        if (auth()->user()->hasRole('admin-aplikasi')) {
+            $roles = Role::where('name', 'like', '%aplikasi%')
+                ->where('name', 'not like', '%admin%')
+                ->get();
+        } else if (auth()->user()->hasRole('admin-spbe')) {
+            $roles = Role::where('name', 'like', '%spbe%')
+                ->where('name', 'not like', '%admin%')
+                ->get();
+        } else {
+            $roles = Role::all();
+        }
+
+        return view('user.user-create', compact('roles'), [
             'title' => 'Data User'
         ]);
     }
@@ -44,6 +69,8 @@ class UserController extends Controller
             $validated['password'] = bcrypt($validated['password']);
 
             $newUser = User::create($validated);
+
+            $newUser->assignRole($request->role_id);
         });
 
         return redirect()->route('admin.user.index')->with('success', 'Data telah tersimpan dengan sukses!');
@@ -62,7 +89,19 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('user.user-edit', compact('user'), [
+        if (auth()->user()->hasRole('admin-aplikasi')) {
+            $roles = Role::where('name', 'like', '%aplikasi%')
+                ->where('name', 'not like', '%admin%')
+                ->get();
+        } else if (auth()->user()->hasRole('admin-spbe')) {
+            $roles = Role::where('name', 'like', '%spbe%')
+                ->where('name', 'not like', '%admin%')
+                ->get();
+        } else {
+            $roles = Role::all();
+        }
+
+        return view('user.user-edit', compact('user', 'roles'), [
             'title' => 'Data User'
         ]);
     }
@@ -72,12 +111,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        // dd($request);
         DB::transaction(function () use ($request, $user) {
             $validated = $request->validated();
 
             $validated['password'] = bcrypt($validated['password']);
 
             $user->update($validated);
+
+            $user->syncRoles([$request->role_id]);
         });
 
         return redirect()->route('admin.user.index')->with('success', 'Perubahan data telah berhasil dilakukan.');

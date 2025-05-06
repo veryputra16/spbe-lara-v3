@@ -13,18 +13,19 @@
                 @endrole
                 @role('superadmin|admin-aplikasi')
                     <li class="{{ Request::is('dashboard/aplikasi') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('dashboard.aplikasi') }}"><i class="fas fa-fire"></i><span>Dashboard
+                        <a class="nav-link" href="{{ route('dashboard.aplikasi') }}"><i
+                                class="fas fa-tachometer-alt"></i><span>Dashboard
                                 Aplikasi</span></a>
                     </li>
                 @endrole
                 @role('superadmin|admin-spbe')
                     <li class="{{ Request::is('dashboard/spbe') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('dashboard.spbe') }}"><i class="fas fa-fire"></i><span>Dashboard
+                        <a class="nav-link" href="{{ route('dashboard.spbe') }}"><i class="fas fa-columns"></i><span>Dashboard
                                 SPBE</span></a>
                     </li>
                 @endrole
 
-                @role('superadmin|admin-aplikasi')
+                @role('superadmin|admin-aplikasi|operator-aplikasi')
                     <li class="menu-header">Aplikasi</li>
                     <li class="{{ Request::is('admin/application*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.application.index') }}"><i class="fas fa-globe"></i><span>Data
@@ -32,15 +33,15 @@
                     </li>
                     <li class="{{ Request::is('admin/subdomain*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.subdomain.index') }}"><i
-                                class="fas fa-dungeon"></i><span>Portal
+                                class="fas fa-archive"></i><span>Portal
                                 CMS</span></a>
                     </li>
                 @endrole
 
-                @role('superadmin|admin-aplikasi|admin-spbe')
+                @role('superadmin|admin-aplikasi|admin-spbe|operator-aplikasi')
                     <li class="menu-header">Master Data</li>
                 @endrole
-                @role('superadmin|admin-aplikasi')
+                @role('superadmin|admin-aplikasi|operator-aplikasi')
                     <li class="nav-item dropdown {{ Request::is('masterapp*') ? 'active' : '' }}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-archway"></i>
                             <span>Master Aplikasi</span></a>
@@ -77,7 +78,7 @@
                     <li class="menu-header">Add On</li>
                     <li class="{{ Request::is('admin/faq*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.faq.index') }}"><i
-                                class="fas fa-info-circle"></i><span>FAQ</span></a>
+                                class="fas fa-question-circle"></i><span>FAQ</span></a>
                     </li>
                     <li class="{{ Request::is('admin/changelog*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.changelog.index') }}"><i
@@ -88,21 +89,21 @@
                 @role('superadmin|admin-aplikasi|admin-spbe')
                     <li class="menu-header">Settings</li>
                 @endrole
-                @role('superadmin')
-                    <li class="{{ Request::is('admin/opd*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.opd.index') }}"><i
-                                class="fas fa-building"></i><span>Perangkat
-                                Daerah</span></a>
-                    </li>
-                    <li class="{{ Request::is('admin/role*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.role.index') }}"><i
-                                class="fas fa-user-cog"></i><span>Roles</span></a>
-                    </li>
-                @endrole
                 @role('superadmin|admin-aplikasi|admin-spbe')
                     <li class="{{ Request::is('admin/user*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.user.index') }}"><i
                                 class="fas fa-users"></i><span>Users</span></a>
+                    </li>
+                @endrole
+                @role('superadmin')
+                    <li class="{{ Request::is('admin/role*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.role.index') }}"><i
+                                class="fas fa-user-cog"></i><span>Roles</span></a>
+                    </li>
+                    <li class="{{ Request::is('admin/opd*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.opd.index') }}"><i
+                                class="fas fa-building"></i><span>Perangkat
+                                Daerah</span></a>
                     </li>
                 @endrole
 
