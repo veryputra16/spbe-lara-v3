@@ -59,7 +59,7 @@ class Application extends Model
 
     public function katapp(): BelongsTo
     {
-        return $this->belongsTo(Frameworkapp::class);
+        return $this->belongsTo(Katapp::class);
     }
 
     public function katdb(): BelongsTo
@@ -95,5 +95,10 @@ class Application extends Model
     public function apps(): HasMany
     {
         return $this->hasMany(Application::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

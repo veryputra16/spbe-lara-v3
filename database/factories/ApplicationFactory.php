@@ -37,7 +37,7 @@ class ApplicationFactory extends Factory
             'layananapp_id' => $this->faker->numberBetween(1, 2),
             'frameworkapp_id' => $this->faker->numberBetween(1, 2),
             // 'nda' => $this->faker->text(50),
-            'aset_takberwujud' => $this->faker->numberBetween(1, 2),
+            'aset_takberwujud' => $this->faker->numberBetween(0, 1),
             // 'sop' => $this->faker->text(50),
             'jaringan_intra' => $this->faker->numberBetween(1, 2),
             // 'dokumen_perancangan' => $this->faker->text(50),

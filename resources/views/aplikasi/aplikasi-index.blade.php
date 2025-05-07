@@ -58,11 +58,10 @@
                                                             class="fas fa-puzzle-piece"></i></a>
                                                     {{-- end button sementara --}}
 
-                                                    <button type="button" class="btn btn-dark btn-sm indi"
-                                                        data-toggle="modal" data-target="#applicationModal"
-                                                        data-id="{{ $application->id }}" title="Detail">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
+
+                                                    <a href="{{ route('admin.application.show', $application->id) }}"
+                                                        class="btn btn-dark btn-sm" title="Detail"><i
+                                                            class="fas fa-eye"></i></a>
                                                     <a href="{{ route('admin.application.edit', $application->id) }}"
                                                         class="btn btn-light btn-sm" title="Edit"><i
                                                             class="fas fa-edit"></i></a>
@@ -96,7 +95,6 @@
             </div>
         </div>
     </section>
-    @include('aplikasi.aplikasi-modal')
 @endsection
 
 @push('scripts')

@@ -120,7 +120,9 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        //
+        return view('aplikasi.aplikasi-detail', compact('application'), [
+            'title' => 'Data Aplikasi'
+        ]);
     }
 
     /**
