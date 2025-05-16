@@ -6,18 +6,10 @@
         <div class="profile-widget-description">
             <div class="profile-widget-name">{{ auth()->user()->name }} <div
                     class="text-muted d-inline font-weight-normal">
-                    <div class="slash"></div> {{ auth()->user()->role }}
+                    <div class="slash"></div> {{ auth()->user()->getRoleNames()->first() }}
                 </div>
             </div>
-            Hai, <b>{{ auth()->user()->name }}</b> dengan
-            Username <b>{{ auth()->user()->username }}</b>
-            @if (auth()->user()->email)
-                dan email <b>{{ auth()->user()->email }}</b>
-            @endif
-            merupakan
-            role
-            <b>{{ auth()->user()->role }}</b>
-            dari Perangkat Daerah <b>AAAAA</b>.
+            Perangkat Daerah <b>AAAAA</b>.
         </div>
     </div>
 </div>

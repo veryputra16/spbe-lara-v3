@@ -27,18 +27,7 @@
                         <div class="card-body">
                             <div class="card card-large-icons">
                                 <div class="card-icon bg-primary text-white">
-                                    @if ($application->katplatform->kategori_platform == 'Website')
-                                        <i class="fas fa-globe"></i>
-                                    @endif
-                                    @if ($application->katplatform->kategori_platform == 'Mobile')
-                                        <i class="fas fa-mobile-alt"></i>
-                                    @endif
-                                    @if ($application->katplatform->kategori_platform == 'Dekstop')
-                                        <i class="fas fa-desktop"></i>
-                                    @endif
-                                    @if ($application->katplatform->kategori_platform == 'Lainnya')
-                                        <i class="fas fa-puzzle-piece"></i>
-                                    @endif
+                                    <i class="fas fa-desktop"></i>
                                 </div>
                                 <div class="card-body">
                                     <h4>
@@ -50,25 +39,31 @@
                                         @endif
                                     </h4>
                                     <p>{{ $application->opd->nama }}</p>
-                                    <div>
-                                        <span><i class="fas fa-desktop"></i>
-                                            {{ $application->katplatform->kategori_platform ? $application->katplatform->kategori_platform : 'Platform Null' }}</span>
+                                    <div><span><i class="fas fa-tag"></i>
+                                            {{ $application->no_regis_app ? $application->no_regis_app : 'No Regis Tidak Ada' }}</span>
                                         &bull; <span><i class="fas fa-th"></i>
                                             {{ $application->katapp->kategori_aplikasi ? $application->katapp->kategori_aplikasi : 'Kategori Aplikasi Null' }}</span>
-                                        &bull; <span><i class="fas fa-code"></i>
-                                            {{ $application->bahasaprogram->bhs_program ? $application->bahasaprogram->bhs_program : 'Bahasa Program Null' }}</span>
                                         &bull; <span><i class="fas fa-server"></i>
                                             {{ $application->katserver->kategori_server ? $application->katserver->kategori_server : 'Server Null' }}</span>
                                         &bull; <span><i class="fas fa-link"></i>
-                                            <a href="{{ $application->url ? $application->url : '#' }}"
-                                                {{ $application->url ? 'target="_blank"' : '#' }}>{{ $application->url ? $application->url : 'Url Null' }}</a></span>
+                                            @empty($application->url)
+                                                {{ 'Url Tidak Ada' }}
+                                            @else
+                                                <a href="{{ $application->url }}" target="_blank">{{ $application->url }}</a>
+                                            @endempty
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="umum-tab" data-toggle="tab" href="#umum"
-                                        role="tab" aria-controls="umum" aria-selected="true">Umum</a>
+                                    <a class="nav-link active" id="detailApp-tab" data-toggle="tab" href="#detailApp"
+                                        role="tab" aria-controls="detailApp" aria-selected="true">Detail</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pengembanganApp-tab" data-toggle="tab" href="#pengembanganApp"
+                                        role="tab" aria-controls="pengembanganApp"
+                                        aria-selected="false">Pengembangan</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="monevApp-tab" data-toggle="tab" href="#monevApp" role="tab"
@@ -88,8 +83,8 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="umum" role="tabpanel"
-                                    aria-labelledby="umum-tab">
+                                <div class="tab-pane fade show active" id="detailApp" role="tabpanel"
+                                    aria-labelledby="detailApp-tab">
                                     <div class="">
                                         <div class="table-responsive">
                                             <table class="table table-hover table-sm" id="">
@@ -99,13 +94,6 @@
                                                         <td>:</td>
                                                         <td class="w-75">
                                                             {{ $application->fungsi_app ? $application->fungsi_app : '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">Fitur Aplikasi</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->fitur_app ? $application->fitur_app : '-' }}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -123,20 +111,6 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th class="w-25">Buku Manual</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->buku_manual ? $application->buku_manual : '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    @if ($application->status == 0)
-                                                        <tr>
-                                                            <th class="w-25">Alasan Nonaktif</th>
-                                                            <td>:</td>
-                                                            <td class="w-75">{{ $application->alasan_nonaktif }}</td>
-                                                        </tr>
-                                                    @endif
-                                                    <tr>
                                                         <th class="w-25">Kategori Pengguna</th>
                                                         <td>:</td>
                                                         <td class="w-75"><span class="btn btn-sm btn-light">
@@ -144,28 +118,10 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th class="w-25">Database</th>
-                                                        <td>:</td>
-                                                        <td class="w-75"><span class="btn btn-sm btn-light">
-                                                                {{ $application->katdb->kategori_database }}</span></td>
-                                                    </tr>
-                                                    <tr>
                                                         <th class="w-25">Layanan</th>
                                                         <td>:</td>
                                                         <td class="w-75"><span class="btn btn-sm btn-light">
                                                                 {{ $application->layananapp->layanan_app }}</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">Framework</th>
-                                                        <td>:</td>
-                                                        <td class="w-75"><span class="btn btn-sm btn-light">
-                                                                {{ $application->frameworkapp->framework_app }}</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">NDA</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->nda ? $application->nda : '-' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <th class="w-25">Aset Tak Berwujud</th>
@@ -176,13 +132,6 @@
                                                             @else
                                                                 <span class="btn btn-sm btn-info">Tidak</span>
                                                             @endif
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">SOP</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->sop ? $application->sop : '-' }}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -197,67 +146,13 @@
                                                             @endif
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <th class="w-25">Dokumen Perancangan</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->dokumen_perancangan ? $application->dokumen_perancangan : '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">Capture Frontend</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->capture_frontend ? $application->capture_frontend : '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">Capture Bankend</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->capture_backend ? $application->capture_backend : '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">Surat Permohonan</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->surat_mohon ? $application->surat_mohon : '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">KAK</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->kak ? $application->kak : '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">Implementasi Aplikasi</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->implemen_app ? $application->implemen_app : '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">Laporan Pentest</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            {{ $application->lapor_pentest ? $application->lapor_pentest : '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="w-25">Video Penggunaan</th>
-                                                        <td>:</td>
-                                                        <td class="w-75">
-                                                            @if ($application->video_pengguna)
-                                                                <a href="{{ $application->video_pengguna }}"
-                                                                    target="_blank">{{ $application->video_pengguna }}</a>
-                                                            @else
-                                                                {{ '-' }}
-                                                            @endif
-                                                        </td>
-                                                    </tr>
+                                                    @if ($application->status == 0)
+                                                        <tr>
+                                                            <th class="w-25">Alasan Nonaktif</th>
+                                                            <td>:</td>
+                                                            <td class="w-75">{{ $application->alasan_nonaktif }}</td>
+                                                        </tr>
+                                                    @endif
                                                     <tr>
                                                         <th class="w-25">Data Diperbaharui</th>
                                                         <td>:</td>
@@ -272,6 +167,14 @@
                                             </table>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="tab-pane fade" id="pengembanganApp" role="tabpanel"
+                                    aria-labelledby="pengembanganApp-tab">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. In fugit quibusdam dolor
+                                    possimus corporis blanditiis ducimus tempora voluptatem accusamus quos, maxime atque
+                                    facilis natus nesciunt quis illum provident quod iusto quas recusandae cupiditate?
+                                    Corrupti quo quas fugiat reprehenderit. Minima sed nulla, doloremque quam dignissimos
+                                    placeat ea architecto dicta consequatur soluta?
                                 </div>
                                 <div class="tab-pane fade" id="monevApp" role="tabpanel"
                                     aria-labelledby="monevApp-tab">

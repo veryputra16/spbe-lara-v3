@@ -36,6 +36,7 @@
                                             <th>OPD/Perumda/Kelurahan/Desa</th>
                                             <th>Tahun Pembuatan</th>
                                             <th>Status</th>
+                                            <th>Aset Tak Berwujud</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -82,6 +83,13 @@
                                                         <span class="badge badge-success">Aktif</span>
                                                     @else
                                                         <span class="badge badge-danger">Tidak Aktif</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($application->aset_takberwujud == 1)
+                                                        {{ 'Ya' }}
+                                                    @else
+                                                        {{ 'Tidak' }}
                                                     @endif
                                                 </td>
                                             </tr>

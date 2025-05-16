@@ -31,19 +31,18 @@
                                 <hr>
                                 <div class="form-group col-md-6 col-12">
                                     <label>{{ __('Perangkat Daerah/Perumda/Kelurahan/Desa *)') }}</label>
-                                    <select class="form-control select2 @error('opd_pengelola') is-invalid @enderror"
-                                        name="opd_pengelola" required autocomplete="opd_pengelola">
-                                        <option value="">-</option>
+                                    <select class="form-control select2 @error('opd_id') is-invalid @enderror"
+                                        name="opd_id" required autocomplete="opd_id">
                                         @forelse ($opds as $opd)
                                             <option value="{{ $opd['id'] }}"
-                                                {{ $application->opd_pengelola == $opd['id'] ? 'selected' : '' }}>
+                                                {{ $application->opd_id == $opd['id'] ? 'selected' : '' }}>
                                                 {{ $opd['nama'] }}
                                             </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
                                         @endforelse
                                     </select>
-                                    @error('opd_pengelola')
+                                    @error('opd_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -58,19 +57,6 @@
                                         Nama Aplikasi
                                     </small> --}}
                                     @error('nama_app')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Fitur Aplikasi *)') }}</label>
-                                    <textarea class="form-control @error('fitur_app') is-invalid @enderror" name="fitur_app" required
-                                        autocomplete="fitur_app" placeholder="{{ __('Fitur Aplikasi') }}" style="height: 200px;resize: vertical">{{ old('fitur_app', $application->fitur_app) }}</textarea>
-                                    <small id="passwordHelpBlock" class="form-text text-muted">
-                                        Menjelaskan fitur dari aplikasi
-                                    </small>
-                                    @error('fitur_app')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -107,7 +93,6 @@
                                     <label>{{ __('Tahun Pembuatan *)') }}</label>
                                     <select class="form-control select2 @error('tahun_buat') is-invalid @enderror"
                                         name="tahun_buat" required autocomplete="tahun_buat">
-                                        <option>-</option>
                                         @for ($i = date('Y'); $i >= 2005; $i--)
                                             <option value="{{ $i }}"
                                                 {{ $application->tahun_buat == $i ? 'selected' : '' }}>
@@ -138,7 +123,6 @@
                                     <label>{{ __('Layanan Aplikasi *)') }}</label>
                                     <select class="form-control select2 @error('layananapp_id') is-invalid @enderror"
                                         name="layananapp_id" required autocomplete="layananapp_id">
-                                        <option value="">-</option>
                                         @forelse ($layananapps as $layananapp)
                                             <option value="{{ $layananapp->id }}"
                                                 {{ $application->layananapp_id == $layananapp->id ? 'selected' : '' }}>
@@ -158,12 +142,9 @@
                                     <label>{{ __('Jaringan Intra *)') }}</label>
                                     <select class="form-control select2 @error('jaringan_intra') is-invalid @enderror"
                                         name="jaringan_intra" required autocomplete="jaringan_intra">
-                                        <option value="">-</option>
-                                        <option value="1"
-                                            {{ $application->jaringan_intra == '1' ? 'selected' : '' }}>
+                                        <option value="1" {{ $application->jaringan_intra == '1' ? 'selected' : '' }}>
                                             Internet</option>
-                                        <option value="2"
-                                            {{ $application->jaringan_intra == '2' ? 'selected' : '' }}>
+                                        <option value="2" {{ $application->jaringan_intra == '2' ? 'selected' : '' }}>
                                             Intranet</option>
                                     </select>
                                     @error('jaringan_intra')
@@ -175,7 +156,8 @@
                                 <div class="form-group col-md-2 col-12">
                                     <label>{{ __('Status *)') }}</label>
                                     <select class="form-control select2 @error('status') is-invalid @enderror"
-                                        name="status" id="status" required autocomplete="status">
+                                        name="status" id="status" required autocomplete="status"
+                                        onclick="toggleAlasan()">
                                         {{-- <option value="">-</option> --}}
                                         <option value="1"{{ $application->status == '1' ? 'selected' : '' }}>Aktif
                                         </option>
@@ -189,22 +171,22 @@
                                         </span>
                                     @enderror
                                 </div>
-                                @if ($application->status == 0)
-                                    <div id="alasan_non_aktif" class="form-group col-md-8 col-12">
-                                        <label>{{ __('Alasan Nonaktif') }}</label>
-                                        <textarea class="form-control @error('alasan_nonaktif') is-invalid @enderror" name="alasan_nonaktif"
-                                            id="alasan_nonaktif" autocomplete="alasan_nonaktif" placeholder="{{ __('Alasan Non-aktif') }}"
-                                            style="height: 200px;resize: vertical">{{ old('alasan_nonaktif', $application->alasan_nonaktif) }}</textarea>
-                                        <small id="alasan_nonaktif" class="form-text text-muted">
-                                            Menjelaskan alasan mengapa aplikasi di non-aktifkan
-                                        </small>
-                                        @error('alasan_nonaktif')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                @endif
+                                {{-- @if ($application->status == 0) --}}
+                                <div id="alasan_non_aktif" class="form-group col-md-8 col-12" style="display: none">
+                                    <label>{{ __('Alasan Nonaktif') }}</label>
+                                    <textarea class="form-control @error('alasan_nonaktif') is-invalid @enderror" name="alasan_nonaktif"
+                                        id="alasan_nonaktif" autocomplete="alasan_nonaktif" placeholder="{{ __('Alasan Non-aktif') }}"
+                                        style="height: 200px;resize: vertical">{{ old('alasan_nonaktif', $application->alasan_nonaktif) }}</textarea>
+                                    <small id="alasan_nonaktif" class="form-text text-muted">
+                                        Menjelaskan alasan mengapa aplikasi di non-aktifkan
+                                    </small>
+                                    @error('alasan_nonaktif')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                {{-- @endif --}}
                                 <br>
                                 <div class="section-title mt-0">Software dan Hardware</div>
                                 <hr>
@@ -212,7 +194,6 @@
                                     <label>{{ __('Kategori Pengguna *)') }}</label>
                                     <select class="form-control select2 @error('katpengguna_id') is-invalid @enderror"
                                         name="katpengguna_id" required autocomplete="katpengguna_id">
-                                        <option value="">-</option>
                                         @forelse ($katpenggunas as $katpengguna)
                                             <option value="{{ $katpengguna->id }}"
                                                 {{ $application->katpengguna_id == $katpengguna->id ? 'selected' : '' }}>
@@ -228,70 +209,10 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-2 col-12">
-                                    <label>{{ __('Kategori Aplikasi *)') }}</label>
-                                    <select class="form-control select2 @error('katapp_id') is-invalid @enderror"
-                                        name="katapp_id" required autocomplete="katapp_id">
-                                        <option value="">-</option>
-                                        @forelse ($katapps as $katapp)
-                                            <option value="{{ $katapp->id }}"
-                                                {{ $application->katapp_id == $katapp->id ? 'selected' : '' }}>
-                                                {{ $katapp->kategori_aplikasi }}</option>
-                                        @empty
-                                            <option value="">Tidak Ada Data</option>
-                                        @endforelse
-                                    </select>
-                                    @error('katapp_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-2 col-12">
-                                    <label>{{ __('Kategori Platform *)') }}</label>
-                                    <select class="form-control select2 @error('katplatform_id') is-invalid @enderror"
-                                        name="katplatform_id" required autocomplete="katplatform_id">
-                                        <option value="">-</option>
-                                        @forelse ($katplatforms as $katplatform)
-                                            <option value="{{ $katplatform->id }}"
-                                                {{ $application->katplatform_id == $katplatform->id ? 'selected' : '' }}>
-                                                {{ $katplatform->kategori_platform }}
-                                            </option>
-                                        @empty
-                                            <option value="">Tidak Ada Data</option>
-                                        @endforelse
-                                    </select>
-                                    @error('katplatform_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-3 col-12">
-                                    <label>{{ __('Kategori Database *)') }}</label>
-                                    <select class="form-control select2 @error('katdb_id') is-invalid @enderror"
-                                        name="katdb_id" required autocomplete="katdb_id">
-                                        <option value="">-</option>
-                                        @forelse ($katdbs as $katdb)
-                                            <option value="{{ $katdb->id }}"
-                                                {{ $application->katdb_id == $katdb->id ? 'selected' : '' }}>
-                                                {{ $katdb->kategori_database }}
-                                            </option>
-                                        @empty
-                                            <option value="">Tidak Ada Data</option>
-                                        @endforelse
-                                    </select>
-                                    @error('katdb_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
                                 <div class="form-group col-md-6 col-12">
                                     <label>{{ __('Kategori Server *)') }}</label>
                                     <select class="form-control select2 @error('katserver_id') is-invalid @enderror"
                                         name="katserver_id" required autocomplete="katserver_id">
-                                        <option value="">-</option>
                                         @forelse ($katservers as $katserver)
                                             <option value="{{ $katserver->id }}"
                                                 {{ $application->katserver_id == $katserver->id ? 'selected' : '' }}>
@@ -307,41 +228,19 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-3 col-12">
-                                    <label>{{ __('Bahasa Program *)') }}</label>
-                                    <select class="form-control select2 @error('bahasaprogram_id') is-invalid @enderror"
-                                        name="bahasaprogram_id" required autocomplete="bahasaprogram_id">
-                                        <option value="">-</option>
-                                        @forelse ($bahasaprograms as $bahasaprogram)
-                                            <option value="{{ $bahasaprogram->id }}"
-                                                {{ $application->bahasaprogram_id == $bahasaprogram->id ? 'selected' : '' }}>
-                                                {{ $bahasaprogram->bhs_program }}
-                                            </option>
+                                <div class="form-group col-md-2 col-12">
+                                    <label>{{ __('Kategori Aplikasi *)') }}</label>
+                                    <select class="form-control select2 @error('katapp_id') is-invalid @enderror"
+                                        name="katapp_id" required autocomplete="katapp_id">
+                                        @forelse ($katapps as $katapp)
+                                            <option value="{{ $katapp->id }}"
+                                                {{ $application->katapp_id == $katapp->id ? 'selected' : '' }}>
+                                                {{ $katapp->kategori_aplikasi }}</option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>
                                         @endforelse
                                     </select>
-                                    @error('bahasaprogram_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6 col-12">
-                                    <label>{{ __('Framework Aplikasi *)') }}</label>
-                                    <select class="form-control select2 @error('frameworkapp_id') is-invalid @enderror"
-                                        name="frameworkapp_id" required autocomplete="frameworkapp_id">
-                                        <option>-</option>
-                                        @forelse ($frameworkapps as $frameworkapp)
-                                            <option value="{{ $frameworkapp->id }}"
-                                                {{ $application->frameworkapp_id == $frameworkapp->id ? 'selected' : '' }}>
-                                                {{ $frameworkapp->framework_app }}
-                                            </option>
-                                        @empty
-                                            <option value="">Tidak Ada Data</option>
-                                        @endforelse
-                                    </select>
-                                    @error('frameworkapp_id')
+                                    @error('katapp_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -371,213 +270,6 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('NDA') }}</label>
-                                    @if ($application->nda != '')
-                                        <div class="mb-0 d-block">
-                                            <a href="{{ asset(Storage::url($application->nda)) }}" target="_blank">
-                                                <i class="fas fa-file-alt"></i> View Dokumen
-                                            </a>
-                                        </div>
-                                    @endif
-                                    <input type="file" class="form-control @error('nda') is-invalid @enderror"
-                                        name="nda" autocomplete="nda">
-                                    <small id="nda" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
-                                    </small>
-                                    @error('nda')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('SOP *)') }}</label>
-                                    @if ($application->sop != '')
-                                        <div class="mb-0 d-block">
-                                            <a href="{{ asset(Storage::url($application->sop)) }}" target="_blank">
-                                                <i class="fas fa-file-alt"></i> View Dokumen
-                                            </a>
-                                        </div>
-                                    @endif
-                                    <input type="file" class="form-control @error('sop') is-invalid @enderror"
-                                        name="sop" autocomplete="sop">
-                                    <small id="sop" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
-                                    </small>
-                                    @error('sop')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('KAK') }}</label>
-                                    @if ($application->kak != '')
-                                        <div class="mb-0 d-block">
-                                            <a href="{{ asset(Storage::url($application->kak)) }}" target="_blank">
-                                                <i class="fas fa-file-alt"></i> View Dokumen
-                                            </a>
-                                        </div>
-                                    @endif
-                                    <input type="file" class="form-control @error('kak') is-invalid @enderror"
-                                        name="kak" autocomplete="kak">
-                                    <small id="kak" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
-                                    </small>
-                                    @error('kak')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <br>
-                                <div class="section-title mt-0">Berkas</div>
-                                <hr>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Capture Frontend *)') }}</label>
-                                    <div class="media">
-                                        <img src="{{ asset(Storage::url($application->capture_frontend)) }}"
-                                            alt="Capture Frontend" class="mb-1 rounded-lg" style="width: 10%;">
-                                    </div>
-                                    <input type="file"
-                                        class="form-control @error('capture_frontend') is-invalid @enderror"
-                                        name="capture_frontend" autocomplete="capture_frontend">
-                                    <small id="capture_frontend" class="form-text text-muted">
-                                        file ekstensi .jpg/.jpeg/.png dengan maksimal size 10MB
-                                    </small>
-                                    @error('capture_frontend')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Capture Backend *)') }}</label>
-                                    <div class="media">
-                                        <img src="{{ asset(Storage::url($application->capture_backend)) }}"
-                                            alt="Capture Backend" class="mb-1 rounded-lg" style="width: 10%;">
-                                    </div>
-                                    <input type="file"
-                                        class="form-control @error('capture_backend') is-invalid @enderror"
-                                        name="capture_backend" autocomplete="capture_backend">
-                                    <small id="capture_backend" class="form-text text-muted">
-                                        file ekstensi .jpg/.jpeg/.png dengan maksimal size 10MB
-                                    </small>
-                                    @error('capture_backend')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Buku Manual') }}</label>
-                                    @if ($application->buku_manual != '')
-                                        <div class="mb-0 d-block">
-                                            <a href="{{ asset(Storage::url($application->buku_manual)) }}"
-                                                target="_blank">
-                                                <i class="fas fa-file-alt"></i> View Dokumen
-                                            </a>
-                                        </div>
-                                    @endif
-                                    <input type="file" class="form-control @error('buku_manual') is-invalid @enderror"
-                                        name="buku_manual" autocomplete="buku_manual">
-                                    <small id="buku_manual" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
-                                    </small>
-                                    @error('buku_manual')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Dokumen Perancangan') }}</label>
-                                    @if ($application->dokumen_perancangan != '')
-                                        <div class="mb-0 d-block">
-                                            <a href="{{ asset(Storage::url($application->dokumen_perancangan)) }}"
-                                                target="_blank">
-                                                <i class="fas fa-file-alt"></i> View Dokumen
-                                            </a>
-                                        </div>
-                                    @endif
-                                    <input type="file"
-                                        class="form-control @error('dokumen_perancangan') is-invalid @enderror"
-                                        name="dokumen_perancangan" autocomplete="dokumen_perancangan">
-                                    <small id="dokumen_perancangan" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
-                                    </small>
-                                    @error('dokumen_perancangan')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Surat Permohonan') }}</label>
-                                    @if ($application->surat_mohon != '')
-                                        <div class="mb-0 d-block">
-                                            <a href="{{ asset(Storage::url($application->surat_mohon)) }}"
-                                                target="_blank">
-                                                <i class="fas fa-file-alt"></i> View Dokumen
-                                            </a>
-                                        </div>
-                                    @endif
-                                    <input type="file" class="form-control @error('surat_mohon') is-invalid @enderror"
-                                        name="surat_mohon" autocomplete="surat_mohon">
-                                    <small id="surat_mohon" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
-                                    </small>
-                                    @error('surat_mohon')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Implementasi Aplikasi') }}</label>
-                                    @if ($application->implemen_app != '')
-                                        <div class="mb-0 d-block">
-                                            <a href="{{ asset(Storage::url($application->implemen_app)) }}"
-                                                target="_blank">
-                                                <i class="fas fa-file-alt"></i> View Dokumen
-                                            </a>
-                                        </div>
-                                    @endif
-                                    <input type="file"
-                                        class="form-control @error('implemen_app') is-invalid @enderror"
-                                        name="implemen_app" autocomplete="implemen_app">
-                                    <small id="implemen_app" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
-                                    </small>
-                                    @error('implemen_app')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Laporan Pentesting') }}</label>
-                                    @if ($application->lapor_pentest != '')
-                                        <div class="mb-0 d-block">
-                                            <a href="{{ asset(Storage::url($application->lapor_pentest)) }}"
-                                                target="_blank">
-                                                <i class="fas fa-file-alt"></i> View Dokumen
-                                            </a>
-                                        </div>
-                                    @endif
-                                    <input type="file"
-                                        class="form-control @error('lapor_pentest') is-invalid @enderror"
-                                        name="lapor_pentest" autocomplete="lapor_pentest">
-                                    <small id="lapor_pentest" class="form-text text-muted">
-                                        file ekstensi .pdf dengan maksimal size 100MB
-                                    </small>
-                                    @error('lapor_pentest')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
                                 <br>
                                 <div class="section-title mt-0">Lainnya</div>
                                 <hr>
@@ -585,7 +277,6 @@
                                     <label>{{ __('Aset Tak Berwujud *)') }}</label>
                                     <select class="form-control select2 @error('aset_takberwujud') is-invalid @enderror"
                                         name="aset_takberwujud" autocomplete="aset_takberwujud">
-                                        <option value="">-</option>
                                         <option value="0"
                                             {{ $application->aset_takberwujud == '0' ? 'selected' : '' }}>
                                             Tidak</option>
@@ -599,17 +290,25 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Video Pengguna') }}</label>
+                                <div class="form-group col-md-5 col-12">
+                                    <label>{{ __('Proses Bisnis') }}</label>
                                     <input type="text"
-                                        class="form-control @error('video_pengguna') is-invalid @enderror"
-                                        name="video_pengguna"
-                                        value="{{ old('video_pengguna', $application->video_pengguna) }}"
-                                        autocomplete="video_pengguna" placeholder="{{ __('Video Pengguna') }}">
-                                    <small id="video_pengguna" class="form-text text-muted">
-                                        Sertakan Link Video disini jika ada
-                                    </small>
-                                    @error('video_pengguna')
+                                        class="form-control @error('proses_bisnis') is-invalid @enderror"
+                                        name="proses_bisnis"
+                                        value="{{ old('proses_bisnis', $application->proses_bisnis) }}" required
+                                        autocomplete="name" placeholder="{{ __('Proses Bisnis') }}">
+                                    @error('proses_bisnis')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-8 col-12">
+                                    <label>{{ __('Keterangan Proses Bisnis') }}</label>
+                                    <textarea class="form-control @error('ket_probis') is-invalid @enderror" name="ket_probis" required
+                                        autocomplete="ket_probis" placeholder="{{ __('Keterangan Proses Bisnis') }}"
+                                        style="height: 150px;resize: vertical">{{ old('ket_probis', $application->ket_probis) }}</textarea>
+                                    @error('ket_probis')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -641,24 +340,17 @@
     <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 
     <script>
-        // $(document).ready(function() {
-        //     $('#status').change(function() {
-        //         if ($(this).val() === '0') {
-        //             $('#alasan_non_aktif').show();
-        //         } else {
-        //             $('#alasan_non_aktif').hide();
-        //         }
-        //     });
-        // });
-
         $(document).ready(function() {
-            $('#status').change(function() {
-                if ($(this).val() == '0') {
-                    $('#alasan_non_aktif').removeClass('d-none');
+            function toggleAlasan() {
+                if ($('#status').val() === '0') {
+                    $('#alasan_non_aktif').show();
                 } else {
-                    $('#alasan_non_aktif').addClass('d-none');
+                    $('#alasan_non_aktif').hide();
                 }
-            });
+            }
+
+            $('#status').on('change', toggleAlasan);
+            toggleAlasan(); // Jalankan saat pertama kali halaman dimuat
         });
     </script>
 @endpush
