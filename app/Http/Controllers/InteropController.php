@@ -18,11 +18,11 @@ class InteropController extends Controller
      */
     public function index(Application $application)
     {
-        $interops = Interop::where('application_id', $application->id)->get();
+        // $interops = Interop::where('application_id', $application->id)->get();
 
-        return view('interop.interop-index', compact('application', 'interops'), [
-            'title' => 'Interopabilitas'
-        ]);
+        // return view('interop.interop-index', compact('application', 'interops'), [
+        //     'title' => 'Interopabilitas'
+        // ]);
     }
 
     /**

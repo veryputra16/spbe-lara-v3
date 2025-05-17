@@ -24,8 +24,10 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('admin.subdomain.create') }}" class="btn btn-primary mb-3"><i
-                                    class="fas fa-plus"></i> Add</a>
+                            @role('superadmin|admin-aplikasi')
+                                <a href="{{ route('admin.subdomain.create') }}" class="btn btn-primary mb-3"><i
+                                        class="fas fa-plus"></i> Add</a>
+                            @endrole
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
                                     <thead>
@@ -45,16 +47,20 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.subdomain.edit', $subdomain->id) }}"
-                                                        class="btn btn-light btn-sm" title="Edit"><i
-                                                            class="fas fa-edit"></i></a>
-                                                    <form action="{{ route('admin.subdomain.destroy', $subdomain->id) }}"
-                                                        method="POST" style="display: inline-block;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
-                                                            title="Delete"><i class="fas fa-trash"></i></button>
-                                                    </form>
+                                                    @role('superadmin|admin-aplikasi|operator-aplikasi')
+                                                        <a href="{{ route('admin.subdomain.edit', $subdomain->id) }}"
+                                                            class="btn btn-light btn-sm" title="Edit"><i
+                                                                class="fas fa-edit"></i></a>
+                                                    @endrole
+                                                    @role('superadmin|admin-aplikasi')
+                                                        <form action="{{ route('admin.subdomain.destroy', $subdomain->id) }}"
+                                                            method="POST" style="display: inline-block;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                                title="Delete"><i class="fas fa-trash"></i></button>
+                                                        </form>
+                                                    @endrole
                                                 </td>
                                                 <td><a href="{{ $subdomain->url }}"
                                                         target="_blank">{{ $subdomain->url }}</a></td>

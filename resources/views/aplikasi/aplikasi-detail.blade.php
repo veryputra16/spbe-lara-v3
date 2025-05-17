@@ -74,10 +74,6 @@
                                         role="tab" aria-controls="tenagaKelola" aria-selected="false">Tenaga Teknis</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="tenagaVendor-tab" data-toggle="tab" href="#tenagaVendor"
-                                        role="tab" aria-controls="tenagaVendor" aria-selected="false">Vendor</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" id="interopabilas-tab" data-toggle="tab" href="#interopabilas"
                                         role="tab" aria-controls="interopabilas" aria-selected="false">Interopabilas</a>
                                 </li>
@@ -100,7 +96,14 @@
                                                         <th class="w-25">Dasar Hukum</th>
                                                         <td>:</td>
                                                         <td class="w-75">
-                                                            {{ $application->dasar_hukum ? $application->dasar_hukum : '-' }}
+                                                            @empty($application->dasar_hukum)
+                                                                <span class="btn btn-danger btn btn-sm">Dasar Hukum Tidak
+                                                                    Ada</span>
+                                                            @else
+                                                                <a href="{{ asset(Storage::url($application->dasar_hukum)) }}"
+                                                                    target="_blank">View Dokumen
+                                                                    Dasar Hukum</a>
+                                                            @endempty
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -108,6 +111,19 @@
                                                         <td>:</td>
                                                         <td class="w-75">
                                                             {{ $application->tahun_buat ? $application->tahun_buat : '-' }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="w-25">Repositori</th>
+                                                        <td>:</td>
+                                                        <td class="w-75">
+                                                            @empty($application->repositori)
+                                                                <span class="btn btn-danger btn btn-sm">Repositori Tidak
+                                                                    Ada</span>
+                                                            @else
+                                                                <a href="{{ $application->repositori }}"
+                                                                    target="_blank">{{ $application->repositori }}</a>
+                                                            @endempty
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -154,6 +170,16 @@
                                                         </tr>
                                                     @endif
                                                     <tr>
+                                                        <th class="w-25">Proses Bisnis</th>
+                                                        <td>:</td>
+                                                        <td class="w-75">{{ $application->proses_bisnis }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="w-25">Keterangan Proses Bisnis</th>
+                                                        <td>:</td>
+                                                        <td class="w-75">{{ $application->ket_probis }}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <th class="w-25">Data Diperbaharui</th>
                                                         <td>:</td>
                                                         <td class="w-75">
@@ -178,48 +204,15 @@
                                 </div>
                                 <div class="tab-pane fade" id="monevApp" role="tabpanel"
                                     aria-labelledby="monevApp-tab">
-                                    Vestibulum imperdiet odio sed neque ultricies, ut dapibus mi maximus. Proin
-                                    ligula massa, gravida in lacinia efficitur, hendrerit eget mauris.
-                                    Pellentesque fermentum, sem interdum molestie finibus, nulla diam varius
-                                    leo, nec varius lectus elit id dolor. Nam malesuada orci non ornare
-                                    vulputate. Ut ut sollicitudin magna. Vestibulum eget ligula ut ipsum
-                                    venenatis ultrices. Proin bibendum bibendum augue ut luctus.
+                                    @include('monevapp.monevapp-index')
                                 </div>
                                 <div class="tab-pane fade" id="tenagaKelola" role="tabpanel"
                                     aria-labelledby="tenagaKelola-tab">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident voluptatibus atque
-                                    ratione possimus nisi explicabo saepe reprehenderit et minima? Id iusto praesentium hic
-                                    culpa debitis deserunt aliquam accusamus fugiat vitae!
-                                </div>
-                                <div class="tab-pane fade" id="tenagaVendor" role="tabpanel"
-                                    aria-labelledby="tenagaVendor-tab">
-                                    Nibh molestie torquent aliquam platea leo magnis. Id penatibus urna dis placerat sodales
-                                    dignissim ultricies lobortis nec tempor phasellus. Curae mollis pretium lectus ex duis
-                                    leo torquent erat congue. Facilisi quam facilisis dolor et tincidunt efficitur nisi
-                                    turpis netus rhoncus volutpat. Ultricies dolor ac rhoncus placerat adipiscing. Nostra
-                                    netus risus dapibus hendrerit venenatis ut nam viverra nec ultricies. Sagittis
-                                    suspendisse dis ex aliquam orci dictumst ut parturient. Tristique congue curae dui
-                                    conubia etiam placerat penatibus.
-                                </div>
-                                <div class="tab-pane fade" id="tenagaVendor" role="tabpanel"
-                                    aria-labelledby="tenagaVendor-tab">
-                                    Nibh molestie torquent aliquam platea leo magnis. Id penatibus urna dis placerat sodales
-                                    dignissim ultricies lobortis nec tempor phasellus. Curae mollis pretium lectus ex duis
-                                    leo torquent erat congue. Facilisi quam facilisis dolor et tincidunt efficitur nisi
-                                    turpis netus rhoncus volutpat. Ultricies dolor ac rhoncus placerat adipiscing. Nostra
-                                    netus risus dapibus hendrerit venenatis ut nam viverra nec ultricies. Sagittis
-                                    suspendisse dis ex aliquam orci dictumst ut parturient. Tristique congue curae dui
-                                    conubia etiam placerat penatibus.
+                                    @include('sdmteknis.sdmteknis-index')
                                 </div>
                                 <div class="tab-pane fade" id="interopabilas" role="tabpanel"
                                     aria-labelledby="interopabilas-tab">
-                                    Nibh molestie torquent aliquam platea leo magnis. Id penatibus urna dis placerat sodales
-                                    dignissim ultricies lobortis nec tempor phasellus. Curae mollis pretium lectus ex duis
-                                    leo torquent erat congue. Facilisi quam facilisis dolor et tincidunt efficitur nisi
-                                    turpis netus rhoncus volutpat. Ultricies dolor ac rhoncus placerat adipiscing. Nostra
-                                    netus risus dapibus hendrerit venenatis ut nam viverra nec ultricies. Sagittis
-                                    suspendisse dis ex aliquam orci dictumst ut parturient. Tristique congue curae dui
-                                    conubia etiam placerat penatibus.
+                                    @include('interop.interop-index')
                                 </div>
                             </div>
                         </div>
@@ -260,4 +253,13 @@
     <!-- Data Tables -->
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $("#myTable").dataTable({
+            "searching": false,
+            "responsive": true,
+            "lengthChange": false,
+            "info": false,
+            "paging": false,
+        });
+    </script>
 @endpush

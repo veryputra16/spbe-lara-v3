@@ -45,18 +45,9 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
                                                     {{-- button sementara --}}
-                                                    <a href="{{ route('admin.monevapp.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="Monev Aplikasi"><i
-                                                            class="fas fa-file-alt"></i></a>
-                                                    <a href="{{ route('admin.sdmteknic.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="SDM Teknis"><i
-                                                            class="fas fa-hard-hat"></i></a>
                                                     <a href="{{ route('admin.sdmpengembang.index', $application->id) }}"
                                                         class="btn btn-primary btn-sm" title="Vendor"><i
                                                             class="fas fa-handshake"></i></a>
-                                                    <a href="{{ route('admin.interop.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="Interopability"><i
-                                                            class="fas fa-puzzle-piece"></i></a>
                                                     {{-- end button sementara --}}
 
 
@@ -133,7 +124,7 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $("#myTable").dataTable({
-            "searching": false
+            "searching": true
         });
     </script>
 @endpush

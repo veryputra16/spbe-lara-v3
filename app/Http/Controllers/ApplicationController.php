@@ -8,13 +8,16 @@ use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Bahasaprogram;
 use App\Models\Frameworkapp;
+use App\Models\Interop;
 use App\Models\Katapp;
 use App\Models\Katdb;
 use App\Models\Katpengguna;
 use App\Models\Katplatform;
 use App\Models\Katserver;
 use App\Models\Layananapp;
+use App\Models\Monevapp;
 use App\Models\Opd;
+use App\Models\Sdmteknic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -80,7 +83,11 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        return view('aplikasi.aplikasi-detail', compact('application'), [
+        $monevapps = Monevapp::where('application_id', $application->id)->get();
+        $sdmteknics = Sdmteknic::where('application_id', $application->id)->get();
+        $interops = Interop::where('application_id', $application->id)->get();
+
+        return view('aplikasi.aplikasi-detail', compact('application', 'monevapps', 'sdmteknics', 'interops'), [
             'title' => 'Data Aplikasi'
         ]);
     }

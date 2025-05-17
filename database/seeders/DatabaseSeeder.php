@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             SubdomainSeeder::class,
             FaqSeeder::class,
             ChangelogSeeder::class,
+            SdmteknicSeeder::class,
+            MonevappSeeder::class,
         ]);
     }
 }

@@ -17,11 +17,11 @@ class SdmTechnicController extends Controller
      */
     public function index(Application $application)
     {
-        $sdmteknics = Sdmteknic::where('application_id', $application->id)->get();
+        // $sdmteknics = Sdmteknic::where('application_id', $application->id)->get();
 
-        return view('sdmteknis.sdmteknis-index', compact('application', 'sdmteknics'), [
-            'title' => 'SDM Tenaga Teknis'
-        ]);
+        // return view('sdmteknis.sdmteknis-index', compact('application', 'sdmteknics'), [
+        //     'title' => 'SDM Tenaga Teknis'
+        // ]);
     }
 
     /**

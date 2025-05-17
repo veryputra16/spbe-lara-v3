@@ -38,10 +38,10 @@
                     </li>
                 @endrole
 
-                @role('superadmin|admin-aplikasi|admin-spbe|operator-aplikasi')
+                @role('superadmin|admin-aplikasi|admin-spbe')
                     <li class="menu-header">Master Data</li>
                 @endrole
-                @role('superadmin|admin-aplikasi|operator-aplikasi')
+                @role('superadmin|admin-aplikasi')
                     <li class="nav-item dropdown {{ Request::is('masterapp*') ? 'active' : '' }}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-archway"></i>
                             <span>Master Aplikasi</span></a>

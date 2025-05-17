@@ -18,11 +18,11 @@ class MonevappController extends Controller
      */
     public function index(Application $application)
     {
-        $monevapps = Monevapp::where('application_id', $application->id)->get();
+        // $monevapps = Monevapp::where('application_id', $application->id)->get();
 
-        return view('monevapp.monevapp-index', compact('application', 'monevapps'), [
-            'title' => 'Monev Aplikasi'
-        ]);
+        // return view('monevapp.monevapp-index', compact('application', 'monevapps'), [
+        //     'title' => 'Monev Aplikasi'
+        // ]);
     }
 
     /**
