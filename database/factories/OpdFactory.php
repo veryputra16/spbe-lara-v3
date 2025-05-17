@@ -17,7 +17,7 @@ class OpdFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama' => $this->faker->words(4, true),
+            'nama' => fake()->company(),
             'singkatan' => $this->faker->word(1, true),
         ];
     }

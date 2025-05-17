@@ -36,6 +36,10 @@
                                 class="fas fa-archive"></i><span>Portal
                                 CMS</span></a>
                     </li>
+                    <li class="{{ Request::is('admin/appdesa*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.appdesa.index') }}"><i
+                                class="fas fa-window-maximize"></i><span>Aplikasi Desa</span></a>
+                    </li>
                 @endrole
 
                 @role('superadmin|admin-aplikasi|admin-spbe')

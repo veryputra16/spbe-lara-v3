@@ -13,7 +13,6 @@ class KatplatformSeeder extends Seeder
      */
     public function run(): void
     {
-        //
         Katplatform::create(['kategori_platform' => 'Website']);
         Katplatform::create(['kategori_platform' => 'Mobile']);
         Katplatform::create(['kategori_platform' => 'Dekstop']);

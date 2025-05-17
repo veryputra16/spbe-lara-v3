@@ -13,7 +13,6 @@ class BahasaprogramSeeder extends Seeder
      */
     public function run(): void
     {
-        //
         Bahasaprogram::create(['bhs_program' => 'PHP 5']);
         Bahasaprogram::create(['bhs_program' => 'PHP 7']);
         Bahasaprogram::create(['bhs_program' => 'PHP 8']);

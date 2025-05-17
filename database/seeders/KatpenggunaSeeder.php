@@ -13,7 +13,6 @@ class KatpenggunaSeeder extends Seeder
      */
     public function run(): void
     {
-        //
         Katpengguna::create(['kategori_pengguna' => 'Khusus']);
         Katpengguna::create(['kategori_pengguna' => 'Umum']);
     }

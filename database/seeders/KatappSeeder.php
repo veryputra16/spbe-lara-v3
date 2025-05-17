@@ -13,7 +13,6 @@ class KatappSeeder extends Seeder
      */
     public function run(): void
     {
-        //
         Katapp::create(['kategori_aplikasi' => 'Pusat']);
         Katapp::create(['kategori_aplikasi' => 'Lokal']);
         Katapp::create(['kategori_aplikasi' => 'Desa']);

@@ -31,7 +31,7 @@ class ApplicationFactory extends Factory
             'katpengguna_id' => $this->faker->numberBetween(1, 2),
             'katserver_id' => $this->faker->numberBetween(1, 2),
             'layananapp_id' => $this->faker->numberBetween(1, 2),
-            'katapp_id' => $this->faker->numberBetween(1, 2),
+            'katapp_id' => $this->faker->numberBetween(1, 4),
             'jaringan_intra' => $this->faker->numberBetween(1, 2),
             'status' => $this->faker->numberBetween(0, 1),
             'alasan_nonaktif' => $this->faker->sentence(),

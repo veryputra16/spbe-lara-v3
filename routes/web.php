@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppDesaController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BahasaprogramController;
@@ -50,8 +51,6 @@ Route::middleware(['auth'])->group(function () {
         // aplikasi
         Route::resource('application', ApplicationController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
-        Route::resource('subdomain', SubdomainController::class)
-            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/monevapp', MonevappController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/sdmteknic', SdmTechnicController::class)
@@ -60,6 +59,12 @@ Route::middleware(['auth'])->group(function () {
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/interop', InteropController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+
+        Route::resource('subdomain', SubdomainController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+
+        Route::resource('appdesa', AppDesaController::class);
+        // Route::resource('appdesa/{application}/monevapp', MonevappController::class);
 
         // helper
         Route::resource('faq', FaqController::class)->middleware('role:superadmin');

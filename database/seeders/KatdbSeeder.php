@@ -13,7 +13,6 @@ class KatdbSeeder extends Seeder
      */
     public function run(): void
     {
-        //
         Katdb::create(['kategori_database' => 'MySQL']);
         Katdb::create(['kategori_database' => 'Oracle']);
         Katdb::create(['kategori_database' => 'Microsoft SQL Server']);

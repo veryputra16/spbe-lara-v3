@@ -32,7 +32,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $applications = Application::all();
+        $applications = Application::whereIn('katapp_id', [1, 2])->get();
 
         return view('aplikasi.aplikasi-index', compact('applications'), [
             'title' => 'Data Aplikasi'
@@ -47,7 +47,6 @@ class ApplicationController extends Controller
         $opds = Opd::all();
         $katpenggunas = Katpengguna::all();
         $katservers = Katserver::all();
-        $layananapps = Layananapp::all();
         $layananapps = Layananapp::all();
         $katapps = Katapp::whereIn('id', [1, 2])->get();
         // $noRegis = Str::upper(Str::random(8));
