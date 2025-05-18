@@ -28,14 +28,12 @@
                                 <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
                                 <div class="alert-body">
                                     <div class="alert-title">Attention</div>
-                                    Fitur ini berfungsi untuk mendata aset digital tak berwujud yang terhubung dengan domain
-                                    <code>.desa.id</code>, seperti website desa dan sistem informasi desa.
+                                    Menandai aplikasi atau situs yang menggunakan domain publik atau komersial, bukan domain
+                                    resmi pemerintah seperti <code>.desa.id</code> atau <code>denpasarkota.go.id</code>.
                                 </div>
                             </div>
-                            @role('superadmin|admin-aplikasi|operator-aplikasi')
-                                <a href="{{ route('admin.appdesa.create') }}" class="btn btn-primary mb-3"><i
-                                        class="fas fa-plus"></i> Add</a>
-                            @endrole
+                            <a href="{{ route('admin.applain.create') }}" class="btn btn-primary mb-3"><i
+                                    class="fas fa-plus"></i> Add</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
                                     <thead>
@@ -43,23 +41,23 @@
                                             <th>#</th>
                                             <th>Action</th>
                                             <th>Nama Aplikasi</th>
-                                            <th>Desa</th>
+                                            <th>Instansi</th>
                                             <th>Tahun Pembuatan</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($appdesas as $appdesa)
+                                        @foreach ($applains as $applain)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.appdesa.show', $appdesa->id) }}"
+                                                    <a href="{{ route('admin.applain.show', $applain->id) }}"
                                                         class="btn btn-dark btn-sm" title="Detail"><i
                                                             class="fas fa-eye"></i></a>
-                                                    <a href="{{ route('admin.appdesa.edit', $appdesa->id) }}"
+                                                    <a href="{{ route('admin.applain.edit', $applain->id) }}"
                                                         class="btn btn-light btn-sm" title="Edit"><i
                                                             class="fas fa-edit"></i></a>
-                                                    <form action="{{ route('admin.appdesa.destroy', $appdesa->id) }}"
+                                                    <form action="{{ route('admin.applain.destroy', $applain->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
@@ -67,11 +65,11 @@
                                                             title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
-                                                <td>{{ $appdesa->nama_app }}</td>
-                                                <td>{{ $appdesa->opd->nama }}</td>
-                                                <td>{{ $appdesa->tahun_buat }}</td>
+                                                <td>{{ $applain->nama_app }}</td>
+                                                <td>{{ $applain->opd->nama }}</td>
+                                                <td>{{ $applain->tahun_buat }}</td>
                                                 <td>
-                                                    @if ($appdesa->status == 1)
+                                                    @if ($applain->status == 1)
                                                         <span class="badge badge-success">Aktif</span>
                                                     @else
                                                         <span class="badge badge-danger">Tidak Aktif</span>

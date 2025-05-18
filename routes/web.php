@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppDesaController;
+use App\Http\Controllers\AppLainController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BahasaprogramController;
@@ -48,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('admin')->name('admin.')->group(function () {
-        // aplikasi
+        // data aplikasi
         Route::resource('application', ApplicationController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/monevapp', MonevappController::class)
@@ -60,11 +61,18 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('application/{application}/interop', InteropController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
 
+        // portal CMS
         Route::resource('subdomain', SubdomainController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
 
-        Route::resource('appdesa', AppDesaController::class);
+        // aplikasi desa
+        Route::resource('appdesa', AppDesaController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         // Route::resource('appdesa/{application}/monevapp', MonevappController::class);
+
+        // aplikasi lainnya
+        Route::resource('applain', AppLainController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
 
         // helper
         Route::resource('faq', FaqController::class)->middleware('role:superadmin');

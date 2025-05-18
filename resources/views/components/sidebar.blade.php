@@ -40,6 +40,10 @@
                         <a class="nav-link" href="{{ route('admin.appdesa.index') }}"><i
                                 class="fas fa-window-maximize"></i><span>Aplikasi Desa</span></a>
                     </li>
+                    <li class="{{ Request::is('admin/applain*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.applain.index') }}"><i class="fas fa-box"></i><span>Aplikasi
+                                Lainnya</span></a>
+                    </li>
                 @endrole
 
                 @role('superadmin|admin-aplikasi|admin-spbe')
