@@ -9,7 +9,7 @@
                     <div class="slash"></div> {{ auth()->user()->getRoleNames()->first() }}
                 </div>
             </div>
-            Perangkat Daerah <b>AAAAA</b>.
+            Unit Kerja <b>AAAAA</b>.
         </div>
     </div>
 </div>

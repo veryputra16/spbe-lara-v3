@@ -25,7 +25,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-md-6 col-12">
+                                    <div class="form-group col-md-8 col-12">
                                         <label>{{ __('Name') }}</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             name="name" value="{{ old('name', $user->name) }}" required
@@ -45,7 +45,7 @@
                                             name="username" value="{{ old('username', $user->username) }}"
                                             autocomplete="username" disabled>
 
-                                        @error('email')
+                                        @error('username')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -56,7 +56,8 @@
                                     <div class="form-group col-md-6 col-12">
                                         <label>{{ __('E-Mail Address') }}</label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                            name="email" value="{{ old('email', $user->email) }}" autocomplete="email">
+                                            name="email" value="{{ old('email', $user->email) }}" autocomplete="email"
+                                            placeholder="E-Mail Address">
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
