@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
@@ -40,6 +42,8 @@ class RoleController extends Controller
         DB::transaction(function () use ($request) {
             $validated = $request->validated();
 
+            $validated['name'] = Str::slug($validated['name']);
+
             $newRole = Role::create($validated);
         });
 
@@ -59,15 +63,25 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('role.role-edit', compact('role'), [
+            'title' => 'Roles'
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        //
+        DB::transaction(function () use ($request, $role) {
+            $validated = $request->validated();
+
+            $validated['name'] = Str::slug($validated['name']);
+
+            $role->update($validated);
+        });
+
+        return redirect()->route('admin.role.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -75,6 +89,10 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        DB::transaction(function () use ($role) {
+            $role->delete();
+        });
+
+        return redirect()->route('admin.role.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

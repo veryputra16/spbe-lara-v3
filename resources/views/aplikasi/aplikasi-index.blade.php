@@ -24,8 +24,10 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                         <div class="card-body">
-                            <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3"><i
-                                    class="fas fa-plus"></i> Add</a>
+                            @role('superadmin|admin-aplikasi|operator-aplikasi')
+                                <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3"><i
+                                        class="fas fa-plus"></i> Add</a>
+                            @endrole
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
                                     <thead>
@@ -50,21 +52,26 @@
                                                             class="fas fa-handshake"></i></a>
                                                     {{-- end button sementara --}}
 
-
-                                                    <a href="{{ route('admin.application.show', $application->id) }}"
-                                                        class="btn btn-dark btn-sm" title="Detail"><i
-                                                            class="fas fa-eye"></i></a>
-                                                    <a href="{{ route('admin.application.edit', $application->id) }}"
-                                                        class="btn btn-light btn-sm" title="Edit"><i
-                                                            class="fas fa-edit"></i></a>
-                                                    <form
-                                                        action="{{ route('admin.application.destroy', $application->id) }}"
-                                                        method="POST" style="display: inline-block;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
-                                                            title="Delete"><i class="fas fa-trash"></i></button>
-                                                    </form>
+                                                    @role('superadmin|admin-aplikasi|operator-aplikasi')
+                                                        <a href="{{ route('admin.application.show', $application->id) }}"
+                                                            class="btn btn-dark btn-sm" title="Detail"><i
+                                                                class="fas fa-eye"></i></a>
+                                                    @endrole
+                                                    @role('superadmin|admin-aplikasi|operator-aplikasi')
+                                                        <a href="{{ route('admin.application.edit', $application->id) }}"
+                                                            class="btn btn-light btn-sm" title="Edit"><i
+                                                                class="fas fa-edit"></i></a>
+                                                    @endrole
+                                                    @role('superadmin|admin-aplikasi')
+                                                        <form
+                                                            action="{{ route('admin.application.destroy', $application->id) }}"
+                                                            method="POST" style="display: inline-block;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                                title="Delete"><i class="fas fa-trash"></i></button>
+                                                        </form>
+                                                    @endrole
                                                 </td>
                                                 <td>{{ $application->nama_app }}</td>
                                                 <td>{{ $application->opd->nama }}</td>
