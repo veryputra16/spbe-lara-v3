@@ -25,10 +25,10 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-4 col-12">
-                                        <label>{{ __('Nama Role') }}</label>
+                                        <label>{{ __('Name Role') }}</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             name="name" value="{{ old('name') }}" required autocomplete="name"
-                                            placeholder="{{ __('Nama Role') }}">
+                                            placeholder="{{ __('Name Role') }}">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

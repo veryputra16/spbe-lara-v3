@@ -108,6 +108,10 @@
                         <a class="nav-link" href="{{ route('admin.role.index') }}"><i
                                 class="fas fa-user-cog"></i><span>Roles</span></a>
                     </li>
+                    <li class="{{ Request::is('admin/permission*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.permission.index') }}"><i
+                                class="fas fa-lock-open"></i><span>Permission</span></a>
+                    </li>
                     <li class="{{ Request::is('admin/opd*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.opd.index') }}"><i
                                 class="fas fa-building"></i><span>Perangkat

@@ -19,6 +19,7 @@ use App\Http\Controllers\KatserverController;
 use App\Http\Controllers\LayananappController;
 use App\Http\Controllers\MonevappController;
 use App\Http\Controllers\OpdController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -82,6 +83,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('opd', OpdController::class)->middleware('role:superadmin');
         Route::resource('user', UserController::class)->middleware('role:superadmin|admin-aplikasi|admin-spbe');
         Route::resource('role', RoleController::class)->middleware('role:superadmin');
+        Route::resource('permission', PermissionController::class)->middleware('role:superadmin');
     });
 
     Route::prefix('masterapp')->name('masterapp.')->group(function () {

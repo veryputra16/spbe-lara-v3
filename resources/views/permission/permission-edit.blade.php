@@ -17,7 +17,7 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <form method="post" class="needs-validation" novalidate=""
-                            action="{{ route('admin.role.update', $role) }}">
+                            action="{{ route('admin.permission.update', $permission) }}">
                             @csrf
                             @method('PUT')
                             {{-- <div class="card-header">
@@ -26,10 +26,10 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-4 col-12">
-                                        <label>{{ __('Name Role') }}</label>
+                                        <label>{{ __('Nama Permission') }}</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            name="name" value="{{ old('name', $role->name) }}" required
-                                            autocomplete="name" placeholder="{{ __('Name Role') }}">
+                                            name="name" value="{{ old('name', $permission->name) }}" required
+                                            autocomplete="name" placeholder="{{ __('Nama Permission') }}">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -39,7 +39,8 @@
                                 </div>
                             </div>
                             <div class="card-footer text-left">
-                                <a href="{{ route('admin.role.index') }}"" class="btn btn-dark">{{ __('Back') }}</a>
+                                <a href="{{ route('admin.permission.index') }}""
+                                    class="btn btn-dark">{{ __('Back') }}</a>
                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                             </div>
                         </form>
