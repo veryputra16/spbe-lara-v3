@@ -31,28 +31,28 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Penggunaan</th>
                                             <th>Action</th>
+                                            <th>Penggunaan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($katpenggunas as $katpengguna)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $katpengguna->kategori_pengguna }}</td>
-
                                                 <td>
                                                     <a href="{{ route('masterapp.katpengguna.edit', $katpengguna->id) }}"
-                                                        class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                        class="btn btn-light btn-sm" title="Edit"><i
+                                                            class="fas fa-edit"></i></a>
                                                     <form
                                                         action="{{ route('masterapp.katpengguna.destroy', $katpengguna->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger show_confirm"><i
-                                                                class="fas fa-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                            title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
+                                                <td>{{ $katpengguna->kategori_pengguna }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

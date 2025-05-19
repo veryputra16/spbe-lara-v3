@@ -31,28 +31,28 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Layanan</th>
                                             <th>Action</th>
+                                            <th>Layanan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($layananapps as $layananapp)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $layananapp->layanan_app }}</td>
-
                                                 <td>
                                                     <a href="{{ route('masterapp.layananapp.edit', $layananapp->id) }}"
-                                                        class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                        class="btn btn-light btn-sm" title="Edit"><i
+                                                            class="fas fa-edit"></i></a>
                                                     <form
                                                         action="{{ route('masterapp.layananapp.destroy', $layananapp->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger show_confirm"><i
-                                                                class="fas fa-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                            title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
+                                                <td>{{ $layananapp->layanan_app }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

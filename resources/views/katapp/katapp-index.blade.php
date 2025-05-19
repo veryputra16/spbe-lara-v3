@@ -31,27 +31,27 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Kategori Aplikasi</th>
                                             <th>Action</th>
+                                            <th>Kategori Aplikasi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($katapps as $katapp)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $katapp->kategori_aplikasi }}</td>
-
                                                 <td>
                                                     <a href="{{ route('masterapp.katapp.edit', $katapp->id) }}"
-                                                        class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                        class="btn btn-light btn-sm" title="Edit"><i
+                                                            class="fas fa-edit"></i></a>
                                                     <form action="{{ route('masterapp.katapp.destroy', $katapp->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger show_confirm"><i
-                                                                class="fas fa-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                            title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
+                                                <td>{{ $katapp->kategori_aplikasi }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

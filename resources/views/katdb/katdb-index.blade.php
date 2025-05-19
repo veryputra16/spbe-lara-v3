@@ -31,27 +31,27 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Database</th>
                                             <th>Action</th>
+                                            <th>Database</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($katdbs as $katdb)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $katdb->kategori_database }}</td>
-
                                                 <td>
                                                     <a href="{{ route('masterapp.katdb.edit', $katdb->id) }}"
-                                                        class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                        class="btn btn-light btn-sm" title="Edit"><i
+                                                            class="fas fa-edit"></i></a>
                                                     <form action="{{ route('masterapp.katdb.destroy', $katdb->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger show_confirm"><i
-                                                                class="fas fa-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                            title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
+                                                <td>{{ $katdb->kategori_database }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

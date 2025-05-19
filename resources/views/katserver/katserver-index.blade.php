@@ -31,28 +31,28 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Server</th>
                                             <th>Action</th>
+                                            <th>Server</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($katservers as $katserver)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $katserver->kategori_server }}</td>
-
                                                 <td>
                                                     <a href="{{ route('masterapp.katserver.edit', $katserver->id) }}"
-                                                        class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                        class="btn btn-light btn-sm" title="Edit"><i
+                                                            class="fas fa-edit"></i></a>
                                                     <form
                                                         action="{{ route('masterapp.katserver.destroy', $katserver->id) }}"
                                                         method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger show_confirm"><i
-                                                                class="fas fa-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                            title="Delete"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
+                                                <td>{{ $katserver->kategori_server }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
