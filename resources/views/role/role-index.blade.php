@@ -40,6 +40,9 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
+                                                    <a href="{{ route('admin.role.show', $role->id) }}"
+                                                        class="btn btn-dark btn-sm" title="Detail"><i
+                                                            class="fas fa-key"></i></a>
                                                     <a href="{{ route('admin.role.edit', $role->id) }}"
                                                         class="btn btn-light btn-sm" title="Edit"><i
                                                             class="fas fa-edit"></i></a>

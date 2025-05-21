@@ -24,18 +24,16 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="form-group col-md-4 col-12">
-                                        <label>{{ __('Name Role') }}</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            name="name" value="{{ old('name', $role->name) }}" required
-                                            autocomplete="name" placeholder="{{ __('Name Role') }}">
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                <div class="form-group col-md-4 col-12">
+                                    <label>{{ __('Name Role') }}</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        name="name" value="{{ old('name', $role->name) }}" required autocomplete="name"
+                                        placeholder="{{ __('Name Role') }}">
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="card-footer text-left">

@@ -22,9 +22,9 @@ class RolePermissionSeeder extends Seeder
         $opapp = Role::create(['name' => 'operator-aplikasi']);
         $opspbe = Role::create(['name' => 'operator-spbe']);
         $ekse = Role::create(['name' => 'eksekutif']); // fitur evaluasi SPBE]);
-        $ekseplus = Role::create(['name' => 'eksekutif-plus']); // fitur penilaian SPBE dan data aplikasi , portal cms dll]);
         $guestApp = Role::create(['name' => 'viewer-aplikasi']);
         $guestSPBE = Role::create(['name' => 'viewer-spbe']);
+        $guestall = Role::create(['name' => 'viewer-all']); // fitur penilaian SPBE dan data aplikasi , portal cms dll]);
 
         // membuat permission
         $addApplication = Permission::create(['name' => 'add-aplikasi']);
@@ -47,24 +47,13 @@ class RolePermissionSeeder extends Seeder
         $viewAppLain = Permission::create(['name' => 'view-aplikasi-lain']);
 
         // menghubungkan role dengan permission
-        $superadmin->syncPermissions($addApplication, $updateApplication, $deleteApplication, $viewApplication);
-        $superadmin->syncPermissions($addPortal, $updatePortal, $deletePortal);
-        $superadmin->syncPermissions($addAppDesa, $updateAppDesa, $deleteAppDesa, $viewAppDesa);
-        $superadmin->syncPermissions($addAppLain, $updateAppLain, $deleteAppLain, $viewAppLain);
+        $superadmin->syncPermissions($addApplication, $updateApplication, $deleteApplication, $viewApplication, $addPortal, $updatePortal, $deletePortal, $addAppDesa, $updateAppDesa, $deleteAppDesa, $viewAppDesa, $addAppLain, $updateAppLain, $deleteAppLain, $viewAppLain);
 
-        $adminapp->syncPermissions($addApplication, $updateApplication, $deleteApplication, $viewApplication);
-        $adminapp->syncPermissions($addPortal, $updatePortal, $deletePortal);
-        $adminapp->syncPermissions($addAppDesa, $updateAppDesa, $deleteAppDesa, $viewAppDesa);
-        $adminapp->syncPermissions($addAppLain, $updateAppLain, $deleteAppLain, $viewAppLain);
+        $adminapp->syncPermissions($addApplication, $updateApplication, $deleteApplication, $viewApplication, $addPortal, $updatePortal, $deletePortal, $addAppDesa, $updateAppDesa, $deleteAppDesa, $viewAppDesa, $addAppLain, $updateAppLain, $deleteAppLain, $viewAppLain);
 
-        $opapp->syncPermissions($addApplication, $updateApplication, $viewApplication);
-        $opapp->syncPermissions($updatePortal);
-        $opapp->syncPermissions($addAppDesa, $updateAppDesa, $viewAppDesa);
-        $opapp->syncPermissions($addAppLain, $updateAppLain, $viewAppLain);
+        $opapp->syncPermissions($addApplication, $updateApplication, $viewApplication, $updatePortal, $addAppDesa, $updateAppDesa, $viewAppDesa, $addAppLain, $updateAppLain, $viewAppLain);
 
-        $guestApp->syncPermissions($viewApplication);
-        $guestApp->syncPermissions($viewAppDesa);
-        $guestApp->syncPermissions($viewAppLain);
+        $guestApp->syncPermissions($viewApplication, $viewAppDesa, $viewAppLain);
 
         // membuat user superadmin default
         $userSuperadmin = User::create([

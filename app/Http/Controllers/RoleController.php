@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
@@ -55,7 +56,11 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        $permissions = Permission::all();
+
+        return view('role.role-manage', compact('role', 'permissions'), [
+            'title' => 'Roles'
+        ]);
     }
 
     /**
@@ -63,7 +68,9 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('role.role-edit', compact('role'), [
+        $permissions = Permission::all();
+
+        return view('role.role-edit', compact('role', 'permissions'), [
             'title' => 'Roles'
         ]);
     }
@@ -94,5 +101,16 @@ class RoleController extends Controller
         });
 
         return redirect()->route('admin.role.index')->with('success', 'Penghapusan data sukses dilakukan.');
+    }
+
+    public function updatePermission(Request $request, Role $role)
+    {
+        // $role = Role::findOrFail($id);
+        // return $request;
+        $role->syncPermissions($request->permission ?? []);
+
+
+        // return redirect()->route('admin.role.index')->with('success', 'Perubahan data permission telah berhasil dilakukan.');
+        return redirect()->back()->with('success', 'Perubahan data permission telah berhasil dilakukan.');
     }
 }

@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('user', UserController::class)->middleware('role:superadmin|admin-aplikasi|admin-spbe');
         Route::resource('role', RoleController::class)->middleware('role:superadmin');
         Route::resource('permission', PermissionController::class)->middleware('role:superadmin');
+        Route::post('role/{role}/permission', [RoleController::class, 'updatePermission'])->name('role.update-permission')->middleware('role:superadmin');
     });
 
     Route::prefix('masterapp')->name('masterapp.')->group(function () {
