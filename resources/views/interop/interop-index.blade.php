@@ -7,6 +7,7 @@
                 <th>Action</th>
                 <th>Dokumen Integrasi</th>
                 <th>Keterangan</th>
+                <th>Updated At</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,10 @@
                     @endempty
                 </td>
                 <td>{{ $interop->ket_interop ? $interop->ket_interop : '-' }}</td>
+                <td><span class="btn btn-sm btn-outline-dark">
+                        {{ $interop->updated_at->translatedFormat('d F Y') }}
+                        oleh
+                        {{ $interop->user->name }}</span></td>
             </tr>
         @empty
             <tr>
