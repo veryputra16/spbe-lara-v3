@@ -24,15 +24,21 @@
                                     class="fas fa-trash"></i></button>
                         </form>
                     </td>
-                    <td><a href="{{ Storage::url($interop->doc_interop) }}" target="_blank">Dokumen
-                            Integrasi</a></td>
-                    <td>{{ $interop->ket_interop }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="3">No data available in table</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+                    <td>
+                    @empty($interop->doc_interop)
+                        {{ '-' }}
+                    @else
+                        <a href="{{ Storage::url($interop->doc_interop) }}" target="_blank">Dokumen
+                            Integrasi</a>
+                    @endempty
+                </td>
+                <td>{{ $interop->ket_interop ? $interop->ket_interop : '-' }}</td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="3">No data available in table</td>
+            </tr>
+        @endforelse
+    </tbody>
+</table>
 </div>

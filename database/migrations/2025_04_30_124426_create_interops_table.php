@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('application_id')->constrained()->onDelete('cascade');
             $table->text('doc_interop')->nullable();
             $table->text('ket_interop')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -25,6 +25,7 @@ class UpdateInteropRequest extends FormRequest
             'application_id' => ['required'],
             'doc_interop' => ['sometimes', 'file', 'mimes:pdf', 'max:100000'],
             'ket_interop' => ['sometimes', 'string', 'max:65535'],
+            'user_id' => ['required'],
         ];
     }
 }

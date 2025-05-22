@@ -23,8 +23,9 @@ class StoreInteropRequest extends FormRequest
     {
         return [
             'application_id' => ['required'],
-            'doc_interop' => ['nullable', 'file', 'mimes:pdf', 'max:100000'],
+            'doc_interop' => ['required', 'file', 'mimes:pdf', 'max:100000'],
             'ket_interop' => ['nullable', 'string', 'max:65535'],
+            'user_id' => ['required'],
         ];
     }
 }

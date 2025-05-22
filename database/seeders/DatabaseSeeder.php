@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ChangelogSeeder::class,
             SdmteknicSeeder::class,
             MonevappSeeder::class,
+            InteropSeeder::class,
         ]);
     }
 }

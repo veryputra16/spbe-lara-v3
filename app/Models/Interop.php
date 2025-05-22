@@ -15,6 +15,7 @@ class Interop extends Model
         'application_id',
         'doc_interop',
         'ket_interop',
+        'user_id',
     ];
 
     public function app(): BelongsTo
