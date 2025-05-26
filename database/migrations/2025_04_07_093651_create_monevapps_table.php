@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('tgl_monev');
             $table->text('bukti_monev')->nullable();
             $table->text('ket_monev')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

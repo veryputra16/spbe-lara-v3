@@ -26,11 +26,9 @@
                                 <input type="hidden" class="form-control @error('application_id') is-invalid @enderror"
                                     name="application_id" value="{{ old('application_id', $application->id) }}" readonly
                                     autocomplete="application_id" placeholder="{{ __('ID Application') }}">
-                                @error('application_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input type="hidden" class="form-control @error('user_id') is-invalid @enderror"
+                                    name="user_id" value="{{ old('user_id', auth()->user()->id) }}" required readonly
+                                    autocomplete="user_id" placeholder="{{ __('ID User') }}">
                                 <div class="form-group col-md-8 col-12">
                                     <label>{{ __('Nama Aplikasi') }}</label>
                                     <input type="text" class="form-control"

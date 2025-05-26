@@ -8,6 +8,7 @@
                 <th>Tanggal Monev</th>
                 <th>Bukti Monev</th>
                 <th>Keterangan Monev</th>
+                <th>Updated At</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,10 @@
                         @endif
                     </td>
                     <td>{{ $monevapp->ket_monev ? $monevapp->ket_monev : '-' }}</td>
+                    <td><span class="btn btn-sm btn-outline-dark">
+                            {{ $monevapp->updated_at->translatedFormat('d F Y') }}
+                            oleh
+                            {{ $monevapp->user->name }}</span></td>
                 </tr>
             @empty
                 <tr>

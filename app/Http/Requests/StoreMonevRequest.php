@@ -26,6 +26,7 @@ class StoreMonevRequest extends FormRequest
             'tgl_monev' => ['required', 'date'],
             'bukti_monev' => ['nullable', 'file', 'mimes:pdf', 'max:10000'],
             'ket_monev' => ['nullable', 'string'],
+            'user_id' => ['required'],
         ];
     }
 }

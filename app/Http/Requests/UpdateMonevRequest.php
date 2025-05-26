@@ -26,6 +26,7 @@ class UpdateMonevRequest extends FormRequest
             'tgl_monev' => ['required', 'date'],
             'bukti_monev' => ['sometimes', 'file', 'mimes:pdf', 'max:10000'],
             'ket_monev' => ['nullable', 'text'],
+            'user_id' => ['required'],
         ];
     }
 }

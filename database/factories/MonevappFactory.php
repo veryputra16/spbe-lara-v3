@@ -21,6 +21,7 @@ class MonevappFactory extends Factory
             'tgl_monev' => fake()->date(),
             'bukti_monev' => fake()->randomElement(['aplikasi/bukti-monevs/gbpLoV5uw5SehevUJTBdRBLYnVCdNj11PhTOmxRX.pdf']),
             'ket_monev' => fake()->sentence(),
+            'user_id' => $this->faker->numberBetween(1, 2),
         ];
     }
 }
