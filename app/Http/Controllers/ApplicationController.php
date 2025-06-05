@@ -17,6 +17,7 @@ use App\Models\Katserver;
 use App\Models\Layananapp;
 use App\Models\Monevapp;
 use App\Models\Opd;
+use App\Models\Pengembangan;
 use App\Models\Sdmteknic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -85,8 +86,9 @@ class ApplicationController extends Controller
         $monevapps = Monevapp::where('application_id', $application->id)->get();
         $sdmteknics = Sdmteknic::where('application_id', $application->id)->get();
         $interops = Interop::where('application_id', $application->id)->get();
+        $pengembangans = Pengembangan::where('application_id', $application->id)->orderBy('tahun_pengembangan', 'desc')->get();
 
-        return view('aplikasi.aplikasi-detail', compact('application', 'monevapps', 'sdmteknics', 'interops'), [
+        return view('aplikasi.aplikasi-detail', compact('application', 'monevapps', 'sdmteknics', 'interops', 'pengembangans'), [
             'title' => 'Data Aplikasi'
         ]);
     }

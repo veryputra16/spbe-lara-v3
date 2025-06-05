@@ -16,6 +16,7 @@ class Monevapp extends Model
         'tgl_monev',
         'bukti_monev',
         'ket_monev',
+        'user_id',
     ];
 
     protected $casts = [

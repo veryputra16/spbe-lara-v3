@@ -51,7 +51,7 @@ class MonevappController extends Controller
             $newMonevapp = Monevapp::create($validated);
         });
 
-        return redirect()->route('admin.application.index')->with('success', 'Data telah tersimpan dengan sukses!');
+        return redirect()->route('admin.application.show', $request->application_id)->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**

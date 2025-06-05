@@ -66,16 +66,17 @@
                                         aria-selected="false">Pengembangan</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="monevApp-tab" data-toggle="tab" href="#monevApp" role="tab"
-                                        aria-controls="monevApp" aria-selected="false">Monev Aplikasi</a>
+                                    <a class="nav-link" id="interoperabilitas-tab" data-toggle="tab"
+                                        href="#interoperabilitas" role="tab" aria-controls="interoperabilitas"
+                                        aria-selected="false">Interoperabilitas</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="tenagaKelola-tab" data-toggle="tab" href="#tenagaKelola"
                                         role="tab" aria-controls="tenagaKelola" aria-selected="false">Tenaga Teknis</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="interopabilas-tab" data-toggle="tab" href="#interopabilas"
-                                        role="tab" aria-controls="interopabilas" aria-selected="false">Interopabilas</a>
+                                    <a class="nav-link" id="monevApp-tab" data-toggle="tab" href="#monevApp" role="tab"
+                                        aria-controls="monevApp" aria-selected="false">Monev Aplikasi</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -196,11 +197,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="pengembanganApp" role="tabpanel"
                                     aria-labelledby="pengembanganApp-tab">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. In fugit quibusdam dolor
-                                    possimus corporis blanditiis ducimus tempora voluptatem accusamus quos, maxime atque
-                                    facilis natus nesciunt quis illum provident quod iusto quas recusandae cupiditate?
-                                    Corrupti quo quas fugiat reprehenderit. Minima sed nulla, doloremque quam dignissimos
-                                    placeat ea architecto dicta consequatur soluta?
+                                    @include('pengembangan.pengembangan-index')
                                 </div>
                                 <div class="tab-pane fade" id="monevApp" role="tabpanel"
                                     aria-labelledby="monevApp-tab">
@@ -210,8 +207,8 @@
                                     aria-labelledby="tenagaKelola-tab">
                                     @include('sdmteknis.sdmteknis-index')
                                 </div>
-                                <div class="tab-pane fade" id="interopabilas" role="tabpanel"
-                                    aria-labelledby="interopabilas-tab">
+                                <div class="tab-pane fade" id="interoperabilitas" role="tabpanel"
+                                    aria-labelledby="interoperabilitas-tab">
                                     @include('interop.interop-index')
                                 </div>
                             </div>

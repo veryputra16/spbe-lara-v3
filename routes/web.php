@@ -19,6 +19,7 @@ use App\Http\Controllers\KatserverController;
 use App\Http\Controllers\LayananappController;
 use App\Http\Controllers\MonevappController;
 use App\Http\Controllers\OpdController;
+use App\Http\Controllers\PengembanganController;
 use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -61,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/interop', InteropController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('application/{application}/pengembangan', PengembanganController::class);
 
         // portal CMS
         Route::resource('subdomain', SubdomainController::class)

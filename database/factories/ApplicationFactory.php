@@ -36,22 +36,6 @@ class ApplicationFactory extends Factory
             'status' => $this->faker->numberBetween(0, 1),
             'alasan_nonaktif' => $this->faker->sentence(),
             'user_id' => $this->faker->numberBetween(1, 2),
-            // 'fitur_app' => $this->faker->text(20),
-            // 'buku_manual' => $this->faker->text(50),
-            // 'katplatform_id' => $this->faker->numberBetween(1, 2),
-            // 'bahasaprogram_id' => $this->faker->numberBetween(1, 2),
-            // 'katdb_id' => $this->faker->numberBetween(1, 2),
-            // 'frameworkapp_id' => $this->faker->numberBetween(1, 2),
-            // 'nda' => $this->faker->text(50),
-            // 'sop' => $this->faker->text(50),
-            // 'dokumen_perancangan' => $this->faker->text(50),
-            // 'capture_frontend' => $this->faker->text(50),
-            // 'capture_backend' => $this->faker->text(50),
-            // 'surat_mohon' => $this->faker->text(50),
-            // 'kak' => $this->faker->text(50),
-            // 'implemen_app' => $this->faker->text(50),
-            // 'lapor_pentest' => $this->faker->text(50),
-            // 'video_pengguna' => $this->faker->url(),
         ];
     }
 }

@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             SdmteknicSeeder::class,
             MonevappSeeder::class,
             InteropSeeder::class,
+            PengembanganSeeder::class,
         ]);
     }
 }
