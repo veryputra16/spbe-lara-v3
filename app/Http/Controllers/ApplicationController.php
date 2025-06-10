@@ -83,7 +83,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        $monevapps = Monevapp::where('application_id', $application->id)->get();
+        $monevapps = Monevapp::where('application_id', $application->id)->orderBy('tgl_monev', 'desc')->get();
         $sdmteknics = Sdmteknic::where('application_id', $application->id)->get();
         $interops = Interop::where('application_id', $application->id)->get();
         $pengembangans = Pengembangan::where('application_id', $application->id)->orderBy('tahun_pengembangan', 'desc')->get();

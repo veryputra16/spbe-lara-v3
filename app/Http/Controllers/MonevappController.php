@@ -81,16 +81,21 @@ class MonevappController extends Controller
             $validated = $request->validated();
 
             if ($request->hasFile('bukti_monev')) {
-                Storage::disk('public')->delete($monevapp->bukti_monev);
+                // Hapus file lama jika ada
+                if ($monevapp->bukti_monev && Storage::disk('public')->exists($monevapp->bukti_monev)) {
+                    Storage::disk('public')->delete($monevapp->bukti_monev);
+                }
 
+                // Upload file baru
                 $bukti_monevPath = $request->file('bukti_monev')->store('aplikasi/bukti-monevs', 'public');
+                // Simpan path file baru
                 $validated['bukti_monev'] = $bukti_monevPath;
             }
 
             $monevapp->update($validated);
         });
 
-        return redirect()->route('admin.application.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
+        return redirect()->route('admin.application.show', $request->application_id)->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -108,6 +113,6 @@ class MonevappController extends Controller
             $monevapp->delete();
         });
 
-        return redirect()->route('admin.application.index')->with('success', 'Penghapusan data sukses dilakukan.');
+        return redirect()->route('admin.application.show', $application->id)->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-left">
-                                <a href="{{ route('admin.application.index') }}""
+                                <a href="{{ route('admin.application.show', $application->id) }}""
                                     class="btn btn-dark">{{ __('Back') }}</a>
                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                             </div>
