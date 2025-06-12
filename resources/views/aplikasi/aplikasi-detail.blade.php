@@ -75,6 +75,10 @@
                                         role="tab" aria-controls="tenagaKelola" aria-selected="false">Tenaga Teknis</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" id="keamananApp-tab" data-toggle="tab" href="#keamananApp"
+                                        role="tab" aria-controls="keamananApp" aria-selected="false">Keamanan</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" id="monevApp-tab" data-toggle="tab" href="#monevApp" role="tab"
                                         aria-controls="monevApp" aria-selected="false">Monev Aplikasi</a>
                                 </li>
@@ -201,11 +205,15 @@
                                 </div>
                                 <div class="tab-pane fade" id="monevApp" role="tabpanel"
                                     aria-labelledby="monevApp-tab">
-                                    @include('monevapp.monevapp-index')
+                                    @include('monevapp.monevapp-index-detailapp')
                                 </div>
                                 <div class="tab-pane fade" id="tenagaKelola" role="tabpanel"
                                     aria-labelledby="tenagaKelola-tab">
                                     @include('sdmteknis.sdmteknis-index')
+                                </div>
+                                <div class="tab-pane fade" id="keamananApp" role="tabpanel"
+                                    aria-labelledby="keamananApp-tab">
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque, dolore.
                                 </div>
                                 <div class="tab-pane fade" id="interoperabilitas" role="tabpanel"
                                     aria-labelledby="interoperabilitas-tab">

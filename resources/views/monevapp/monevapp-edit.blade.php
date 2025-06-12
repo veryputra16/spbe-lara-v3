@@ -17,25 +17,16 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <form method="post" class="needs-validation" novalidate=""
-                            action="{{ route('admin.monevapp.update', ['application' => $application->id, 'monevapp' => $monevapp]) }}"
-                            enctype="multipart/form-data">
+                            action="{{ route('admin.monevapp.update', $monevapp) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             {{-- <div class="card-header">
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                             <div class="card-body">
-                                <input type="hidden" class="form-control @error('application_id') is-invalid @enderror"
-                                    name="application_id" value="{{ old('application_id', $application->id) }}" readonly
-                                    autocomplete="application_id" placeholder="{{ __('ID Application') }}">
                                 <input type="hidden" class="form-control @error('user_id') is-invalid @enderror"
                                     name="user_id" value="{{ old('user_id', auth()->user()->id) }}" required readonly
                                     autocomplete="user_id" placeholder="{{ __('ID User') }}">
-                                <div class="form-group col-md-8 col-12">
-                                    <label>{{ __('Nama Aplikasi') }}</label>
-                                    <input type="text" class="form-control"
-                                        value="{{ old('application_id', $application->nama_app) }}" disabled>
-                                </div>
                                 <div class="form-group col-md-4 col-12">
                                     <label>{{ __('Tanggal Monev Aplikasi') }}</label>
                                     <div class="input-group">
@@ -54,6 +45,26 @@
                                             </span>
                                         @enderror
                                     </div>
+                                </div>
+                                <div class="form-group col-md-8 col-12">
+                                    <label>{{ __('Nama Aplikasi') }}</label>
+                                    <select class="form-control select2 @error('application_id') is-invalid @enderror"
+                                        name="application_id" required autocomplete="application_id">
+                                        {{-- <option value="">-</option> --}}
+                                        @forelse ($applications as $app)
+                                            <option value="{{ $app->id }}"
+                                                {{ old('application_id', $monevapp->application_id) == $app->id ? 'selected' : '' }}>
+                                                {{ $app->nama_app }}
+                                            </option>
+                                        @empty
+                                            <option value="">Tidak Ada Data</option>
+                                        @endforelse
+                                    </select>
+                                    @error('application_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
                                     <label>{{ __('Bukti Laporan Monev') }}</label>
@@ -87,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-left">
-                                <a href="{{ route('admin.application.show', $application->id) }}""
+                                <a href="{{ route('admin.monevapp.index') }}""
                                     class="btn btn-dark">{{ __('Back') }}</a>
                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                             </div>

@@ -44,6 +44,11 @@
                         <a class="nav-link" href="{{ route('admin.applain.index') }}"><i class="fas fa-box"></i><span>Aplikasi
                                 Lainnya</span></a>
                     </li>
+                    <li class="{{ Request::is('admin/monevapp*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.monevapp.index') }}"><i
+                                class="fas fa-clipboard-check"></i><span>Monev
+                                Aplikasi</span></a>
+                    </li>
                 @endrole
 
                 @role('superadmin|admin-aplikasi|admin-spbe')

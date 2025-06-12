@@ -54,8 +54,8 @@ Route::middleware(['auth'])->group(function () {
         // data aplikasi
         Route::resource('application', ApplicationController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
-        Route::resource('application/{application}/monevapp', MonevappController::class)
-            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        // Route::resource('application/{application}/monevapp', MonevappController::class)
+        //     ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/sdmteknic', SdmTechnicController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/sdmpengembang', SdmpengembangController::class)
@@ -63,6 +63,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('application/{application}/interop', InteropController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/pengembangan', PengembanganController::class);
+
+        // monev aplikasi
+        Route::resource('monevapp', MonevappController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
 
         // portal CMS
         Route::resource('subdomain', SubdomainController::class)
