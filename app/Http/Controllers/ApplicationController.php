@@ -70,104 +70,48 @@ class ApplicationController extends Controller
      */
     public function store(StoreFullApplicationRequest $request)
     {
-        DB::transaction(function () use ($request) {
-            $validated = $request->validated();
+    DB::transaction(function () use ($request) {
+        $validated = $request->validated();
 
-            // Generate no_regis_app
-            $validated['no_regis_app'] = Str::upper(Str::random(12));
+        // Simpan file dasar hukum aplikasi (jika ada)
+        if ($request->hasFile('dasar_hukum')) {
+            $dasar_hukumPath = $request->file('dasar_hukum')->store('aplikasi/dasar-hukums', 'public');
+            $validated['dasar_hukum'] = $dasar_hukumPath;
+        }
 
-            // Handle file upload Application
-            if ($request->hasFile('dasar_hukum')) {
-                $validated['dasar_hukum'] = $request->file('dasar_hukum')->store('aplikasi/dasar-hukums', 'public');
+        // Generate nomor registrasi aplikasi
+        $validated['no_regis_app'] = Str::upper(Str::random(12));
+
+        // Simpan data aplikasi dulu
+        $newApplication = Application::create($validated);
+
+        // === Simpan data pengembangan ===
+        $pengembanganData = $request->only([
+            'tahun_pengembangan', 'riwayat_pengembangan', 'fitur',
+            'katplatform_id', 'katdb_id', 'bahasaprogram_id', 'frameworkapp_id',
+            'video_penggunaan'
+        ]);
+        $pengembanganData['application_id'] = $newApplication->id;
+        $pengembanganData['user_id'] = $validated['user_id'];
+
+        // Handle file upload pengembangan
+        $fileFields = [
+            'nda', 'doc_perancangan', 'surat_mohon', 'kak', 'sop',
+            'doc_pentest', 'doc_uat', 'buku_manual', 'capture_frontend', 'capture_backend'
+        ];
+
+        foreach ($fileFields as $field) {
+            if ($request->hasFile($field)) {
+                $path = $request->file($field)->store("pengembangan/$field", 'public');
+                $pengembanganData[$field] = $path;
             }
+        }
 
-            // Simpan data Application
-            $application = Application::create([
-                'no_regis_app' => $validated['no_regis_app'],
-                'nama_app' => $validated['nama_app'],
-                'fungsi_app' => $validated['fungsi_app'],
-                'url' => $validated['url'] ?? null,
-                'dasar_hukum' => $validated['dasar_hukum'] ?? null,
-                'opd_id' => $validated['opd_id'],
-                'tahun_buat' => $validated['tahun_buat'],
-                'repositori' => $validated['repositori'] ?? null,
-                'aset_takberwujud' => $validated['aset_takberwujud'],
-                'proses_bisnis' => $validated['proses_bisnis'] ?? null,
-                'ket_probis' => $validated['ket_probis'] ?? null,
-                'katpengguna_id' => $validated['katpengguna_id'],
-                'katserver_id' => $validated['katserver_id'],
-                'layananapp_id' => $validated['layananapp_id'],
-                'katapp_id' => $validated['katapp_id'],
-                'jaringan_intra' => $validated['jaringan_intra'],
-                'status' => $validated['status'],
-                'alasan_nonaktif' => $validated['alasan_nonaktif'] ?? null,
-                'user_id' => $validated['user_id'],
-            ]);
+        Pengembangan::create($pengembanganData);
+    });
 
-            // Mapping untuk file Pengembangan
-            $fileFields = [
-                'nda' => 'pengembangan/ndas',
-                'doc_perancangan' => 'pengembangan/perancangans',
-                'surat_mohon' => 'pengembangan/surat-mohons',
-                'kak' => 'pengembangan/kaks',
-                'sop' => 'pengembangan/sops',
-                'doc_pentest' => 'pengembangan/pentests',
-                'doc_uat' => 'pengembangan/uats',
-                'buku_manual' => 'pengembangan/buku-manuals',
-                'capture_frontend' => 'pengembangan/capture-frontends',
-                'capture_backend' => 'pengembangan/capture-backends',
-            ];
-
-            foreach ($fileFields as $field => $path) {
-                if ($request->hasFile($field)) {
-                    $validated[$field] = $request->file($field)->store($path, 'public');
-                }
-            }
-
-            // Simpan data Pengembangan
-            Pengembangan::create([
-                'application_id' => $application->id,
-                'tahun_pengembangan' => $validated['tahun_pengembangan'],
-                'riwayat_pengembangan' => $validated['riwayat_pengembangan'] ?? null,
-                'fitur' => $validated['fitur'],
-                'nda' => $validated['nda'] ?? null,
-                'doc_perancangan' => $validated['doc_perancangan'] ?? null,
-                'surat_mohon' => $validated['surat_mohon'] ?? null,
-                'kak' => $validated['kak'] ?? null,
-                'sop' => $validated['sop'] ?? null,
-                'doc_pentest' => $validated['doc_pentest'] ?? null,
-                'doc_uat' => $validated['doc_uat'] ?? null,
-                'video_penggunaan' => $validated['video_penggunaan'] ?? null,
-                'buku_manual' => $validated['buku_manual'] ?? null,
-                'katplatform_id' => $validated['katplatform_id'],
-                'katdb_id' => $validated['katdb_id'],
-                'bahasaprogram_id' => $validated['bahasaprogram_id'],
-                'frameworkapp_id' => $validated['frameworkapp_id'],
-                'capture_frontend' => $validated['capture_frontend'] ?? null,
-                'capture_backend' => $validated['capture_backend'] ?? null,
-                'user_id' => $validated['user_id'],
-            ]);
-        });
-
-        return redirect()->route('admin.application.index')->with('success', 'Data aplikasi dan pengembangan berhasil disimpan!');
-    }
-    // public function store(StoreApplicationRequest $request) 
-    // {
-    //     DB::transaction(function () use ($request) {
-    //         $validated = $request->validated();
-
-    //         $validated['no_regis_app'] = Str::upper(Str::random(12));
-
-    //         if ($request->hasFile('dasar_hukum')) {
-    //             $dasar_hukumPath = $request->file('dasar_hukum')->store('aplikasi/dasar-hukums', 'public');
-    //             $validated['dasar_hukum'] = $dasar_hukumPath;
-    //         }
-
-    //         $newApplication = Application::create($validated);
-    //     });
-
-    //     return redirect()->route('admin.application.index')->with('success', 'Data telah tersimpan dengan sukses!');
-    // }
+    return redirect()->route('admin.application.index')->with('success', 'Data telah tersimpan dengan sukses!');
+}
 
     /**
      * Display the specified resource.

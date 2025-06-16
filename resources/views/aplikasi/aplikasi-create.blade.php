@@ -302,7 +302,6 @@
                                     @enderror
                                 </div>
 
-
                                     {{-- ini insert ke pengembangans --}}
                                 <br>
                                     <div class="section-title mt-0">Pengembangan</div>
