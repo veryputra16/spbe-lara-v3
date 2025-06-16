@@ -1,7 +1,7 @@
-<div>
+<div class="table-responsive">
     <a href="{{ route('admin.pengembangan.create', $application->id) }}" class="btn btn-primary mb-3"><i
             class="fas fa-plus"></i> Add</a>
-    <table class="table table-bordered table-hover" id="">
+    <table class="table table-bordered table-hover" id="myTablePengembangan">
         <thead>
             <tr>
                 <th>#</th>
@@ -38,7 +38,7 @@
                             <a href="{{ $pengembangan->video_penggunaan }}"
                                 target="_blank">{{ $pengembangan->video_penggunaan }}</a>
                         @else
-                            {{ '-' }}
+                            <span class="text-muted">-</span>
                         @endif
                     </td>
                     <td>{{ $pengembangan->platform->kategori_platform }}</td>
@@ -47,9 +47,9 @@
                     <td>{{ $pengembangan->frameworkapp->framework_app }}</td>
                 </tr>
             @empty
-                <tr>
+                {{-- <tr>
                     <td colspan="8">No data available in table</td>
-                </tr>
+                </tr> --}}
             @endforelse
         </tbody>
     </table>

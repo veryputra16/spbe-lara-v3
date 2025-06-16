@@ -213,7 +213,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="keamananApp" role="tabpanel"
                                     aria-labelledby="keamananApp-tab">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque, dolore.
+                                    @include('keamanan.keamanan-index')
                                 </div>
                                 <div class="tab-pane fade" id="interoperabilitas" role="tabpanel"
                                     aria-labelledby="interoperabilitas-tab">
@@ -259,7 +259,7 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
     <script>
-        $("#myTable").dataTable({
+        $("#myTableMonev,#myTableKeamanan,#myTableTeknis,#myTableInterop,#myTablePengembangan").dataTable({
             "searching": false,
             "responsive": true,
             "lengthChange": false,

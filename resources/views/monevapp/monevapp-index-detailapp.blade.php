@@ -1,7 +1,7 @@
-<div>
+<div class="table-responsive">
     {{-- <a href="{{ route('admin.monevapp.create', $application->id) }}" class="btn btn-primary mb-3"><i
             class="fas fa-plus"></i> Add</a> --}}
-    <table class="table table-bordered table-hover" id="">
+    <table class="table table-bordered table-hover" id="myTableMonev">
         <thead>
             <tr>
                 {{-- <th>Action</th> --}}
@@ -33,19 +33,19 @@
                             <a href="{{ asset(Storage::url($monevapp->bukti_monev)) }}" target="_blank">View Dokumen
                                 Bukti Monev</a>
                         @else
-                            {{ '-' }}
+                            <span class="text-muted">-</span>
                         @endif
                     </td>
-                    <td>{{ $monevapp->ket_monev ? $monevapp->ket_monev : '-' }}</td>
+                    <td>{!! $monevapp->ket_monev ? $monevapp->ket_monev : '<span class="text-muted">-</span>' !!}</td>
                     <td><span class="btn btn-sm btn-outline-dark">
                             {{ $monevapp->updated_at->translatedFormat('d F Y') }}
                             oleh
                             {{ $monevapp->user->name }}</span></td>
                 </tr>
             @empty
-                <tr>
+                {{-- <tr>
                     <td colspan="5">No data available in table</td>
-                </tr>
+                </tr> --}}
             @endforelse
         </tbody>
     </table>

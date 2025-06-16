@@ -14,6 +14,7 @@ use App\Models\Katdb;
 use App\Models\Katpengguna;
 use App\Models\Katplatform;
 use App\Models\Katserver;
+use App\Models\Keamanan;
 use App\Models\Layananapp;
 use App\Models\Monevapp;
 use App\Models\Opd;
@@ -85,10 +86,11 @@ class ApplicationController extends Controller
     {
         $monevapps = Monevapp::where('application_id', $application->id)->orderBy('tgl_monev', 'desc')->get();
         $sdmteknics = Sdmteknic::where('application_id', $application->id)->get();
-        $interops = Interop::where('application_id', $application->id)->get();
+        $interops = Interop::where('application_id', $application->id)->orderBy('id', 'desc')->get();
         $pengembangans = Pengembangan::where('application_id', $application->id)->orderBy('tahun_pengembangan', 'desc')->get();
+        $keamanans = Keamanan::where('application_id', $application->id)->orderBy('id', 'desc')->get();
 
-        return view('aplikasi.aplikasi-detail', compact('application', 'monevapps', 'sdmteknics', 'interops', 'pengembangans'), [
+        return view('aplikasi.aplikasi-detail', compact('application', 'monevapps', 'sdmteknics', 'interops', 'pengembangans', 'keamanans'), [
             'title' => 'Data Aplikasi'
         ]);
     }
@@ -103,6 +105,7 @@ class ApplicationController extends Controller
         $katservers = Katserver::all();
         $layananapps = Layananapp::all();
         $katapps = Katapp::whereIn('id', [1, 2])->get();
+        $keamanans = Keamanan::all();
 
         return view('aplikasi.aplikasi-edit', compact('application', 'opds', 'katpenggunas', 'katservers', 'layananapps', 'katapps'), [
             'title' => 'Data Aplikasi'

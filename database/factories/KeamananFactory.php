@@ -29,9 +29,9 @@ class KeamananFactory extends Factory
             'menerapkan_fitur_log' => fake()->numberBetween(0, 1),
             'menerapkan_size_file' => fake()->numberBetween(0, 1),
             'pernah_mengalami_serangan_cyber' => fake()->numberBetween(0, 1),
-            'penanganan_serangan_cyber' => fake()->numberBetween(0, 1),
-            'pernah_audit_keamanan' => fake()->sentence(),
-            'siapa_melakukan_audit_keamanan' => fake()->sentence(),
+            'penanganan_serangan_cyber' => fake()->randomElement(['aplikasi/keamanan/penanganan-serangan-cybers/wdkXiHEGfZZV4MII87PO9OS0XEGl0JfU41rz2kJh.pdf']),
+            'pernah_audit_keamanan' => fake()->word(),
+            'siapa_melakukan_audit_keamanan' => fake()->word(),
             'user_id' => $this->faker->numberBetween(1, 2),
         ];
     }

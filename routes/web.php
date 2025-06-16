@@ -16,6 +16,7 @@ use App\Http\Controllers\KatdbController;
 use App\Http\Controllers\KatpenggunaController;
 use App\Http\Controllers\KatplatformController;
 use App\Http\Controllers\KatserverController;
+use App\Http\Controllers\KeamananController;
 use App\Http\Controllers\LayananappController;
 use App\Http\Controllers\MonevappController;
 use App\Http\Controllers\OpdController;
@@ -62,7 +63,10 @@ Route::middleware(['auth'])->group(function () {
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/interop', InteropController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
-        Route::resource('application/{application}/pengembangan', PengembanganController::class);
+        Route::resource('application/{application}/pengembangan', PengembanganController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('application/{application}/keamanan', KeamananController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
 
         // monev aplikasi
         Route::resource('monevapp', MonevappController::class)

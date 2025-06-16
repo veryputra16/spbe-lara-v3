@@ -59,11 +59,13 @@
                                                 </td>
                                                 <td>{{ $sdmpengembang->app->nama_app }}</td>
                                                 <td>{{ $sdmpengembang->nama_pengembang }}</td>
-                                                <td>{{ $sdmpengembang->alamat_pengembang ? $sdmpengembang->alamat_pengembang : '-' }}
+                                                <td>{!! $sdmpengembang->alamat_pengembang ? $sdmpengembang->alamat_pengembang : '<span class="text-muted">-</span>' !!}
                                                 <td>{{ $sdmpengembang->nohp_pengembang }}</td>
-                                                <td>{{ $sdmpengembang->nokantor_pengembang ? $sdmpengembang->nokantor_pengembang : '-' }}
+                                                <td>{!! $sdmpengembang->nokantor_pengembang
+                                                    ? $sdmpengembang->nokantor_pengembang
+                                                    : '<span class="text-muted">-</span>' !!}
                                                 </td>
-                                                <td>{{ $sdmpengembang->email_pengembang ? $sdmpengembang->email_pengembang : '-' }}
+                                                <td>{!! $sdmpengembang->email_pengembang ? $sdmpengembang->email_pengembang : '<span class="text-muted">-</span>' !!}
                                                 </td>
                                             </tr>
                                         @endforeach

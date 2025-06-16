@@ -63,10 +63,10 @@
                                                             target="_blank">View Dokumen
                                                             Bukti Monev</a>
                                                     @else
-                                                        {{ '-' }}
+                                                        <span class="text-muted">-</span>
                                                     @endif
                                                 </td>
-                                                <td>{{ $monevapp->ket_monev ? $monevapp->ket_monev : '-' }}</td>
+                                                <td>{!! $monevapp->ket_monev ? $monevapp->ket_monev : '<span class="text-muted">-</span>' !!}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
