@@ -1,7 +1,7 @@
-<div>
+<div class="table-responsive">
     <a href="{{ route('admin.interop.create', $application->id) }}" class="btn btn-primary mb-3"><i
             class="fas fa-plus"></i> Add</a>
-    <table class="table table-bordered table-hover" id="">
+    <table class="table table-bordered table-hover" id="myTableInterop">
         <thead>
             <tr>
                 <th>Action</th>
@@ -27,22 +27,22 @@
                     </td>
                     <td>
                     @empty($interop->doc_interop)
-                        {{ '-' }}
+                        <span class="text-muted">-</span>
                     @else
                         <a href="{{ Storage::url($interop->doc_interop) }}" target="_blank">Dokumen
                             Integrasi</a>
                     @endempty
                 </td>
-                <td>{{ $interop->ket_interop ? $interop->ket_interop : '-' }}</td>
+                <td>{!! $interop->ket_interop ? $interop->ket_interop : '<span class="text-muted">-</span>' !!}</td>
                 <td><span class="btn btn-sm btn-outline-dark">
                         {{ $interop->updated_at->translatedFormat('d F Y') }}
                         oleh
                         {{ $interop->user->name }}</span></td>
             </tr>
         @empty
-            <tr>
+            {{-- <tr>
                 <td colspan="4">No data available in table</td>
-            </tr>
+            </tr> --}}
         @endforelse
     </tbody>
 </table>

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\StoreFullApplicationRequest; //new class for multiple insert table requests
+use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Bahasaprogram;
 use App\Models\Frameworkapp;
 use App\Models\Interop;
@@ -11,6 +15,7 @@ use App\Models\Katdb;
 use App\Models\Katpengguna;
 use App\Models\Katplatform;
 use App\Models\Katserver;
+use App\Models\Keamanan;
 use App\Models\Layananapp;
 use App\Models\Monevapp;
 use App\Models\Opd;
@@ -52,6 +57,15 @@ class ApplicationController extends Controller
 
         return view('aplikasi.aplikasi-create', compact(
             'opds', 'katplatforms', 'katdbs', 'bhsprograms', 'frameworkapps', 'katpenggunas', 'katservers', 'layananapps', 'katapps'), [
+
+        // For Pengembangan
+        $katplatforms = Katplatform::all();
+        $katdbs = Katdb::all();
+        $bhsprograms = Bahasaprogram::all();
+        $frameworkapps = Frameworkapp::all();
+        // $noRegis = Str::upper(Str::random(8));
+
+        return view('aplikasi.aplikasi-create', compact('opds', 'katpenggunas', 'katservers', 'layananapps', 'katapps', 'katplatforms', 'katdbs', 'bhsprograms', 'frameworkapps'), [
             'title' => 'Data Aplikasi'
         ]);
     }
@@ -94,18 +108,67 @@ class ApplicationController extends Controller
             });
             return redirect()->route('admin.application.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreFullApplicationRequest $request)
+    {
+    DB::transaction(function () use ($request) {
+        $validated = $request->validated();
+
+        // Simpan file dasar hukum aplikasi (jika ada)
+        if ($request->hasFile('dasar_hukum')) {
+            $dasar_hukumPath = $request->file('dasar_hukum')->store('aplikasi/dasar-hukums', 'public');
+            $validated['dasar_hukum'] = $dasar_hukumPath;
+        }
+
+        // Generate nomor registrasi aplikasi
+        $validated['no_regis_app'] = Str::upper(Str::random(12));
+
+        // Simpan data aplikasi dulu
+        $newApplication = Application::create($validated);
+
+        // === Simpan data pengembangan ===
+        $pengembanganData = $request->only([
+            'tahun_pengembangan', 'riwayat_pengembangan', 'fitur',
+            'katplatform_id', 'katdb_id', 'bahasaprogram_id', 'frameworkapp_id',
+            'video_penggunaan'
+        ]);
+        $pengembanganData['application_id'] = $newApplication->id;
+        $pengembanganData['user_id'] = $validated['user_id'];
+
+        // Handle file upload pengembangan
+        $fileFields = [
+            'nda', 'doc_perancangan', 'surat_mohon', 'kak', 'sop',
+            'doc_pentest', 'doc_uat', 'buku_manual', 'capture_frontend', 'capture_backend'
+        ];
+
+        foreach ($fileFields as $field) {
+            if ($request->hasFile($field)) {
+                $path = $request->file($field)->store("pengembangan/$field", 'public');
+                $pengembanganData[$field] = $path;
+            }
+        }
+
+        Pengembangan::create($pengembanganData);
+    });
+
+    return redirect()->route('admin.application.index')->with('success', 'Data telah tersimpan dengan sukses!');
+}
 
     /** Display the specified resource. */
     public function show(Application $application)
     {
         $monevapps = Monevapp::where('application_id', $application->id)->orderBy('tgl_monev', 'desc')->get();
         $sdmteknics = Sdmteknic::where('application_id', $application->id)->get();
-        $interops = Interop::where('application_id', $application->id)->get();
+        $interops = Interop::where('application_id', $application->id)->orderBy('id', 'desc')->get();
         $pengembangans = Pengembangan::where('application_id', $application->id)->orderBy('tahun_pengembangan', 'desc')->get();
+        $keamanans = Keamanan::where('application_id', $application->id)->orderBy('id', 'desc')->get();
 
         return view('aplikasi.aplikasi-detail', compact(
             'application', 'monevapps', 'sdmteknics', 'interops', 'pengembangans'
         ), [
+        return view('aplikasi.aplikasi-detail', compact('application', 'monevapps', 'sdmteknics', 'interops', 'pengembangans', 'keamanans'), [
             'title' => 'Data Aplikasi'
         ]);
     }
@@ -118,6 +181,7 @@ class ApplicationController extends Controller
         $katservers = Katserver::all();
         $layananapps = Layananapp::all();
         $katapps = Katapp::whereIn('id', [1, 2])->get();
+        $keamanans = Keamanan::all();
 
         return view('aplikasi.aplikasi-edit', compact(
             'application', 'opds', 'katpenggunas', 'katservers', 'layananapps', 'katapps'
