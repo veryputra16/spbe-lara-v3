@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             MonevappSeeder::class,
             InteropSeeder::class,
             PengembanganSeeder::class,
+            KeamananSeeder::class,
         ]);
     }
 }

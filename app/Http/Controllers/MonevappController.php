@@ -16,21 +16,23 @@ class MonevappController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Application $application)
+    public function index()
     {
-        // $monevapps = Monevapp::where('application_id', $application->id)->get();
+        $monevapps = Monevapp::orderBy('tgl_monev', 'desc')->get();
 
-        // return view('monevapp.monevapp-index', compact('application', 'monevapps'), [
-        //     'title' => 'Monev Aplikasi'
-        // ]);
+        return view('monevapp.monevapp-index', compact('monevapps'), [
+            'title' => 'Monev Aplikasi'
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Application $application)
+    public function create()
     {
-        return view('monevapp.monevapp-create', compact('application'), [
+        $applications = Application::whereIn('katapp_id', [1, 2])->get();
+
+        return view('monevapp.monevapp-create', compact('applications'), [
             'title' => 'Monev Aplikasi'
         ]);
     }
@@ -51,7 +53,7 @@ class MonevappController extends Controller
             $newMonevapp = Monevapp::create($validated);
         });
 
-        return redirect()->route('admin.application.show', $request->application_id)->with('success', 'Data telah tersimpan dengan sukses!');
+        return redirect()->route('admin.monevapp.index')->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -65,9 +67,11 @@ class MonevappController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Application $application, Monevapp $monevapp)
+    public function edit(Monevapp $monevapp)
     {
-        return view('monevapp.monevapp-edit', compact('application', 'monevapp'), [
+        $applications = Application::whereIn('katapp_id', [1, 2])->get();
+
+        return view('monevapp.monevapp-edit', compact('monevapp', 'applications'), [
             'title' => 'Monev Aplikasi'
         ]);
     }
@@ -75,14 +79,14 @@ class MonevappController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Application $application, UpdateMonevRequest $request, Monevapp $monevapp)
+    public function update(UpdateMonevRequest $request, Monevapp $monevapp)
     {
         DB::transaction(function () use ($request, $monevapp) {
             $validated = $request->validated();
 
             if ($request->hasFile('bukti_monev')) {
                 // Hapus file lama jika ada
-                if ($monevapp->bukti_monev && Storage::disk('public')->exists($monevapp->bukti_monev)) {
+                if (!empty($monevapp->bukti_monev)) {
                     Storage::disk('public')->delete($monevapp->bukti_monev);
                 }
 
@@ -95,7 +99,7 @@ class MonevappController extends Controller
             $monevapp->update($validated);
         });
 
-        return redirect()->route('admin.application.show', $request->application_id)->with('success', 'Perubahan data telah berhasil dilakukan.');
+        return redirect()->route('admin.monevapp.index')->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
     /**
@@ -113,6 +117,6 @@ class MonevappController extends Controller
             $monevapp->delete();
         });
 
-        return redirect()->route('admin.application.show', $application->id)->with('success', 'Penghapusan data sukses dilakukan.');
+        return redirect()->route('admin.monevapp.index')->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

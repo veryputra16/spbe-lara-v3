@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\StoreFullApplicationRequest; //new class for multiple insert table requests
 use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Bahasaprogram;
 use App\Models\Frameworkapp;
@@ -14,6 +15,7 @@ use App\Models\Katdb;
 use App\Models\Katpengguna;
 use App\Models\Katplatform;
 use App\Models\Katserver;
+use App\Models\Keamanan;
 use App\Models\Layananapp;
 use App\Models\Monevapp;
 use App\Models\Opd;
@@ -50,14 +52,15 @@ class ApplicationController extends Controller
         $katservers = Katserver::all();
         $layananapps = Layananapp::all();
         $katapps = Katapp::whereIn('id', [1, 2])->get();
-        // $noRegis = Str::upper(Str::random(8));
 
+        // For Pengembangan
         $katplatforms = Katplatform::all();
         $katdbs = Katdb::all();
         $bhsprograms = Bahasaprogram::all();
         $frameworkapps = Frameworkapp::all();
+        // $noRegis = Str::upper(Str::random(8));
 
-        return view('aplikasi.aplikasi-create', compact('opds', 'katpenggunas', 'katservers', 'layananapps', 'katapps', 'katplatforms','katdbs','bhsprograms','frameworkapps'), [
+        return view('aplikasi.aplikasi-create', compact('opds', 'katpenggunas', 'katservers', 'layananapps', 'katapps', 'katplatforms', 'katdbs', 'bhsprograms', 'frameworkapps'), [
             'title' => 'Data Aplikasi'
         ]);
     }
@@ -65,8 +68,8 @@ class ApplicationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreApplicationRequest $request)
-{
+    public function store(StoreFullApplicationRequest $request)
+    {
     DB::transaction(function () use ($request) {
         $validated = $request->validated();
 
@@ -117,10 +120,11 @@ class ApplicationController extends Controller
     {
         $monevapps = Monevapp::where('application_id', $application->id)->orderBy('tgl_monev', 'desc')->get();
         $sdmteknics = Sdmteknic::where('application_id', $application->id)->get();
-        $interops = Interop::where('application_id', $application->id)->get();
+        $interops = Interop::where('application_id', $application->id)->orderBy('id', 'desc')->get();
         $pengembangans = Pengembangan::where('application_id', $application->id)->orderBy('tahun_pengembangan', 'desc')->get();
+        $keamanans = Keamanan::where('application_id', $application->id)->orderBy('id', 'desc')->get();
 
-        return view('aplikasi.aplikasi-detail', compact('application', 'monevapps', 'sdmteknics', 'interops', 'pengembangans'), [
+        return view('aplikasi.aplikasi-detail', compact('application', 'monevapps', 'sdmteknics', 'interops', 'pengembangans', 'keamanans'), [
             'title' => 'Data Aplikasi'
         ]);
     }
@@ -135,6 +139,7 @@ class ApplicationController extends Controller
         $katservers = Katserver::all();
         $layananapps = Layananapp::all();
         $katapps = Katapp::whereIn('id', [1, 2])->get();
+        $keamanans = Keamanan::all();
 
         return view('aplikasi.aplikasi-edit', compact('application', 'opds', 'katpenggunas', 'katservers', 'layananapps', 'katapps'), [
             'title' => 'Data Aplikasi'

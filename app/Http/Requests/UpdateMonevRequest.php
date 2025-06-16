@@ -22,10 +22,10 @@ class UpdateMonevRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'application_id' => ['sometimes'],
+            'application_id' => ['required'],
             'tgl_monev' => ['required', 'date'],
             'bukti_monev' => ['sometimes', 'file', 'mimes:pdf', 'max:10000'],
-            'ket_monev' => ['nullable', 'text'],
+            'ket_monev' => ['nullable', 'string'],
             'user_id' => ['required'],
         ];
     }
