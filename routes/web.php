@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         // dashbaord
         Route::get('aplikasi', [DashboardController::class, 'aplikasi'])->name('aplikasi')
-            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi');
         Route::get('spbe', [DashboardController::class, 'spbe'])->name('spbe')
             ->middleware('role:superadmin|admin-spbe');
     });
@@ -131,8 +131,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
     Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
-    Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');
-    Route::get('/hakakses/edit/{id}', [HakaksesController::class, 'edit'])->name('hakakses.edit')->middleware('superadmin');
-    Route::put('/hakakses/update/{id}', [HakaksesController::class, 'update'])->name('hakakses.update')->middleware('superadmin');
-    Route::delete('/hakakses/delete/{id}', [HakaksesController::class, 'destroy'])->name('hakakses.delete')->middleware('superadmin');
+    // Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');
+    // Route::get('/hakakses/edit/{id}', [HakaksesController::class, 'edit'])->name('hakakses.edit')->middleware('superadmin');
+    // Route::put('/hakakses/update/{id}', [HakaksesController::class, 'update'])->name('hakakses.update')->middleware('superadmin');
+    // Route::delete('/hakakses/delete/{id}', [HakaksesController::class, 'destroy'])->name('hakakses.delete')->middleware('superadmin');
 });
