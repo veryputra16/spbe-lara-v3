@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BahasaprogramController;
 use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FrameworkappController;
 use App\Http\Controllers\HakaksesController;
@@ -66,6 +67,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('application/{application}/pengembangan', PengembanganController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
         Route::resource('application/{application}/keamanan', KeamananController::class)
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+        Route::resource('application/{application}/data', DataController::class)
             ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
 
         // monev aplikasi
