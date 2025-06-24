@@ -60,4 +60,4 @@
     </div>
 @endsection
 
-<script src="https://hcaptcha.com/1/api.js" async defer></script>
+<script src="https://hcaptcha.com/1/api.js?hl=en" async defer></script>
