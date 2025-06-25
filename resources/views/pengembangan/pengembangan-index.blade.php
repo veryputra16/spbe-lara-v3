@@ -1,12 +1,13 @@
 <div class="table-responsive">
-    <a href="{{ route('admin.pengembangan.create', $application->id) }}" class="btn btn-primary mb-3"><i
-            class="fas fa-plus"></i> Add</a>
+    <a href="{{ route('admin.pengembangan.create', $application->id) }}" class="btn btn-primary mb-3">
+        <i class="fas fa-plus"></i> Add
+    </a>
+
     <table class="table table-bordered table-hover" id="myTablePengembangan">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Action</th>
-                {{-- <th>Aplikasi</th> --}}
                 <th>Tahun Pengembangan</th>
                 <th>Video Penggunaan</th>
                 <th>Platform</th>
@@ -19,28 +20,33 @@
             @forelse ($pengembangans as $pengembangan)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>
+                    <td class="d-flex gap-1">
+                        <button type="button" class="btn btn-light btn-sm" data-toggle="modal"
+                            data-target="#modalDetail{{ $pengembangan->id }}" title="Detail">
+                            <i class="fas fa-eye"></i>
+                        </button>
                         <a href="{{ route('admin.pengembangan.edit', ['application' => $application->id, 'pengembangan' => $pengembangan->id]) }}"
-                            class="btn btn-light btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
+                            class="btn btn-light btn-sm" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
                         <form
                             action="{{ route('admin.pengembangan.destroy', ['application' => $application->id, 'pengembangan' => $pengembangan->id]) }}"
                             method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-light btn-sm show_confirm" title="Delete"><i
-                                    class="fas fa-trash"></i></button>
+                            <button type="submit" class="btn btn-light btn-sm show_confirm" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </form>
                         <!-- Tombol Detail (Trigger Modal) -->
                         <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#detailModal{{ $pengembangan->id }}" title="Detail">
                             <i class="fas fa-eye"></i>
                         </button>
                     </td>
-                    {{-- <td>{{ $pengembangan->app->nama_app }}</td> --}}
                     <td>{{ $pengembangan->tahun_pengembangan }}</td>
                     <td>
                         @if ($pengembangan->video_penggunaan)
-                            <a href="{{ $pengembangan->video_penggunaan }}"
-                                target="_blank">{{ $pengembangan->video_penggunaan }}</a>
+                            <a href="{{ $pengembangan->video_penggunaan }}" target="_blank">{{ $pengembangan->video_penggunaan }}</a>
                         @else
                             <span class="text-muted">-</span>
                         @endif
@@ -51,13 +57,14 @@
                     <td>{{ $pengembangan->frameworkapp->framework_app }}</td>
                 </tr>
             @empty
-                {{-- <tr>
-                    <td colspan="8">No data available in table</td>
-                </tr> --}}
+                <tr>
+                    <td colspan="8" class="text-center">Tidak ada data pengembangan</td>
+                </tr>
             @endforelse
         </tbody>
     </table>
 </div>
+<<<<<<< HEAD
 @push('modals')
     @foreach ($pengembangans as $pengembangan)
         <!-- Modal Detail -->
@@ -66,6 +73,19 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Detail Pengembangan - {{ $pengembangan->tahun_pengembangan }}</h5>
+=======
+
+@push('scripts')
+    @foreach ($pengembangans as $pengembangan)
+        <div class="modal fade" id="modalDetail{{ $pengembangan->id }}" tabindex="-1"
+            aria-labelledby="modalDetailLabel{{ $pengembangan->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDetailLabel{{ $pengembangan->id }}">
+                            Detail Pengembangan {{ $pengembangan->app->nama_app }}
+                        </h5>
+>>>>>>> 52338047033f77e75a1b9bc941e3033a2d6d0855
                         <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -121,4 +141,8 @@
             </div>
         </div>
     @endforeach
+<<<<<<< HEAD
 @endpush
+=======
+@endpush
+>>>>>>> 52338047033f77e75a1b9bc941e3033a2d6d0855

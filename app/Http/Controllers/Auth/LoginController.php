@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+=======
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
+>>>>>>> 52338047033f77e75a1b9bc941e3033a2d6d0855
 
 class LoginController extends Controller
 {
