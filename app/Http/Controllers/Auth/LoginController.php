@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class LoginController extends Controller
 {
@@ -38,12 +39,27 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Override default validation untuk login, termasuk validasi h-captcha.
+     */
     protected function validateLogin(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'h-captcha-response' => 'required|HCaptcha',
+            'h-captcha-response' => 'required',
         ]);
+
+        $response = Http::asForm()->post('https://hcaptcha.com/siteverify', [
+            'secret' => env('HCAPTCHA_SECRET'),
+            'response' => $request->input('h-captcha-response'),
+            'remoteip' => $request->ip(),
+        ]);
+
+        if (!data_get($response->json(), 'success')) {
+            return redirect()->back()
+                ->withErrors(['h-captcha-response' => 'Captcha tidak valid'])
+                ->withInput($request->only($this->username(), 'remember'));
+        }
     }
 }

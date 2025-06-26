@@ -70,6 +70,8 @@
 
     <!-- Additional JS (if any) -->
     @stack('scripts')
+
+    {{-- @stack('modals') --}}
 </body>
 
 </html>
