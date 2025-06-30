@@ -46,12 +46,6 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    {{-- button sementara --}}
-                                                    <a href="{{ route('admin.sdmpengembang.index', $application->id) }}"
-                                                        class="btn btn-primary btn-sm" title="Vendor"><i
-                                                            class="fas fa-handshake"></i></a>
-                                                    {{-- end button sementara --}}
-
                                                     @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
                                                         <a href="{{ route('admin.application.show', $application->id) }}"
                                                             class="btn btn-dark btn-sm" title="Detail"><i

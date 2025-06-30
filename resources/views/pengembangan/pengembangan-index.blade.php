@@ -22,7 +22,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td style="white-space: nowrap; text-align: center;">
-                        <button type="button" class="btn btn-light btn-sm" data-toggle="modal"
+                        <button type="button" class="btn btn-dark btn-sm" data-toggle="modal"
                             data-target="#modalDetail{{ $pengembangan->id }}" title="Detail">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -124,7 +124,7 @@
                                             <td class="text-muted">:</td>
                                             <td>{{ $pengembangan->fitur ?? '-' }}</td>
                                         </tr>
-                                        
+
                                     </table>
                                 </div>
 
@@ -272,100 +272,102 @@
 
                     <!-- Tabs Menu dalam Modal -->
                     <hr>
-                        <ul class="nav nav-tabs px-3" id="tabDetail{{ $pengembangan->id }}" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="vendor-tab{{ $pengembangan->id }}" data-toggle="tab"
-                                href="#vendor{{ $pengembangan->id }}" role="tab" aria-controls="vendor" aria-selected="true">Vendor</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="staging1-tab" data-toggle="tab"
-                                href="#staging1{{ $pengembangan->id }}" role="tab" aria-controls="staging1" aria-selected="false">Staging1</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="staging2-tab" data-toggle="tab"
-                                href="#staging2{{ $pengembangan->id }}" role="tab" aria-controls="staging2" aria-selected="false">Staging2</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="staging3-tab" data-toggle="tab"
-                                href="#staging3{{ $pengembangan->id }}" role="tab" aria-controls="staging3" aria-selected="false">Staging3</a>
-                            </li>
-                        </ul>
+                    <ul class="nav nav-tabs px-3" id="tabDetail{{ $pengembangan->id }}" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="vendor-tab{{ $pengembangan->id }}" data-toggle="tab"
+                                href="#vendor{{ $pengembangan->id }}" role="tab" aria-controls="vendor"
+                                aria-selected="true">Vendor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="staging1-tab" data-toggle="tab"
+                                href="#staging1{{ $pengembangan->id }}" role="tab" aria-controls="staging1"
+                                aria-selected="false">Staging1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="staging2-tab" data-toggle="tab"
+                                href="#staging2{{ $pengembangan->id }}" role="tab" aria-controls="staging2"
+                                aria-selected="false">Staging2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="staging3-tab" data-toggle="tab"
+                                href="#staging3{{ $pengembangan->id }}" role="tab" aria-controls="staging3"
+                                aria-selected="false">Staging3</a>
+                        </li>
+                    </ul>
                     <div class="tab-content pt-3 px-3" id="tabContentDetail{{ $pengembangan->id }}">
-                        
-                    <div class="tab-pane fade show active" id="vendor{{ $pengembangan->id }}" role="tabpanel"
-                        aria-labelledby="vendor-tab{{ $pengembangan->id }}">
-                        <!-- TABEL VENDOR -->
-                        <div class="table-responsive">
 
-                            <a href="###" class="btn btn-primary mb-3">
-                                <i class="fas fa-plus"></i> Add Vendor
-                            </a>
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Action</th>
-                                        <th>Nama Pengembang</th>
-                                        <th>Alamat</th>
-                                        <th>No HP</th>
-                                        <th>No Kantor</th>
-                                        <th>Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($pengembangan->sdmpengembang as $i => $sdm)
+                        <div class="tab-pane fade show active" id="vendor{{ $pengembangan->id }}" role="tabpanel"
+                            aria-labelledby="vendor-tab{{ $pengembangan->id }}">
+                            <!-- TABEL VENDOR -->
+                            <div class="table-responsive">
+
+                                <a href="###" class="btn btn-primary mb-3">
+                                    <i class="fas fa-plus"></i> Add Vendor
+                                </a>
+                                <table class="table table-bordered table-hover">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $i + 1 }}</td>
-                                            <td style="white-space: nowrap; text-align: center;">
-                                                <a href="#"
-                                                    class="btn btn-light btn-sm" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form
-                                                    action="#"
-                                                    method="POST" style="display: inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-light btn-sm show_confirm" title="Delete">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                            <td>{{ $sdm->nama_pengembang }}</td>
-                                            <td>{{ $sdm->alamat_pengembang }}</td>
-                                            <td>{{ $sdm->nohp_pengembang }}</td>
-                                            <td>{{ $sdm->nokantor_pengembang }}</td>
-                                            <td>{{ $sdm->email_pengembang }}</td>
+                                            <th>#</th>
+                                            <th>Action</th>
+                                            <th>Nama Pengembang</th>
+                                            <th>Alamat</th>
+                                            <th>No HP</th>
+                                            <th>No Kantor</th>
+                                            <th>Email</th>
                                         </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center">Belum ada data vendor</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($pengembangan->sdmpengembang as $i => $sdm)
+                                            <tr>
+                                                <td>{{ $i + 1 }}</td>
+                                                <td style="white-space: nowrap; text-align: center;">
+                                                    <a href="#" class="btn btn-light btn-sm" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <form action="#" method="POST" style="display: inline-block;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                            title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                <td>{{ $sdm->nama_pengembang }}</td>
+                                                <td>{{ $sdm->alamat_pengembang }}</td>
+                                                <td>{{ $sdm->nohp_pengembang }}</td>
+                                                <td>{{ $sdm->nokantor_pengembang }}</td>
+                                                <td>{{ $sdm->email_pengembang }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center">Belum ada data vendor</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="staging1{{ $pengembangan->id }}" role="tabpanel"
+                            aria-labelledby="staging1-tab">
+                            <p>Lorem ipsum dolor amet awikwok loerm ipsum dolor amet</p>
+                        </div>
+
+                        <div class="tab-pane fade" id="staging2{{ $pengembangan->id }}" role="tabpanel"
+                            aria-labelledby="staging2-tab">
+                            <p>Lorem ipsum dolor amet awikwok loerm ipsum dolor amet</p>
+                        </div>
+
+                        <div class="tab-pane fade" id="staging3{{ $pengembangan->id }}" role="tabpanel"
+                            aria-labelledby="staging3-tab">
+                            <p>Lorem ipsum dolor amet awikwok loerm ipsum dolor amet</p>
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="staging1{{ $pengembangan->id }}" role="tabpanel"
-                        aria-labelledby="staging1-tab">
-                        <p>Lorem ipsum dolor amet awikwok loerm ipsum dolor amet</p>
-                    </div>
-
-                    <div class="tab-pane fade" id="staging2{{ $pengembangan->id }}" role="tabpanel"
-                        aria-labelledby="staging2-tab">
-                        <p>Lorem ipsum dolor amet awikwok loerm ipsum dolor amet</p>
-                    </div>
-
-                    <div class="tab-pane fade" id="staging3{{ $pengembangan->id }}" role="tabpanel"
-                        aria-labelledby="staging3-tab">
-                        <p>Lorem ipsum dolor amet awikwok loerm ipsum dolor amet</p>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                </div>
+                    </div>
 
                 </div>
             </div>
