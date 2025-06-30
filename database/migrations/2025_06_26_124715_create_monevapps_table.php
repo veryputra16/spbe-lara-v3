@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('monevapps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('application_id')->constrained()->onDelete('cascade');
+            $table->foreignId('pengembangan_id')->constrained()->onDelete('cascade');
             $table->date('tgl_monev');
             $table->text('bukti_monev')->nullable();
             $table->text('ket_monev')->nullable();

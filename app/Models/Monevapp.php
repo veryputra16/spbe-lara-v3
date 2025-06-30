@@ -13,6 +13,7 @@ class Monevapp extends Model
 
     protected $fillable = [
         'application_id',
+        'pengembangan_id',
         'tgl_monev',
         'bukti_monev',
         'ket_monev',

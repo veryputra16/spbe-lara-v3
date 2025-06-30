@@ -28,12 +28,12 @@ class DatabaseSeeder extends Seeder
             FaqSeeder::class,
             ChangelogSeeder::class,
             SdmteknicSeeder::class,
-            MonevappSeeder::class,
             InteropSeeder::class,
             PengembanganSeeder::class,
             KeamananSeeder::class,
             DataSeeder::class,
             SdmpengembangSeeder::class,
+            MonevappSeeder::class,
         ]);
     }
 }
