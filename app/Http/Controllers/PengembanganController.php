@@ -11,6 +11,7 @@ use App\Models\Bahasaprogram;
 use App\Models\Frameworkapp;
 use App\Models\Katdb;
 use App\Models\Katplatform;
+use App\Models\Sdmpengembang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -103,9 +104,19 @@ class PengembanganController extends Controller
             }
 
             $newPengembangan = Pengembangan::create($validated);
+
+            Sdmpengembang::create([
+                'pengembangan_id' => $newPengembangan->id, //get from $pengembangan->id
+                'nama_pengembang' => $request->input('nama_pengembang'),
+                'alamat_pengembang' => $request->input('alamat_pengembang'),
+                'nohp_pengembang' => $request->input('nohp_pengembang'),
+                'nokantor_pengembang' => $request->input('nokantor_pengembang'),
+                'email_pengembang' => $request->input('email_pengembang'),
+            ]);
         });
 
-        return redirect()->route('admin.application.show', $request->application_id)->with('success', 'Data telah tersimpan dengan sukses!');
+        return redirect()->route('admin.application.show', $request->application_id)
+            ->with('success', 'Data telah tersimpan dengan sukses!');
     }
 
     /**
@@ -126,7 +137,9 @@ class PengembanganController extends Controller
         $bhsprograms = Bahasaprogram::all();
         $frameworkapps = Frameworkapp::all();
 
-        return view('pengembangan.pengembangan-edit', compact('application', 'pengembangan', 'katplatforms', 'katdbs', 'bhsprograms', 'frameworkapps'), [
+        $vendor = \App\Models\Sdmpengembang::where('pengembangan_id', $pengembangan->id)->first();
+
+        return view('pengembangan.pengembangan-edit', compact('application', 'pengembangan', 'katplatforms', 'katdbs', 'bhsprograms', 'frameworkapps', 'vendor'), [
             'title' => 'Pengembangan Aplikasi'
         ]);
     }
@@ -210,8 +223,29 @@ class PengembanganController extends Controller
             }
 
             $pengembangan->update($validated);
-        });
 
+            $vendor = Sdmpengembang::where('pengembangan_id', $pengembangan->id)->first();
+            if ($vendor) {
+                // Update jika data vendor sudah ada
+            $vendor->update([
+                'nama_pengembang' => $request->input('nama_pengembang'),
+                'alamat_pengembang' => $request->input('alamat_pengembang'),
+                'nohp_pengembang' => $request->input('nohp_pengembang'),
+                'nokantor_pengembang' => $request->input('nokantor_pengembang'),
+                'email_pengembang' => $request->input('email_pengembang'),
+            ]);
+        } else {
+            // Insert jika belum ada
+            Sdmpengembang::create([
+                'pengembangan_id' => $pengembangan->id,
+                'nama_pengembang' => $request->input('nama_pengembang'),
+                'alamat_pengembang' => $request->input('alamat_pengembang'),
+                'nohp_pengembang' => $request->input('nohp_pengembang'),
+                'nokantor_pengembang' => $request->input('nokantor_pengembang'),
+                'email_pengembang' => $request->input('email_pengembang'),
+            ]);
+        }
+        });
         return redirect()->route('admin.application.show', $request->application_id)->with('success', 'Perubahan data telah berhasil dilakukan.');
     }
 
