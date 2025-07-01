@@ -66,6 +66,26 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-8 col-12">
+                                    <label>{{ __('Pengembangan Aplikasi') }}</label>
+                                    <select class="form-control select2 @error('application_id') is-invalid @enderror"
+                                        name="application_id" required autocomplete="application_id">
+                                        <option value="">-</option>
+                                        @forelse ($applications as $app)
+                                            <option value="{{ $app->id }}"
+                                                {{ old('application_id') == $app->id ? 'selected' : '' }}>
+                                                {{ $app->nama_app }}
+                                            </option>
+                                        @empty
+                                            <option value="">Tidak Ada Data</option>
+                                        @endforelse
+                                    </select>
+                                    @error('application_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-8 col-12">
                                     <label>{{ __('Bukti Laporan Monev') }}</label>
                                     <input type="file" class="form-control @error('bukti_monev') is-invalid @enderror"
                                         name="bukti_monev" autocomplete="bukti_monev">
