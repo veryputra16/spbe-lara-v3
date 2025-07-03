@@ -36,9 +36,12 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $applications = Application::whereIn('katapp_id', [1, 2])->get();
+        $applications = Application::with(['opd', 'layananapp'])->whereIn('katapp_id', [1, 2])->get();
 
-        return view('aplikasi.aplikasi-index', compact('applications'), [
+        $opds = Opd::all();
+        $layanans = Layananapp::all();  
+
+        return view('aplikasi.aplikasi-index', compact('applications', 'opds', 'layanans'), [
             'title' => 'Data Aplikasi'
         ]);
     }

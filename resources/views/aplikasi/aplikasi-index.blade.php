@@ -41,6 +41,20 @@
 
                                 <!-- KANAN: Filter -->
                                 <div class="d-flex flex-wrap mb-2 justify-content-end" style="gap: 0.5rem;">
+                                    <select id="filterOPD" class="form-control form-control-sm" style="width: 180px; height: 40px;">
+                                        <option value="">-- Semua OPD --</option>
+                                        @foreach ($opds as $opd)
+                                            <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <select id="filterLayanan" class="form-control form-control-sm" style="width: 180px; height: 40px;">
+                                        <option value="">-- Semua Layanan --</option>
+                                        @foreach ($layanans as $layanan)
+                                            <option value="{{ strtolower($layanan->layanan_app) }}">{{ $layanan->layanan_app }}</option>
+                                        @endforeach
+                                    </select>
+
                                     <select id="filterTahun" class="form-control form-control-sm" style="width: 180px; height: 40px;">
                                         <option value="">-- Semua Tahun --</option>
                                         @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
@@ -74,7 +88,7 @@
                                     </thead>
                                     <tbody id="tableBody">
                                         @foreach ($applications as $application)
-                                            <tr>
+                                            <tr data-layanan="{{ strtolower($application->layananapp->layanan_app ?? '') }}">
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.sdmpengembang.index', $application->id) }}" class="btn btn-primary btn-sm" title="Vendor">
@@ -146,7 +160,9 @@
         function filterTable() {
             let searchText = $('#customSearch').val().toLowerCase();
             let filterTahun = $('#filterTahun').val();
-            let filterStatus = $('#filterStatus').val().trim().toLowerCase();
+            let filterStatus = $('#filterStatus').val().toLowerCase();
+            let filterOPD = $('#filterOPD').val().toLowerCase();
+            let filterLayanan = $('#filterLayanan').val().toLowerCase();
             let showCount = parseInt($('#customLength').val());
 
             let visibleRowCount = 0;
@@ -156,12 +172,16 @@
                 let text = row.text().toLowerCase();
                 let tahun = row.find('td:eq(4)').text().trim();
                 let status = row.find('td:eq(5)').text().trim().toLowerCase();
+                let opd = row.find('td:eq(3)').text().trim().toLowerCase();
+                let layanan = row.data('layanan') ?? '';
 
                 let matchSearch = text.includes(searchText);
                 let matchTahun = filterTahun === "" || tahun === filterTahun;
                 let matchStatus = filterStatus === "" || status === filterStatus;
+                let matchOPD = filterOPD === "" || opd === filterOPD;
+                let matchLayanan = filterLayanan === "" || layanan.includes(filterLayanan);
 
-                if (matchSearch && matchTahun && matchStatus) {
+                if (matchSearch && matchTahun && matchStatus && matchOPD && matchLayanan) {
                     if (visibleRowCount < showCount) {
                         row.show();
                         visibleRowCount++;
@@ -174,7 +194,7 @@
             });
         }
 
-        $('#customSearch, #filterTahun, #filterStatus, #customLength').on('input change', function () {
+        $('#customSearch, #filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customLength').on('input change', function () {
             filterTable();
         });
 
