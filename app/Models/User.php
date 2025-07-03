@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function opds()
+    {
+        return $this->belongsToMany(Opd::class, 'opd_users');
+    }
 }
