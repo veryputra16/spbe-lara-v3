@@ -80,6 +80,23 @@
                                         </span>
                                     @enderror
                                 </div>
+                                <div class="form-group col-md-8 col-12">
+                                    <label>{{ __('OPD/Perumda/Kelurahan/Desa') }}</label>
+                                    <select class="form-control select2 @error('opd_id') is-invalid @enderror"
+                                        name="opd_id" autocomplete="opd_id">
+                                        <option value="">-</option>
+                                        @foreach ($opds as $opd)
+                                            <option value="{{ $opd->id }}"
+                                                {{ $userOpds->contains('id', $opd->id) ? 'selected' : '' }}>
+                                                {{ $opd->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('opd_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                                 <div class="form-group col-md-3 col-12">
                                     <label>{{ __('Role') }}</label>
                                     <select class="form-control select2 @error('role_id') is-invalid @enderror"
@@ -109,3 +126,11 @@
             </div>
     </section>
 @endsection
+
+@push('css')
+    <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+@endpush
