@@ -36,14 +36,11 @@
                 @enderror
             </div>
 
-            <div class="form-group">
-                @if ($errors->has('h-captcha-response'))
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    {{ $errors->first('h-captcha-response') }}
-                </div>
-                @endif
-                {!! HCaptcha::display() !!}
+            <div class="form-group mt-3">
+                <div class="h-captcha" data-sitekey="{{ env('HCAPTCHA_SITEKEY') }}"></div>
+                @error('h-captcha-response')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group">
@@ -62,3 +59,5 @@
         </form>
     </div>
 @endsection
+
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
