@@ -56,15 +56,22 @@
                                                 </td>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->username }}</td>
-                                                <td>{{ 'OPD/Perumda/Kelurahan/Desa' }}</td>
-                                                {{-- <td>{{ $user->role }}</td> --}}
+                                                <td>
+                                                    @if ($user->opds->isNotEmpty())
+                                                        @foreach ($user->opds as $opd)
+                                                            {{ $opd->nama }}
+                                                        @endforeach
+                                                    @else
+                                                        <span class="text-muted">-</span>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     @if ($user->roles->isNotEmpty())
                                                         @foreach ($user->getRoleNames() as $role)
                                                             {{ $role }}
                                                         @endforeach
                                                     @else
-                                                        {{ '-' }}
+                                                        <span class="text-muted">-</span>
                                                     @endif
                                                 </td>
                                             </tr>
