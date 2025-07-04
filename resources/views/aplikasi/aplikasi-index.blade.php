@@ -5,6 +5,12 @@
 @push('style')
     <!-- Data Tables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap4.min.css" />
+    <style>
+        div.dataTables_length,
+        div.dataTables_filter {
+            display: none !important;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -18,7 +24,7 @@
         </div>
         <div class="section-body">
             <div class="row mt-sm-4">
-                <div class="col-12 col-md-12 col-lg-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             @role('superadmin|admin-aplikasi|operator-aplikasi')
@@ -27,7 +33,6 @@
                             </a>
 
                             <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                                <!-- KIRI: Length -->
                                 <div class="form-inline mb-2">
                                     <label for="customLength" class="mr-2 mb-0">Tampilkan</label>
                                     <select id="customLength" class="form-control form-control-sm" style="height: 40px;">
@@ -39,22 +44,35 @@
                                     </select>
                                 </div>
 
-                                <!-- KANAN: Filter -->
                                 <div class="d-flex flex-wrap mb-2 justify-content-end" style="gap: 0.5rem;">
-                                    <select id="filterTahun" class="form-control form-control-sm" style="width: 180px; height: 40px;">
+                                    <select id="filterOPD" class="form-control form-control-sm" style="width: 180px;">
+                                        <option value="">-- Semua OPD --</option>
+                                        @foreach ($opds as $opd)
+                                            <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <select id="filterLayanan" class="form-control form-control-sm" style="width: 180px;">
+                                        <option value="">-- Semua Layanan --</option>
+                                        @foreach ($layanans as $layanan)
+                                            <option value="{{ strtolower($layanan->layanan_app) }}">{{ $layanan->layanan_app }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <select id="filterTahun" class="form-control form-control-sm" style="width: 180px;">
                                         <option value="">-- Semua Tahun --</option>
                                         @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
                                             <option value="{{ $tahun }}">{{ $tahun }}</option>
                                         @endforeach
                                     </select>
 
-                                    <select id="filterStatus" class="form-control form-control-sm" style="width: 180px; height: 40px;">
+                                    <select id="filterStatus" class="form-control form-control-sm" style="width: 180px;">
                                         <option value="">-- Semua Status --</option>
                                         <option value="Aktif">Aktif</option>
                                         <option value="Tidak Aktif">Tidak Aktif</option>
                                     </select>
 
-                                    <input type="text" id="customSearch" class="form-control form-control-sm" style="width: 250px; height: 40px;" placeholder="Cari...">
+                                    <input type="text" id="customSearch" class="form-control form-control-sm" style="width: 250px;" placeholder="Cari...">
                                 </div>
                             </div>
                             @endrole
@@ -72,27 +90,30 @@
                                             <th>Aset Tak Berwujud</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tableBody">
+                                    <tbody>
                                         @foreach ($applications as $application)
-                                            <tr>
+                                            <tr
+                                                data-opd="{{ strtolower($application->opd->nama) }}"
+                                                data-layanan="{{ strtolower($application->layananapp->layanan_app ?? '') }}"
+                                                data-tahun="{{ $application->tahun_buat }}"
+                                                data-status="{{ $application->status == 1 ? 'aktif' : 'tidak aktif' }}"
+                                            >
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.sdmpengembang.index', $application->id) }}" class="btn btn-primary btn-sm" title="Vendor">
+                                                    {{-- <a href="{{ route('admin.sdmpengembang.index', $application->id) }}" class="btn btn-primary btn-sm" title="Vendor">
                                                         <i class="fas fa-handshake"></i>
-                                                    </a>
+                                                    </a> --}}
 
                                                     @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
                                                         <a href="{{ route('admin.application.show', $application->id) }}" class="btn btn-dark btn-sm" title="Detail">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                     @endrole
-
                                                     @role('superadmin|admin-aplikasi|operator-aplikasi')
                                                         <a href="{{ route('admin.application.edit', $application->id) }}" class="btn btn-light btn-sm" title="Edit">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                     @endrole
-
                                                     @role('superadmin|admin-aplikasi')
                                                         <form action="{{ route('admin.application.destroy', $application->id) }}" method="POST" style="display: inline-block;">
                                                             @csrf
@@ -113,18 +134,13 @@
                                                         <span class="badge badge-danger">Tidak Aktif</span>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    @if ($application->aset_takberwujud == 1)
-                                                        Ya
-                                                    @else
-                                                        Tidak
-                                                    @endif
-                                                </td>
+                                                <td>{{ $application->aset_takberwujud == 1 ? 'Ya' : 'Tidak' }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -137,48 +153,64 @@
 <!-- SweetAlert2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
-<!-- DataTables (meskipun tidak dipakai, tetap aman untuk disimpan) -->
+<!-- DataTables -->
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        function filterTable() {
-            let searchText = $('#customSearch').val().toLowerCase();
-            let filterTahun = $('#filterTahun').val();
-            let filterStatus = $('#filterStatus').val().trim().toLowerCase();
-            let showCount = parseInt($('#customLength').val());
+    let table;
 
-            let visibleRowCount = 0;
+    function applyCustomFilter() {
+        let filterTahun = $('#filterTahun').val();
+        let filterStatus = $('#filterStatus').val().toLowerCase();
+        let filterOPD = $('#filterOPD').val().toLowerCase();
+        let filterLayanan = $('#filterLayanan').val().toLowerCase();
+        let searchText = $('#customSearch').val().toLowerCase();
 
-            $('#tableBody tr').each(function () {
-                let row = $(this);
-                let text = row.text().toLowerCase();
-                let tahun = row.find('td:eq(4)').text().trim();
-                let status = row.find('td:eq(5)').text().trim().toLowerCase();
+        table.rows().every(function () {
+            let row = $(this.node());
 
-                let matchSearch = text.includes(searchText);
-                let matchTahun = filterTahun === "" || tahun === filterTahun;
-                let matchStatus = filterStatus === "" || status === filterStatus;
+            let opd = row.data('opd') || '';
+            let layanan = row.data('layanan') || '';
+            let tahun = row.data('tahun') || '';
+            let status = row.data('status') || '';
+            let text = row.text().toLowerCase();
 
-                if (matchSearch && matchTahun && matchStatus) {
-                    if (visibleRowCount < showCount) {
-                        row.show();
-                        visibleRowCount++;
-                    } else {
-                        row.hide();
-                    }
-                } else {
-                    row.hide();
-                }
-            });
-        }
+            let match =
+                (filterTahun === "" || tahun == filterTahun) &&
+                (filterStatus === "" || status == filterStatus) &&
+                (filterOPD === "" || opd.includes(filterOPD)) &&
+                (filterLayanan === "" || layanan.includes(filterLayanan)) &&
+                (searchText === "" || text.includes(searchText));
 
-        $('#customSearch, #filterTahun, #filterStatus, #customLength').on('input change', function () {
-            filterTable();
+            if (match) {
+                row.show();
+            } else {
+                row.hide();
+            }
         });
 
-        filterTable();
+        table.draw(false);
+    }
+
+    $(document).ready(function () {
+        table = $('#myTable').DataTable({
+            paging: true,
+            searching: false,
+            lengthChange: false,
+            info: false
+        });
+
+        $('#customLength').on('change', function () {
+            let selectedLength = parseInt($(this).val());
+            table.page.len(selectedLength).draw();
+        });
+
+        $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
+            applyCustomFilter();
+        });
+
+        applyCustomFilter();
     });
 </script>
 @endpush

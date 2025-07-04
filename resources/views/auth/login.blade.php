@@ -61,4 +61,5 @@
             </div>
         </form>
     </div>
+    {!! HCaptcha::renderJs('en') !!}
 @endsection
