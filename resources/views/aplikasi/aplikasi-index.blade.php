@@ -102,12 +102,8 @@
                                                 <td>
                                                     {{-- <a href="{{ route('admin.sdmpengembang.index', $application->id) }}" class="btn btn-primary btn-sm" title="Vendor">
                                                         <i class="fas fa-handshake"></i>
-<<<<<<< HEAD
                                                     </a> --}}
 
-=======
-                                                    </a>
->>>>>>> origin/draft
                                                     @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
                                                         <a href="{{ route('admin.application.show', $application->id) }}" class="btn btn-dark btn-sm" title="Detail">
                                                             <i class="fas fa-eye"></i>
