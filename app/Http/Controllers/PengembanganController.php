@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+
 class PengembanganController extends Controller
 {
     /**
@@ -51,7 +52,7 @@ class PengembanganController extends Controller
     public function store(StorePengembanganRequest $request)
     {
         DB::transaction(function () use ($request) {
-            $validated = $request->validated();
+        $validated = $request->validated();
 
             if ($request->hasFile('nda')) {
                 $ndaPath = $request->file('nda')->store('pengembangan/ndas', 'public');
@@ -103,6 +104,7 @@ class PengembanganController extends Controller
                 $validated['capture_backend'] = $capture_backendPath;
             }
 
+            // submit pengembangan 
             $newPengembangan = Pengembangan::create($validated);
 
             Sdmpengembang::create([
@@ -118,6 +120,7 @@ class PengembanganController extends Controller
         return redirect()->route('admin.application.show', $request->application_id)
             ->with('success', 'Data telah tersimpan dengan sukses!');
     }
+
 
     /**
      * Display the specified resource.
@@ -262,9 +265,34 @@ class PengembanganController extends Controller
             //     Storage::delete($pengembangan->bukti_monev);
             // }
 
+            // // Hapus file jika ada
+            // $files = [
+            //     $pengembangan->nda,
+            //     $pengembangan->doc_perancangan,
+            //     $pengembangan->surat_mohon,
+            //     $pengembangan->kak,
+            //     $pengembangan->sop,
+            //     $pengembangan->doc_pentest,
+            //     $pengembangan->doc_uat,
+            //     $pengembangan->buku_manual,
+            //     $pengembangan->capture_frontend,
+            //     $pengembangan->capture_backend,
+            // ];
+
+            // foreach ($files as $file) {
+            //     if ($file && Storage::disk('public')->exists($file)) {
+            //         Storage::disk('public')->delete($file);
+            //     }
+            // }
+
+            // Hapus SDM pengembang where sdmpengembang.pengembangan_id = $pengembangan->id
+            $pengembangan->sdmpengembang()->delete();
+
+            // Hapus data pengembangan
             $pengembangan->delete();
         });
 
-        return redirect()->route('admin.application.show', $application->id)->with('success', 'Penghapusan data sukses dilakukan.');
+        return redirect()->route('admin.application.show', $application->id)
+            ->with('success', 'Penghapusan data sukses dilakukan.');
     }
 }

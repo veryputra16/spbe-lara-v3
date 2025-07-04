@@ -20,14 +20,45 @@
             <div class="row mt-sm-4">
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
-                        {{-- <div class="card-header">
-                            <h4>{{ __($title) }}</h4>
-                        </div> --}}
                         <div class="card-body">
                             @role('superadmin|admin-aplikasi|operator-aplikasi')
-                                <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3"><i
-                                        class="fas fa-plus"></i> Add</a>
+                            <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3">
+                                <i class="fas fa-plus"></i> Add
+                            </a>
+
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                                <!-- KIRI: Length -->
+                                <div class="form-inline mb-2">
+                                    <label for="customLength" class="mr-2 mb-0">Tampilkan</label>
+                                    <select id="customLength" class="form-control form-control-sm" style="height: 40px;">
+                                        <option value="5">5</option>
+                                        <option value="10" selected>10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+
+                                <!-- KANAN: Filter -->
+                                <div class="d-flex flex-wrap mb-2 justify-content-end" style="gap: 0.5rem;">
+                                    <select id="filterTahun" class="form-control form-control-sm" style="width: 180px; height: 40px;">
+                                        <option value="">-- Semua Tahun --</option>
+                                        @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
+                                            <option value="{{ $tahun }}">{{ $tahun }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <select id="filterStatus" class="form-control form-control-sm" style="width: 180px; height: 40px;">
+                                        <option value="">-- Semua Status --</option>
+                                        <option value="Aktif">Aktif</option>
+                                        <option value="Tidak Aktif">Tidak Aktif</option>
+                                    </select>
+
+                                    <input type="text" id="customSearch" class="form-control form-control-sm" style="width: 250px; height: 40px;" placeholder="Cari...">
+                                </div>
+                            </div>
                             @endrole
+
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="myTable">
                                     <thead>
@@ -41,29 +72,34 @@
                                             <th>Aset Tak Berwujud</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tableBody">
                                         @foreach ($applications as $application)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
+                                                    <a href="{{ route('admin.sdmpengembang.index', $application->id) }}" class="btn btn-primary btn-sm" title="Vendor">
+                                                        <i class="fas fa-handshake"></i>
+                                                    </a>
+
                                                     @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
-                                                        <a href="{{ route('admin.application.show', $application->id) }}"
-                                                            class="btn btn-dark btn-sm" title="Detail"><i
-                                                                class="fas fa-eye"></i></a>
+                                                        <a href="{{ route('admin.application.show', $application->id) }}" class="btn btn-dark btn-sm" title="Detail">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
                                                     @endrole
+
                                                     @role('superadmin|admin-aplikasi|operator-aplikasi')
-                                                        <a href="{{ route('admin.application.edit', $application->id) }}"
-                                                            class="btn btn-light btn-sm" title="Edit"><i
-                                                                class="fas fa-edit"></i></a>
+                                                        <a href="{{ route('admin.application.edit', $application->id) }}" class="btn btn-light btn-sm" title="Edit">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
                                                     @endrole
+
                                                     @role('superadmin|admin-aplikasi')
-                                                        <form
-                                                            action="{{ route('admin.application.destroy', $application->id) }}"
-                                                            method="POST" style="display: inline-block;">
+                                                        <form action="{{ route('admin.application.destroy', $application->id) }}" method="POST" style="display: inline-block;">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-light btn-sm show_confirm"
-                                                                title="Delete"><i class="fas fa-trash"></i></button>
+                                                            <button type="submit" class="btn btn-light btn-sm show_confirm" title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
                                                         </form>
                                                     @endrole
                                                 </td>
@@ -79,9 +115,9 @@
                                                 </td>
                                                 <td>
                                                     @if ($application->aset_takberwujud == 1)
-                                                        {{ 'Ya' }}
+                                                        Ya
                                                     @else
-                                                        {{ 'Tidak' }}
+                                                        Tidak
                                                     @endif
                                                 </td>
                                             </tr>
@@ -98,34 +134,51 @@
 @endsection
 
 @push('scripts')
-    <!-- SweetAlert2 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-    <script>
-        $('.show_confirm').click(function(event) {
-            var form = $(this).closest("form");
-            var name = $(this).data("name");
-            event.preventDefault();
-            swal({
-                    title: 'Apakah Anda yakin ingin menghapus data ini?',
-                    text: "Jika Anda menghapus data ini, akan hilang selamanya.",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        form.submit();
-                    }
-                });
-        });
-    </script>
+<!-- SweetAlert2 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
-    <!-- Data Tables -->
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $("#myTable").dataTable({
-            "searching": true
+<!-- DataTables (meskipun tidak dipakai, tetap aman untuk disimpan) -->
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        function filterTable() {
+            let searchText = $('#customSearch').val().toLowerCase();
+            let filterTahun = $('#filterTahun').val();
+            let filterStatus = $('#filterStatus').val().trim().toLowerCase();
+            let showCount = parseInt($('#customLength').val());
+
+            let visibleRowCount = 0;
+
+            $('#tableBody tr').each(function () {
+                let row = $(this);
+                let text = row.text().toLowerCase();
+                let tahun = row.find('td:eq(4)').text().trim();
+                let status = row.find('td:eq(5)').text().trim().toLowerCase();
+
+                let matchSearch = text.includes(searchText);
+                let matchTahun = filterTahun === "" || tahun === filterTahun;
+                let matchStatus = filterStatus === "" || status === filterStatus;
+
+                if (matchSearch && matchTahun && matchStatus) {
+                    if (visibleRowCount < showCount) {
+                        row.show();
+                        visibleRowCount++;
+                    } else {
+                        row.hide();
+                    }
+                } else {
+                    row.hide();
+                }
+            });
+        }
+
+        $('#customSearch, #filterTahun, #filterStatus, #customLength').on('input change', function () {
+            filterTable();
         });
-    </script>
+
+        filterTable();
+    });
+</script>
 @endpush
