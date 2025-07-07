@@ -22,12 +22,12 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td style="white-space: nowrap; text-align: center;">
-                        <button type="button" class="btn btn-dark btn-sm" data-toggle="modal"
+                        <button type="button" class="btn btn-dark btn-sm " data-toggle="modal"
                             data-target="#modalDetail{{ $pengembangan->id }}" title="Detail">
                             <i class="fas fa-eye"></i>
                         </button>
                         <a href="{{ route('admin.pengembangan.edit', ['application' => $application->id, 'pengembangan' => $pengembangan->id]) }}"
-                            class="btn btn-light btn-sm" title="Edit">
+                            class="btn btn-icon btn-warning btn-sm" title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
                         <form
@@ -35,7 +35,7 @@
                             method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-light btn-sm show_confirm" title="Delete">
+                            <button type="submit" class="btn btn-icon btn-danger btn-sm show_confirm btn-sm show_confirm" title="Delete">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -73,7 +73,7 @@
                         <h5 class="modal-title" id="modalDetailLabel{{ $pengembangan->id }}">
                             Detail Pengembangan {{ $pengembangan->app->nama_app }}
                         </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Tutup">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -352,7 +352,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                     </div>
 
                 </div>
