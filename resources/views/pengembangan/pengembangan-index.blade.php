@@ -55,9 +55,6 @@
                     <td>{{ $pengembangan->frameworkapp->framework_app }}</td>
                 </tr>
             @empty
-                <tr>
-                    <td colspan="8" class="text-center">Tidak ada data pengembangan</td>
-                </tr>
             @endforelse
         </tbody>
     </table>
