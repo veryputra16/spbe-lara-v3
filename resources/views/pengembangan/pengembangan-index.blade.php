@@ -54,10 +54,8 @@
                     <td>{{ $pengembangan->bahasaprogram->bhs_program }}</td>
                     <td>{{ $pengembangan->frameworkapp->framework_app }}</td>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="8" class="text-center">Tidak ada data pengembangan</td>
-                </tr>
+            @empty           
+                {{-- <p class="text-center text-muted">Tidak ada data pengembangan</p> --}}
             @endforelse
         </tbody>
     </table>
