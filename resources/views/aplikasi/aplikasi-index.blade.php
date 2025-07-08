@@ -10,6 +10,11 @@
         div.dataTables_filter {
             display: none !important;
         }
+
+        table.dataTable tbody td.dataTables_empty {
+            text-align: center;
+            vertical-align: middle;
+        }
     </style>
 @endpush
 
@@ -28,9 +33,31 @@
                     <div class="card">
                         <div class="card-body">
                             @role('superadmin|admin-aplikasi|operator-aplikasi')
-                            <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3">
-                                <i class="fas fa-plus"></i> Add
-                            </a>
+                            
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                                {{-- Kiri: Tombol Add --}}
+                                <div class="mb-2">
+                                    @role('superadmin|admin-aplikasi|operator-aplikasi')
+                                    <a href="{{ route('admin.application.create') }}" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i> Add
+                                    </a>
+                                    @endrole
+                                </div>
+
+                                {{-- Kanan: Tombol Export --}}
+                                <form id="exportForm" method="GET" action="{{ route('admin.application.export') }}">
+                                    <input type="hidden" name="opd" id="exportOPD">
+                                    <input type="hidden" name="layanan" id="exportLayanan">
+                                    <input type="hidden" name="tahun" id="exportTahun">
+                                    <input type="hidden" name="status" id="exportStatus">
+                                    <input type="hidden" name="search" id="exportSearch">
+
+                                    <button type="submit" class="btn btn-success mb-3 ml-2">
+                                        <i class="fas fa-file-excel"></i> Export Excel
+                                    </button>
+                                </form>
+                            </div>
+                            
 
                             <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
                                 <div class="form-inline mb-2">
@@ -137,6 +164,11 @@
                                                 <td>{{ $application->aset_takberwujud == 1 ? 'Ya' : 'Tidak' }}</td>
                                             </tr>
                                         @endforeach
+                                            <tfoot>
+                                                <tr id="noDataRow" style="display: none;">
+                                                    <td colspan="7" class="text-center">No data available in table</td>
+                                                </tr>
+                                            </tfoot>
                                     </tbody>
                                 </table>
                             </div>
@@ -150,26 +182,26 @@
 @endsection
 
 @push('scripts')
-<!-- SweetAlert2 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-
-<!-- DataTables -->
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
     let table;
+    let currentLimit = 10;
 
-    function applyCustomFilter() {
+    function applyCustomFilterAndLimit() {
         let filterTahun = $('#filterTahun').val();
         let filterStatus = $('#filterStatus').val().toLowerCase();
         let filterOPD = $('#filterOPD').val().toLowerCase();
         let filterLayanan = $('#filterLayanan').val().toLowerCase();
         let searchText = $('#customSearch').val().toLowerCase();
+        let limit = parseInt($('#customLength').val());
 
-        table.rows().every(function () {
-            let row = $(this.node());
+        let visibleCount = 0;
+        let shownCount = 0;
 
+        $('#myTable tbody tr').each(function () {
+            let row = $(this);
             let opd = row.data('opd') || '';
             let layanan = row.data('layanan') || '';
             let tahun = row.data('tahun') || '';
@@ -184,33 +216,52 @@
                 (searchText === "" || text.includes(searchText));
 
             if (match) {
-                row.show();
+                visibleCount++;
+                if (shownCount < limit) {
+                    row.show();
+                    shownCount++;
+                } else {
+                    row.hide();
+                }
             } else {
                 row.hide();
             }
         });
 
-        table.draw(false);
+        $('#noDataRow').toggle(visibleCount === 0);
     }
 
     $(document).ready(function () {
+        // Nonaktifkan pagination & fitur lainnya dari DataTables
         table = $('#myTable').DataTable({
-            paging: true,
+            paging: false,
             searching: false,
             lengthChange: false,
             info: false
         });
 
-        $('#customLength').on('change', function () {
-            let selectedLength = parseInt($(this).val());
-            table.page.len(selectedLength).draw();
-        });
-
+        // Trigger saat filter berubah
         $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
-            applyCustomFilter();
+            applyCustomFilterAndLimit();
         });
 
-        applyCustomFilter();
+        // Trigger saat limit baris diubah
+        $('#customLength').on('change', function () {
+            currentLimit = parseInt($(this).val());
+            applyCustomFilterAndLimit();
+        });
+
+        // Initial render
+        applyCustomFilterAndLimit();
+
+        // Kirim filter ke input hidden saat submit export
+        $('#exportForm').on('submit', function () {
+            $('#exportOPD').val($('#filterOPD').val());
+            $('#exportLayanan').val($('#filterLayanan').val());
+            $('#exportTahun').val($('#filterTahun').val());
+            $('#exportStatus').val($('#filterStatus').val());
+            $('#exportSearch').val($('#customSearch').val());
+        });
     });
 </script>
 @endpush

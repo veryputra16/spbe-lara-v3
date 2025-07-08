@@ -27,6 +27,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+//  export class
+use App\Exports\ApplicationExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 use function PHPUnit\Framework\isEmpty;
 
 class ApplicationController extends Controller
@@ -39,12 +44,37 @@ class ApplicationController extends Controller
         $applications = Application::with(['opd', 'layananapp'])->whereIn('katapp_id', [1, 2])->get();
 
         $opds = Opd::all();
-        $layanans = Layananapp::all();  
+        $layanans = Layananapp::all();
 
-        return view('aplikasi.aplikasi-index', compact('applications', 'opds', 'layanans'), [
+        // JSON-ready array untuk JS
+        $exportedApplications = $applications->map(function ($app) {
+            return [
+                'Perangkat Daerah' => $app->opd->nama ?? '-',
+                'Nama Aplikasi' => $app->nama_app ?? '-',
+                'Fungsi Aplikasi' => $app->fungsi_app ?? '-',
+                'URL' => $app->url ?? '-',
+                'Tahun Pembuatan' => $app->tahun_buat ?? '-',
+                'Repositori' => $app->repositori ?? '-',
+                'Layanan Aplikasi' => $app->layananapp->layanan_app ?? '-',
+                'Jaringan Intra' => $app->jaringan_intra == 1 ? 'Internet' : ($app->jaringan_intra == 2 ? 'Intranet' : '-'),
+                'Status' => $app->status == 1 ? 'Aktif' : 'Tidak Aktif',
+                'Alasan Nonaktif' => $app->alasan_nonaktif ?? '-',
+                'Kategori Pengguna' => $app->katpengguna->kategori_pengguna ?? '-',
+                'Kategori Server' => $app->katserver->kategori_server ?? '-',
+                'Kategori Aplikasi' => $app->katapp->kategori_aplikasi ?? '-',
+                'Dasar Hukum' => $app->dasar_hukum ? asset(Storage::url($app->dasar_hukum)) : '-',
+                'Aset Tak Berwujud' => $app->aset_takberwujud == 1 ? 'Ya' : 'Tidak',
+                'Proses Bisnis' => $app->proses_bisnis ?? '-',
+                'Keterangan Proses Bisnis' => $app->ket_probis ?? '-',
+                'Created At' => $app->created_at ? $app->created_at->format('Y-m-d H:i:s') : '-',
+            ];
+        });
+
+        return view('aplikasi.aplikasi-index', compact('applications', 'opds', 'layanans', 'exportedApplications'), [
             'title' => 'Data Aplikasi'
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -249,5 +279,19 @@ class ApplicationController extends Controller
         });
 
         return redirect()->route('admin.application.index')->with('success', 'Penghapusan data sukses dilakukan.');
+    }
+
+
+    public function export(Request $request)
+    {
+        $filters = [
+            'opd' => $request->opd,
+            'layanan' => $request->layanan,
+            'tahun' => $request->tahun,
+            'status' => $request->status,
+            'search' => $request->search,
+        ];
+
+        return Excel::download(new ApplicationExport($filters), 'Data-Application.xlsx');
     }
 }

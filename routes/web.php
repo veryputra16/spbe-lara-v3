@@ -135,4 +135,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/hakakses/edit/{id}', [HakaksesController::class, 'edit'])->name('hakakses.edit')->middleware('superadmin');
     // Route::put('/hakakses/update/{id}', [HakaksesController::class, 'update'])->name('hakakses.update')->middleware('superadmin');
     // Route::delete('/hakakses/delete/{id}', [HakaksesController::class, 'destroy'])->name('hakakses.delete')->middleware('superadmin');
+
+    // Export applications
+    Route::get('/admin/applications/export', [ApplicationController::class, 'export'])->name('admin.application.export');
 });
