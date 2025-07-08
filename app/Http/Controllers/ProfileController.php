@@ -10,8 +10,14 @@ class ProfileController extends Controller
 {
     public function edit()
     {
+        $user = Auth::user();
+
+        $opds = $user->opds()->first();
+        // dd($opds);
+
         return view('profile.edit', [
-            'user' => Auth::user(),
+            'user' => $user,
+            'opds' => $opds,
             'title' => 'Profile'
         ]);
     }
