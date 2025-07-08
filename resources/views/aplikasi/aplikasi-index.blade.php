@@ -138,6 +138,13 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
+
+                                    <tfoot>
+                                        <tr id="noDataRow" style="display: none;">
+                                            <td colspan="7" class="text-center">No data available in table</td>
+                                        </tr>
+                                    </tfoot>
+
                                 </table>
                             </div>
 
@@ -167,9 +174,10 @@
         let filterLayanan = $('#filterLayanan').val().toLowerCase();
         let searchText = $('#customSearch').val().toLowerCase();
 
+        let visibleCount = 0;
+
         table.rows().every(function () {
             let row = $(this.node());
-
             let opd = row.data('opd') || '';
             let layanan = row.data('layanan') || '';
             let tahun = row.data('tahun') || '';
@@ -185,10 +193,17 @@
 
             if (match) {
                 row.show();
+                visibleCount++;
             } else {
                 row.hide();
             }
         });
+
+        if (visibleCount === 0) {
+            $('#noDataRow').show();
+        } else {
+            $('#noDataRow').hide();
+        }
 
         table.draw(false);
     }
