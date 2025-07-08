@@ -19,4 +19,9 @@ class Opd extends Model
     {
         return $this->hasMany(Opd::class);
     }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 }
