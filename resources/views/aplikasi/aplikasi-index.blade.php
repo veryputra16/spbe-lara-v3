@@ -15,6 +15,7 @@
             text-align: center;
             vertical-align: middle;
         }
+
     </style>
 @endpush
 
@@ -73,7 +74,7 @@
 
                                 <div class="d-flex flex-wrap mb-2 justify-content-end align-items-center" style="gap: 0.5rem;">
                                     <div class="form-group mb-0">
-                                        <select id="filterOPD" class="form-control form-control-sm select2" style="min-width: 180px;">
+                                        <select id="filterOPD" class="form-control form-control-sm select2" style="width: 220px;">
                                             <option value="">-- Semua OPD --</option>
                                             @foreach ($opds as $opd)
                                                 <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
@@ -191,11 +192,36 @@
     </section>
 @endsection
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+
+    <style>
+        .select2-selection__rendered {
+        line-height: 36px !important; /* atur sesuai tinggi */
+        }
+
+        .select2-container .select2-selection--single {
+            height: 40px !important;       /* sesuaikan tinggi */
+            display: flex !important;
+            align-items: center !important;
+        }
+    </style>
+@endpush
+
 @push('scripts')
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
+<!-- JS -->
+<script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 
 <script>
+
+    $('#filterOPD, #filterLayanan, #filterTahun, #filterStatus').select2({
+        width: 'style',
+        // placeholder: "-- Pilih --",
+        allowClear: true
+    });
+    
     let table;
     let currentLimit = 10;
 
