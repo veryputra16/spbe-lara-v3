@@ -43,36 +43,45 @@
                                         <option value="100">100</option>
                                     </select>
                                 </div>
+                                <div class="d-flex flex-wrap mb-2 justify-content-end align-items-center" style="gap: 0.5rem;">
+                                    <div class="form-group mb-0">
+                                        <select id="filterOPD" class="form-control form-control-sm select2" style="min-width: 180px;">
+                                            <option value="">-- Semua OPD --</option>
+                                            @foreach ($opds as $opd)
+                                                <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                <div class="d-flex flex-wrap mb-2 justify-content-end" style="gap: 0.5rem;">
-                                    <select id="filterOPD" class="form-control form-control-sm" style="width: 180px;">
-                                        <option value="">-- Semua OPD --</option>
-                                        @foreach ($opds as $opd)
-                                            <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="form-group mb-0">
+                                        <select id="filterLayanan" class="form-control form-control-sm select2" style="min-width: 180px;">
+                                            <option value="">-- Semua Layanan --</option>
+                                            @foreach ($layanans as $layanan)
+                                                <option value="{{ strtolower($layanan->layanan_app) }}">{{ $layanan->layanan_app }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                    <select id="filterLayanan" class="form-control form-control-sm" style="width: 180px;">
-                                        <option value="">-- Semua Layanan --</option>
-                                        @foreach ($layanans as $layanan)
-                                            <option value="{{ strtolower($layanan->layanan_app) }}">{{ $layanan->layanan_app }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="form-group mb-0">
+                                        <select id="filterTahun" class="form-control form-control-sm select2" style="min-width: 140px;">
+                                            <option value="">-- Semua Tahun --</option>
+                                            @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
+                                                <option value="{{ $tahun }}">{{ $tahun }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                    <select id="filterTahun" class="form-control form-control-sm" style="width: 180px;">
-                                        <option value="">-- Semua Tahun --</option>
-                                        @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
-                                            <option value="{{ $tahun }}">{{ $tahun }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="form-group mb-0">
+                                        <select id="filterStatus" class="form-control form-control-sm select2" style="min-width: 140px;">
+                                            <option value="">-- Semua Status --</option>
+                                            <option value="Aktif">Aktif</option>
+                                            <option value="Tidak Aktif">Tidak Aktif</option>
+                                        </select>
+                                    </div>
 
-                                    <select id="filterStatus" class="form-control form-control-sm" style="width: 180px;">
-                                        <option value="">-- Semua Status --</option>
-                                        <option value="Aktif">Aktif</option>
-                                        <option value="Tidak Aktif">Tidak Aktif</option>
-                                    </select>
-
-                                    <input type="text" id="customSearch" class="form-control form-control-sm" style="width: 250px;" placeholder="Cari...">
+                                    <div class="form-group mb-0">
+                                        <input type="text" id="customSearch" class="form-control form-control-sm" style="min-width: 200px;" placeholder="Cari...">
+                                    </div>
                                 </div>
                             </div>
                             @endrole
@@ -153,6 +162,10 @@
     </section>
 @endsection
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+@endpush
+
 @push('scripts')
 <!-- SweetAlert2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
@@ -161,7 +174,17 @@
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
 
+<!-- JS -->
+<script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+
 <script>
+
+    $('#filterOPD, #filterLayanan, #filterTahun, #filterStatus').select2({
+        width: 'style',
+        placeholder: "-- Pilih --",
+        allowClear: true
+    });
+
     let table;
 
     function applyCustomFilter() {
