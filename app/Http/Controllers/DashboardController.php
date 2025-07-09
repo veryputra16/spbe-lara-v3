@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Application;
 
 class DashboardController extends Controller
 {
@@ -13,8 +14,15 @@ class DashboardController extends Controller
      */
     public function aplikasi()
     {
+        $totalAplikasi = Application::count();
+        $aplikasiAktif = Application::where('status', 1)->count();
+        $aplikasiNonAktif = Application::where('status', 0)->count();
+
         return view('dashboard.aplikasi.d-app', [
-            'title' => 'Dashboard Aplikasi'
+            'title' => 'Dashboard Aplikasi',
+            'totalAplikasi' => $totalAplikasi,
+            'aplikasiAktif' => $aplikasiAktif,
+            'aplikasiNonAktif' => $aplikasiNonAktif,
         ]);
     }
 

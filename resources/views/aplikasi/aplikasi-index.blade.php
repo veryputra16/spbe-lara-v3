@@ -138,16 +138,13 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
-
                                     <tfoot>
                                         <tr id="noDataRow" style="display: none;">
                                             <td colspan="7" class="text-center">No data available in table</td>
                                         </tr>
                                     </tfoot>
-
                                 </table>
                             </div>
-
                         </div>
                     </div>
                 </div>
