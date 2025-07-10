@@ -103,7 +103,8 @@
                                         name="role_id" required autocomplete="role_id">
                                         @forelse ($roles as $role)
                                             <option value="{{ $role['name'] }}"
-                                                {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ $role['name'] }}
+                                                {{ $user->hasRole($role->name) ? 'selected' : '' }}>
+                                                {{ strtoupper(Str::headline($role['name'])) }}
                                             </option>
                                         @empty
                                             <option value="">Tidak Ada Data</option>

@@ -68,7 +68,7 @@
                                                 <td>
                                                     @if ($user->roles->isNotEmpty())
                                                         @foreach ($user->getRoleNames() as $role)
-                                                            {{ $role }}
+                                                            {{ strtoupper(Str::headline($role)) }}
                                                         @endforeach
                                                     @else
                                                         <span class="text-muted">-</span>
