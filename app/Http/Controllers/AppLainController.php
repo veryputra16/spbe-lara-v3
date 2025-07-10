@@ -14,6 +14,7 @@ use App\Models\Monevapp;
 use App\Models\Opd;
 use App\Models\Sdmteknic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,8 +25,14 @@ class AppLainController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+
         if (auth()->user()->hasAnyRole(['operator-aplikasi', 'viewer-aplikasi'])) {
-            $applains = Application::where('katapp_id', 4)->get();
+            $applains = Application::where('katapp_id', 4)
+                ->whereHas('opd.users', function ($query) use ($user) {
+                    $query->where('users.id', $user->id);
+                })
+                ->get();
         } else {
             $applains = Application::where('katapp_id', 4)->get();
         }

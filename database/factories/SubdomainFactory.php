@@ -19,7 +19,6 @@ class SubdomainFactory extends Factory
     {
         return [
             'url' => fake()->url(),
-            'status' => $this->faker->numberBetween(0, 1),
             'op_teknis' => fake()->name(),
             'kontak_teknis' => fake()->randomNumber(7),
             'opd_id' => $this->faker->numberBetween(1, 2),

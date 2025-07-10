@@ -15,7 +15,6 @@
             text-align: center;
             vertical-align: middle;
         }
-
     </style>
 @endpush
 
@@ -33,85 +32,92 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            @role('superadmin|admin-aplikasi|operator-aplikasi')                            
-                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                                {{-- Kiri: Tombol Add --}}
-                                <div class="mb-2">
-                                    @role('superadmin|admin-aplikasi|operator-aplikasi')
-                                    <a href="{{ route('admin.application.create') }}" class="btn btn-primary">
-                                        <i class="fas fa-plus"></i> Add
-                                    </a>
-                                    @endrole
+                            @role('superadmin|admin-aplikasi|operator-aplikasi')
+                                <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                                    {{-- Kiri: Tombol Add --}}
+                                    <div class="mb-2">
+                                        @role('superadmin|admin-aplikasi|operator-aplikasi')
+                                            <a href="{{ route('admin.application.create') }}" class="btn btn-primary">
+                                                <i class="fas fa-plus"></i> Add
+                                            </a>
+                                        @endrole
+                                    </div>
+
+                                    {{-- Kanan: Tombol Export --}}
+                                    <form id="exportForm" method="GET" action="{{ route('admin.application.export') }}">
+                                        <input type="hidden" name="opd" id="exportOPD">
+                                        <input type="hidden" name="layanan" id="exportLayanan">
+                                        <input type="hidden" name="tahun" id="exportTahun">
+                                        <input type="hidden" name="status" id="exportStatus">
+                                        <input type="hidden" name="search" id="exportSearch">
+
+                                        <button type="submit" class="btn btn-success mb-3 ml-2">
+                                            <i class="fas fa-file-excel"></i> Export Excel
+                                        </button>
+                                    </form>
                                 </div>
 
-                                {{-- Kanan: Tombol Export --}}
-                                <form id="exportForm" method="GET" action="{{ route('admin.application.export') }}">
-                                    <input type="hidden" name="opd" id="exportOPD">
-                                    <input type="hidden" name="layanan" id="exportLayanan">
-                                    <input type="hidden" name="tahun" id="exportTahun">
-                                    <input type="hidden" name="status" id="exportStatus">
-                                    <input type="hidden" name="search" id="exportSearch">
 
-                                    <button type="submit" class="btn btn-success mb-3 ml-2">
-                                        <i class="fas fa-file-excel"></i> Export Excel
-                                    </button>
-                                </form>
-                            </div>
-                            
-
-                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                                <div class="form-inline mb-2">
-                                    <label for="customLength" class="mr-2 mb-0">Tampilkan</label>
-                                    <select id="customLength" class="form-control form-control-sm" style="height: 40px;">
-                                        <option value="5">5</option>
-                                        <option value="10" selected>10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                </div>
-
-                                <div class="d-flex flex-wrap mb-2 justify-content-end align-items-center" style="gap: 0.5rem;">
-                                    <div class="form-group mb-0">
-                                        <select id="filterOPD" class="form-control form-control-sm select2" style="width: 220px;">
-                                            <option value="">-- Semua OPD --</option>
-                                            @foreach ($opds as $opd)
-                                                <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
-                                            @endforeach
+                                <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                                    <div class="form-inline mb-2">
+                                        <label for="customLength" class="mr-2 mb-0">Tampilkan</label>
+                                        <select id="customLength" class="form-control form-control-sm" style="height: 40px;">
+                                            <option value="5">5</option>
+                                            <option value="10" selected>10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
                                         </select>
                                     </div>
 
-                                    <div class="form-group mb-0">
-                                        <select id="filterLayanan" class="form-control form-control-sm select2" style="min-width: 180px;">
-                                            <option value="">-- Semua Layanan --</option>
-                                            @foreach ($layanans as $layanan)
-                                                <option value="{{ strtolower($layanan->layanan_app) }}">{{ $layanan->layanan_app }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <div class="d-flex flex-wrap mb-2 justify-content-end align-items-center"
+                                        style="gap: 0.5rem;">
+                                        <div class="form-group mb-0">
+                                            <select id="filterOPD" class="form-control form-control-sm select2"
+                                                style="width: 220px;">
+                                                <option value="">-- Semua OPD --</option>
+                                                @foreach ($opds as $opd)
+                                                    <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                                    <div class="form-group mb-0">
-                                        <select id="filterTahun" class="form-control form-control-sm select2" style="min-width: 140px;">
-                                            <option value="">-- Semua Tahun --</option>
-                                            @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
-                                                <option value="{{ $tahun }}">{{ $tahun }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                        <div class="form-group mb-0">
+                                            <select id="filterLayanan" class="form-control form-control-sm select2"
+                                                style="min-width: 180px;">
+                                                <option value="">-- Semua Layanan --</option>
+                                                @foreach ($layanans as $layanan)
+                                                    <option value="{{ strtolower($layanan->layanan_app) }}">
+                                                        {{ $layanan->layanan_app }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                                    <div class="form-group mb-0">
-                                        <select id="filterStatus" class="form-control form-control-sm select2" style="min-width: 140px;">
-                                            <option value="">-- Semua Status --</option>
-                                            <option value="Aktif">Aktif</option>
-                                            <option value="Tidak Aktif">Tidak Aktif</option>
-                                        </select>
-                                    </div>
+                                        <div class="form-group mb-0">
+                                            <select id="filterTahun" class="form-control form-control-sm select2"
+                                                style="min-width: 140px;">
+                                                <option value="">-- Semua Tahun --</option>
+                                                @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
+                                                    <option value="{{ $tahun }}">{{ $tahun }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                                    <div class="form-group mb-0">
-                                        <input type="text" id="customSearch" class="form-control form-control-sm" style="min-width: 200px;" placeholder="Cari...">
+                                        <div class="form-group mb-0">
+                                            <select id="filterStatus" class="form-control form-control-sm select2"
+                                                style="min-width: 140px;">
+                                                <option value="">-- Semua Status --</option>
+                                                <option value="Aktif">Aktif</option>
+                                                <option value="Tidak Aktif">Tidak Aktif</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <input type="text" id="customSearch" class="form-control form-control-sm"
+                                                style="min-width: 200px;" placeholder="Cari...">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                                 <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3">
                                     <i class="fas fa-plus"></i> Add
                                 </a>
@@ -136,7 +142,8 @@
                                             @endforeach
                                         </select>
 
-                                        <select id="filterLayanan" class="form-control form-control-sm" style="width: 180px;">
+                                        <select id="filterLayanan" class="form-control form-control-sm"
+                                            style="width: 180px;">
                                             <option value="">-- Semua Layanan --</option>
                                             @foreach ($layanans as $layanan)
                                                 <option value="{{ strtolower($layanan->layanan_app) }}">
@@ -226,11 +233,11 @@
                                                 <td>{{ $application->aset_takberwujud == 1 ? 'Ya' : 'Tidak' }}</td>
                                             </tr>
                                         @endforeach
-                                            <tfoot>
-                                                <tr id="noDataRow" style="display: none;">
-                                                    <td colspan="7" class="text-center">No data available in table</td>
-                                                </tr>
-                                            </tfoot>
+                                    <tfoot>
+                                        <tr id="noDataRow" style="display: none;">
+                                            <td colspan="7" class="text-center">No data available in table</td>
+                                        </tr>
+                                    </tfoot>
                                     </tbody>
                                 </table>
                             </div>
@@ -249,11 +256,13 @@
 
     <style>
         .select2-selection__rendered {
-        line-height: 36px !important; /* atur sesuai tinggi */
+            line-height: 36px !important;
+            /* atur sesuai tinggi */
         }
 
         .select2-container .select2-selection--single {
-            height: 40px !important;       /* sesuaikan tinggi */
+            height: 40px !important;
+            /* sesuaikan tinggi */
             display: flex !important;
             align-items: center !important;
         }
@@ -261,119 +270,34 @@
 @endpush
 
 @push('scripts')
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
-<!-- JS -->
-<script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
-
-<script>
-
-    $('#filterOPD, #filterLayanan, #filterTahun, #filterStatus').select2({
-        width: 'style',
-        // placeholder: "-- Pilih --",
-        allowClear: true
-    });
-    
-    let table;
-    let currentLimit = 10;
-
-    function applyCustomFilterAndLimit() {
-        let filterTahun = $('#filterTahun').val();
-        let filterStatus = $('#filterStatus').val().toLowerCase();
-        let filterOPD = $('#filterOPD').val().toLowerCase();
-        let filterLayanan = $('#filterLayanan').val().toLowerCase();
-        let searchText = $('#customSearch').val().toLowerCase();
-        let limit = parseInt($('#customLength').val());
-
-        let visibleCount = 0;
-        let shownCount = 0;
-
-        $('#myTable tbody tr').each(function () {
-            let row = $(this);
-            let opd = row.data('opd') || '';
-            let layanan = row.data('layanan') || '';
-            let tahun = row.data('tahun') || '';
-            let status = row.data('status') || '';
-            let text = row.text().toLowerCase();
-
-            let match =
-                (filterTahun === "" || tahun == filterTahun) &&
-                (filterStatus === "" || status == filterStatus) &&
-                (filterOPD === "" || opd.includes(filterOPD)) &&
-                (filterLayanan === "" || layanan.includes(filterLayanan)) &&
-                (searchText === "" || text.includes(searchText));
-
-            if (match) {
-                visibleCount++;
-                if (shownCount < limit) {
-                    row.show();
-                    shownCount++;
-                } else {
-                    row.hide();
-                }
-            } else {
-                row.hide();
-            }
-        });
-
-        $('#noDataRow').toggle(visibleCount === 0);
-    }
-
-    $(document).ready(function () {
-        // Nonaktifkan pagination & fitur lainnya dari DataTables
-        table = $('#myTable').DataTable({
-            paging: false,
-            searching: false,
-            lengthChange: false,
-            info: false
-        });
-
-        // Trigger saat filter berubah
-        $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
-            applyCustomFilterAndLimit();
-        });
-
-        // Trigger saat limit baris diubah
-        $('#customLength').on('change', function () {
-            currentLimit = parseInt($(this).val());
-            applyCustomFilterAndLimit();
-        });
-
-        // Initial render
-        applyCustomFilterAndLimit();
-
-        // Kirim filter ke input hidden saat submit export
-        $('#exportForm').on('submit', function () {
-            $('#exportOPD').val($('#filterOPD').val());
-            $('#exportLayanan').val($('#filterLayanan').val());
-            $('#exportTahun').val($('#filterTahun').val());
-            $('#exportStatus').val($('#filterStatus').val());
-            $('#exportSearch').val($('#customSearch').val());
-        });
-    });
-</script>
-
-@push('scripts')
-    <!-- SweetAlert2 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-
-    <!-- DataTables -->
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
+    <!-- JS -->
+    <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 
     <script>
-        let table;
+        $('#filterOPD, #filterLayanan, #filterTahun, #filterStatus').select2({
+            width: 'style',
+            // placeholder: "-- Pilih --",
+            allowClear: true
+        });
 
-        function applyCustomFilter() {
+        let table;
+        let currentLimit = 10;
+
+        function applyCustomFilterAndLimit() {
             let filterTahun = $('#filterTahun').val();
             let filterStatus = $('#filterStatus').val().toLowerCase();
             let filterOPD = $('#filterOPD').val().toLowerCase();
             let filterLayanan = $('#filterLayanan').val().toLowerCase();
             let searchText = $('#customSearch').val().toLowerCase();
+            let limit = parseInt($('#customLength').val());
 
-            table.rows().every(function() {
-                let row = $(this.node());
+            let visibleCount = 0;
+            let shownCount = 0;
 
+            $('#myTable tbody tr').each(function() {
+                let row = $(this);
                 let opd = row.data('opd') || '';
                 let layanan = row.data('layanan') || '';
                 let tahun = row.data('tahun') || '';
@@ -388,35 +312,120 @@
                     (searchText === "" || text.includes(searchText));
 
                 if (match) {
-                    row.show();
+                    visibleCount++;
+                    if (shownCount < limit) {
+                        row.show();
+                        shownCount++;
+                    } else {
+                        row.hide();
+                    }
                 } else {
                     row.hide();
                 }
             });
 
-            table.draw(false);
+            $('#noDataRow').toggle(visibleCount === 0);
         }
 
         $(document).ready(function() {
+            // Nonaktifkan pagination & fitur lainnya dari DataTables
             table = $('#myTable').DataTable({
-                paging: true,
+                paging: false,
                 searching: false,
                 lengthChange: false,
                 info: false
             });
 
-            $('#customLength').on('change', function() {
-                let selectedLength = parseInt($(this).val());
-                table.page.len(selectedLength).draw();
-            });
-
+            // Trigger saat filter berubah
             $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change',
             function() {
-                applyCustomFilter();
+                applyCustomFilterAndLimit();
             });
 
-            applyCustomFilter();
+            // Trigger saat limit baris diubah
+            $('#customLength').on('change', function() {
+                currentLimit = parseInt($(this).val());
+                applyCustomFilterAndLimit();
+            });
+
+            // Initial render
+            applyCustomFilterAndLimit();
+
+            // Kirim filter ke input hidden saat submit export
+            $('#exportForm').on('submit', function() {
+                $('#exportOPD').val($('#filterOPD').val());
+                $('#exportLayanan').val($('#filterLayanan').val());
+                $('#exportTahun').val($('#filterTahun').val());
+                $('#exportStatus').val($('#filterStatus').val());
+                $('#exportSearch').val($('#customSearch').val());
+            });
         });
     </script>
 
-@endpush
+    @push('scripts')
+        <!-- SweetAlert2 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+        <!-- DataTables -->
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
+
+        <script>
+            let table;
+
+            function applyCustomFilter() {
+                let filterTahun = $('#filterTahun').val();
+                let filterStatus = $('#filterStatus').val().toLowerCase();
+                let filterOPD = $('#filterOPD').val().toLowerCase();
+                let filterLayanan = $('#filterLayanan').val().toLowerCase();
+                let searchText = $('#customSearch').val().toLowerCase();
+
+                table.rows().every(function() {
+                    let row = $(this.node());
+
+                    let opd = row.data('opd') || '';
+                    let layanan = row.data('layanan') || '';
+                    let tahun = row.data('tahun') || '';
+                    let status = row.data('status') || '';
+                    let text = row.text().toLowerCase();
+
+                    let match =
+                        (filterTahun === "" || tahun == filterTahun) &&
+                        (filterStatus === "" || status == filterStatus) &&
+                        (filterOPD === "" || opd.includes(filterOPD)) &&
+                        (filterLayanan === "" || layanan.includes(filterLayanan)) &&
+                        (searchText === "" || text.includes(searchText));
+
+                    if (match) {
+                        row.show();
+                    } else {
+                        row.hide();
+                    }
+                });
+
+                table.draw(false);
+            }
+
+            $(document).ready(function() {
+                table = $('#myTable').DataTable({
+                    paging: true,
+                    searching: false,
+                    lengthChange: false,
+                    info: false
+                });
+
+                $('#customLength').on('change', function() {
+                    let selectedLength = parseInt($(this).val());
+                    table.page.len(selectedLength).draw();
+                });
+
+                $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change',
+                    function() {
+                        applyCustomFilter();
+                    });
+
+                applyCustomFilter();
+            });
+        </script>
+
+    @endpush

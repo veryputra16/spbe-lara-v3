@@ -14,6 +14,7 @@ use App\Models\Monevapp;
 use App\Models\Opd;
 use App\Models\Sdmteknic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -25,7 +26,17 @@ class AppDesaController extends Controller
      */
     public function index()
     {
-        $appdesas = Application::where('katapp_id', 3)->get();
+        $user = Auth::user();
+
+        if (auth()->user()->hasAnyRole(['operator-aplikasi', 'viewer-aplikasi'])) {
+            $appdesas = Application::where('katapp_id', 3)
+                ->whereHas('opd.users', function ($query) use ($user) {
+                    $query->where('users.id', $user->id);
+                })
+                ->get();
+        } else {
+            $appdesas = Application::where('katapp_id', 3)->get();
+        }
 
         return view('appdesa.appdesa-index', compact('appdesas'), [
             'title' => 'Aplikasi Desa'

@@ -22,11 +22,10 @@ class UpdateSubdomainRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'url' => ['required', 'url:http,https', 'max:255'],
-            'status' => ['required'],
+            'url' => ['sometimes', 'url:http,https', 'max:255'],
             'op_teknis' => ['nullable', 'string', 'max:255'],
             'kontak_teknis' => ['nullable', 'regex:/^[0-9]{9,14}$/'],
-            'opd_id' => ['required', 'max:255'],
+            'opd_id' => ['sometimes', 'max:255'],
             'keterangan' => ['nullable', 'string', 'max:255'],
         ];
     }

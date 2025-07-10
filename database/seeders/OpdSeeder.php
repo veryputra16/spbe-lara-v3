@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Opd;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,8 +26,8 @@ class OpdSeeder extends Seeder
             ['nama' => 'Badan Perencanaan Pembangunan Daerah', 'singkatan' => null],
             ['nama' => 'Dinas Kebudayaan', 'singkatan' => null],
             ['nama' => 'Dinas Kependudukan dan Pencatatan Sipil', 'singkatan' => null],
-            ['nama' => 'Dinas Kesehatan', 'singkatan' => null],
-            ['nama' => 'Dinas Komunikasi, Informatika dan Statistik', 'singkatan' => null],
+            ['nama' => 'Dinas Kesehatan', 'singkatan' => 'DINKES'],
+            ['nama' => 'Dinas Komunikasi, Informatika dan Statistik', 'singkatan' => 'DKIS'],
             ['nama' => 'Dinas Koperasi, Usaha Mikro Kecil dan Menengah', 'singkatan' => null],
             ['nama' => 'Dinas Lingkungan Hidup dan Kebersihan', 'singkatan' => 'DLHK'],
             ['nama' => 'Dinas Pariwisata', 'singkatan' => null],
@@ -125,5 +126,8 @@ class OpdSeeder extends Seeder
                 'singkatan' => $data['singkatan'],
             ]);
         }
+
+        $user = User::find(4);
+        $user->opdPivot()->attach(10);
     }
 }

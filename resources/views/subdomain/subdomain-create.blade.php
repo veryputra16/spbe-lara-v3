@@ -23,7 +23,7 @@
                             <h4>{{ __($title) }}</h4>
                         </div> --}}
                             <div class="card-body">
-                                <div class="form-group col-md-5 col-12">
+                                <div class="form-group col-md-6 col-12">
                                     <label>{{ __('URL') }}</label>
                                     <input type="text" class="form-control @error('url') is-invalid @enderror"
                                         name="url" value="{{ old('url') }}" required autocomplete="URL"
@@ -34,24 +34,14 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-2 col-12">
-                                    <label>{{ __('Status') }}</label>
-                                    <select class="form-control select2 @error('status') is-invalid @enderror"
-                                        name="status" required autocomplete="status">
-                                        <option value="1">Aktif</option>
-                                        <option value="0">Tidak Aktif</option>
-                                    </select>
-                                    @error('status')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
                                 <div class="form-group col-md-6 col-12">
                                     <label>{{ __('Operator Teknis') }}</label>
                                     <input type="text" class="form-control @error('op_teknis') is-invalid @enderror"
                                         name="op_teknis" value="{{ old('op_teknis') }}" autocomplete="op_teknis"
                                         placeholder="{{ __('Operator Teknis') }}">
+                                    <small id="op_teknis" class="form-text text-muted">
+                                        Nama Operator
+                                    </small>
                                     @error('op_teknis')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -63,6 +53,9 @@
                                     <input type="text" class="form-control @error('kontak_teknis') is-invalid @enderror"
                                         name="kontak_teknis" value="{{ old('kontak_teknis') }}"
                                         autocomplete="kontak_teknis" placeholder="{{ __('Nomor Kontak Teknis') }}">
+                                    <small id="op_teknis" class="form-text text-muted">
+                                        Nomor Kontak Operator Teknis
+                                    </small>
                                     @error('kontak_teknis')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
