@@ -8,17 +8,17 @@
                 <a href="https://spbe.denpasarkota.go.id/">{{ env('APP_NAME') }}</a>
             </div>
             <ul class="sidebar-menu">
-                @role('superadmin|admin-aplikasi|viewer-spbe|viewer-all')
+                @role('superadmin|admin-spbe|admin-aplikasi|operator-aplikasi|operator-spbe|eksekutif|viewer-aplikasi|viewer-all')
                     <li class="menu-header">Dashboard</li>
                 @endrole
-                @role('superadmin|admin-aplikasi|viewer-aplikasi|viewer-all')
+                @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi|viewer-all')
                     <li class="{{ Request::is('dashboard/aplikasi') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dashboard.aplikasi') }}"><i
                                 class="fas fa-tachometer-alt"></i><span>Dashboard
                                 Aplikasi</span></a>
                     </li>
                 @endrole
-                @role('superadmin|admin-spbe')
+                @role('superadmin|admin-spbe|operator-spbe|eksekutif|viewer-all')
                     <li class="{{ Request::is('dashboard/spbe') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dashboard.spbe') }}"><i class="fas fa-columns"></i><span>Dashboard
                                 SPBE</span></a>

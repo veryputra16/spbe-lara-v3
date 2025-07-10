@@ -24,7 +24,11 @@ class AppLainController extends Controller
      */
     public function index()
     {
-        $applains = Application::where('katapp_id', 4)->get();
+        if (auth()->user()->hasAnyRole(['operator-aplikasi', 'viewer-aplikasi'])) {
+            $applains = Application::where('katapp_id', 4)->get();
+        } else {
+            $applains = Application::where('katapp_id', 4)->get();
+        }
 
         return view('applain.applain-index', compact('applains'), [
             'title' => 'Aplikasi Lainnya'

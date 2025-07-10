@@ -8,12 +8,17 @@
                     <div class="slash"></div> {{ $user->getRoleNames()->first() }}
                 </div>
             </div>
-            <div>Unit Kerja
-                <div class="text-muted d-inline font-weight-normal">
-                    <b>nama opd</b>
+            @if ($user->opdPivot->isNotEmpty())
+                <div>Unit Kerja
+                    <div class="text-muted d-inline font-weight-normal">
+                        <b>
+                            @foreach ($user->opdPivot as $opd)
+                                {{ $opd->nama }}
+                            @endforeach
+                        </b>
+                    </div>
                 </div>
-            </div>
-
+            @endif
         </div>
     </div>
 </div>
