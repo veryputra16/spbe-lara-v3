@@ -17,6 +17,16 @@ return new class extends Migration
             $table->string('singkatan')->nullable();
             $table->timestamps();
         });
+
+        // Tabel pivot antara OPD dan User
+        Schema::create('opd_users', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('opd_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+
+            $table->unique(['opd_id', 'user_id']); // Mencegah duplikasi
+        });
     }
 
     /**
@@ -25,5 +35,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('opds');
+        Schema::dropIfExists('opd_users');
     }
 };

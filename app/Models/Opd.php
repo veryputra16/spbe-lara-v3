@@ -24,4 +24,9 @@ class Opd extends Model
     {
         return $this->hasMany(Application::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'opd_users');
+    }
 }

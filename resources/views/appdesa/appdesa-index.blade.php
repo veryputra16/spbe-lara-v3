@@ -29,7 +29,8 @@
                                 <div class="alert-body">
                                     <div class="alert-title">Attention</div>
                                     Fitur ini berfungsi untuk mendata aset digital tak berwujud yang terhubung dengan domain
-                                    <code>.desa.id</code>, seperti website desa dan sistem informasi desa.
+                                    <code>.desa.id</code>, seperti website desa dan sistem informasi desa yang dimiliki oleh
+                                    Pemerintah Desa.
                                 </div>
                             </div>
                             @role('superadmin|admin-aplikasi|operator-aplikasi')
@@ -56,16 +57,18 @@
                                                     <a href="{{ route('admin.appdesa.show', $appdesa->id) }}"
                                                         class="btn btn-dark btn-sm" title="Detail"><i
                                                             class="fas fa-eye"></i></a>
-                                                    <a href="{{ route('admin.appdesa.edit', $appdesa->id) }}"
-                                                        class="btn btn-light btn-sm" title="Edit"><i
-                                                            class="fas fa-edit"></i></a>
-                                                    <form action="{{ route('admin.appdesa.destroy', $appdesa->id) }}"
-                                                        method="POST" style="display: inline-block;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
-                                                            title="Delete"><i class="fas fa-trash"></i></button>
-                                                    </form>
+                                                    @role('superadmin|admin-aplikasi|operator-aplikasi')
+                                                        <a href="{{ route('admin.appdesa.edit', $appdesa->id) }}"
+                                                            class="btn btn-light btn-sm" title="Edit"><i
+                                                                class="fas fa-edit"></i></a>
+                                                        <form action="{{ route('admin.appdesa.destroy', $appdesa->id) }}"
+                                                            method="POST" style="display: inline-block;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                                title="Delete"><i class="fas fa-trash"></i></button>
+                                                        </form>
+                                                    @endrole
                                                 </td>
                                                 <td>{{ $appdesa->nama_app }}</td>
                                                 <td>{{ $appdesa->opd->nama }}</td>

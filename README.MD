@@ -16,6 +16,7 @@ SPBE merupakan singkatan dari Sistem Pemerintahan Berbasis Elektronik, Sistem Pe
 -   Bootstrap 4
 -   Sweetalert
 -   Spatie
+-   HCaptcha
 
 ## Installation Guide
 

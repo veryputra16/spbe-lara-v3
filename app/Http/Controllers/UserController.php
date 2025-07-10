@@ -22,12 +22,12 @@ class UserController extends Controller
             $users = User::whereHas('roles', function ($query) {
                 $query->where('name', 'like', '%aplikasi%')
                     ->where('name', 'not like', '%admin%');
-            })->with(['roles', 'opds'])->get();
+            })->with(['roles', 'opdPivot'])->get();
         } else if (auth()->user()->hasRole('admin-spbe')) {
             $users = User::whereHas('roles', function ($query) {
                 $query->where('name', 'like', '%spbe%')
                     ->where('name', 'not like', '%admin%');
-            })->with(['roles', 'opds'])->get();
+            })->with(['roles', 'opdPivot'])->get();
         } else {
             $users = User::with('roles')->get();
         }
@@ -76,7 +76,7 @@ class UserController extends Controller
 
             $newUser->assignRole($request->role_id);
 
-            $newUser->opds()->attach($request->opd_id);
+            $newUser->opdPivot()->attach($request->opd_id);
         });
 
         return redirect()->route('admin.user.index')->with('success', 'Data telah tersimpan dengan sukses!');
@@ -96,7 +96,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $opds = Opd::all(); // menampilkan data semua opd 
-        $userOpds = $user->opds()->get(); // OPD yang dimiliki user
+        $userOpds = $user->opdPivot()->get(); // OPD yang dimiliki user
 
         if (auth()->user()->hasRole('admin-aplikasi')) {
             $roles = Role::where('name', 'like', '%aplikasi%')
@@ -135,7 +135,7 @@ class UserController extends Controller
 
             $user->syncRoles([$request->role_id]);
 
-            $user->opds()->sync($request->opd_id);
+            $user->opdPivot()->sync($request->opd_id);
         });
 
         return redirect()->route('admin.user.index')->with('success', 'Perubahan data telah berhasil dilakukan.');

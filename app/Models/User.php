@@ -47,8 +47,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function opds()
+    public function opdPivot()
     {
-        return $this->belongsToMany(Opd::class, 'opd_users');
+        return $this->belongsToMany(Opd::class, 'opd_users', 'user_id', 'opd_id');
     }
 }

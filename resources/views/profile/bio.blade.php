@@ -4,12 +4,21 @@
             <img alt="image" src="{{ asset('img/avatar/avatar-1.png') }}" class="rounded-circle profile-widget-picture">
         </div>
         <div class="profile-widget-description">
-            <div class="profile-widget-name">{{ auth()->user()->name }} <div
-                    class="text-muted d-inline font-weight-normal">
-                    <div class="slash"></div> {{ auth()->user()->getRoleNames()->first() }}
+            <div class="profile-widget-name">{{ $user->name }} <div class="text-muted d-inline font-weight-normal">
+                    <div class="slash"></div> {{ $user->getRoleNames()->first() }}
                 </div>
             </div>
-            Unit Kerja <b>AAAAA</b>.
+            @if ($user->opdPivot->isNotEmpty())
+                <div>Unit Kerja
+                    <div class="text-muted d-inline font-weight-normal">
+                        <b>
+                            @foreach ($user->opdPivot as $opd)
+                                {{ $opd->nama }}
+                            @endforeach
+                        </b>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>

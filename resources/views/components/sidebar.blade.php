@@ -8,17 +8,17 @@
                 <a href="https://spbe.denpasarkota.go.id/">{{ env('APP_NAME') }}</a>
             </div>
             <ul class="sidebar-menu">
-                @role('superadmin|admin-aplikasi|viewer-spbe|viewer-all')
+                @role('superadmin|admin-spbe|admin-aplikasi|operator-aplikasi|operator-spbe|eksekutif|viewer-aplikasi|viewer-all')
                     <li class="menu-header">Dashboard</li>
                 @endrole
-                @role('superadmin|admin-aplikasi|viewer-aplikasi|viewer-all')
+                @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi|viewer-all')
                     <li class="{{ Request::is('dashboard/aplikasi') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dashboard.aplikasi') }}"><i
                                 class="fas fa-tachometer-alt"></i><span>Dashboard
                                 Aplikasi</span></a>
                     </li>
                 @endrole
-                @role('superadmin|admin-spbe')
+                @role('superadmin|admin-spbe|operator-spbe|eksekutif|viewer-all')
                     <li class="{{ Request::is('dashboard/spbe') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dashboard.spbe') }}"><i class="fas fa-columns"></i><span>Dashboard
                                 SPBE</span></a>
@@ -27,23 +27,33 @@
 
                 @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi|viewer-all')
                     <li class="menu-header">Aplikasi</li>
+                @endrole
+                @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
                     <li class="{{ Request::is('admin/application*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.application.index') }}"><i class="fas fa-globe"></i><span>Data
                                 Aplikasi</span></a>
                     </li>
+                @endrole
+                @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
                     <li class="{{ Request::is('admin/subdomain*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.subdomain.index') }}"><i
                                 class="fas fa-archive"></i><span>Portal
                                 CMS</span></a>
                     </li>
+                @endrole
+                @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
                     <li class="{{ Request::is('admin/appdesa*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.appdesa.index') }}"><i
                                 class="fas fa-window-maximize"></i><span>Aplikasi Desa</span></a>
                     </li>
+                @endrole
+                @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
                     <li class="{{ Request::is('admin/applain*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.applain.index') }}"><i class="fas fa-box"></i><span>Aplikasi
                                 Lainnya</span></a>
                     </li>
+                @endrole
+                @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
                     <li class="{{ Request::is('admin/monevapp*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.monevapp.index') }}"><i
                                 class="fas fa-clipboard-check"></i><span>Monev
