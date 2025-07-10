@@ -81,7 +81,7 @@ Route::middleware(['auth'])->group(function () {
 
         // aplikasi desa
         Route::resource('appdesa', AppDesaController::class)
-            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi');
+            ->middleware('role:superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi');
         // Route::resource('appdesa/{application}/monevapp', MonevappController::class);
 
         // aplikasi lainnya
@@ -126,10 +126,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('changelog', [ChangelogController::class, 'changeLogHelper'])->name('helper.changelog');
     });
 
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
-    Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
+    Route::middleware(['role:superadmin|admin-spbe|admin-aplikasi|operator-aplikasi|operator-spbe|eksekutif|viewer-aplikasi|viewer-spbe|viewer-all'])->group(function () {
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
+        Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
+    });
 
     // Route::get('/hakakses', [HakaksesController::class, 'index'])->name('hakakses.index')->middleware('superadmin');
     // Route::get('/hakakses/edit/{id}', [HakaksesController::class, 'edit'])->name('hakakses.edit')->middleware('superadmin');

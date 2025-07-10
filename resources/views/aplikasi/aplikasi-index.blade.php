@@ -28,20 +28,54 @@
                     <div class="card">
                         <div class="card-body">
                             @role('superadmin|admin-aplikasi|operator-aplikasi')
-                            <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3">
-                                <i class="fas fa-plus"></i> Add
-                            </a>
+                                <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3">
+                                    <i class="fas fa-plus"></i> Add
+                                </a>
 
-                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                                <div class="form-inline mb-2">
-                                    <label for="customLength" class="mr-2 mb-0">Tampilkan</label>
-                                    <select id="customLength" class="form-control form-control-sm" style="height: 40px;">
-                                        <option value="5">5</option>
-                                        <option value="10" selected>10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                                    <div class="form-inline mb-2">
+                                        <label for="customLength" class="mr-2 mb-0">Tampilkan</label>
+                                        <select id="customLength" class="form-control form-control-sm" style="height: 40px;">
+                                            <option value="5">5</option>
+                                            <option value="10" selected>10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="d-flex flex-wrap mb-2 justify-content-end" style="gap: 0.5rem;">
+                                        <select id="filterOPD" class="form-control form-control-sm" style="width: 180px;">
+                                            <option value="">-- Semua OPD --</option>
+                                            @foreach ($opds as $opd)
+                                                <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        <select id="filterLayanan" class="form-control form-control-sm" style="width: 180px;">
+                                            <option value="">-- Semua Layanan --</option>
+                                            @foreach ($layanans as $layanan)
+                                                <option value="{{ strtolower($layanan->layanan_app) }}">
+                                                    {{ $layanan->layanan_app }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        <select id="filterTahun" class="form-control form-control-sm" style="width: 180px;">
+                                            <option value="">-- Semua Tahun --</option>
+                                            @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
+                                                <option value="{{ $tahun }}">{{ $tahun }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        <select id="filterStatus" class="form-control form-control-sm" style="width: 180px;">
+                                            <option value="">-- Semua Status --</option>
+                                            <option value="Aktif">Aktif</option>
+                                            <option value="Tidak Aktif">Tidak Aktif</option>
+                                        </select>
+
+                                        <input type="text" id="customSearch" class="form-control form-control-sm"
+                                            style="width: 250px;" placeholder="Cari...">
+                                    </div>
                                 </div>
                                 <div class="d-flex flex-wrap mb-2 justify-content-end align-items-center" style="gap: 0.5rem;">
                                     <div class="form-group mb-0">
@@ -101,12 +135,10 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($applications as $application)
-                                            <tr
-                                                data-opd="{{ strtolower($application->opd->nama) }}"
+                                            <tr data-opd="{{ strtolower($application->opd->nama) }}"
                                                 data-layanan="{{ strtolower($application->layananapp->layanan_app ?? '') }}"
                                                 data-tahun="{{ $application->tahun_buat }}"
-                                                data-status="{{ $application->status == 1 ? 'aktif' : 'tidak aktif' }}"
-                                            >
+                                                data-status="{{ $application->status == 1 ? 'aktif' : 'tidak aktif' }}">
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
                                                     <!-- <a href="{{ route('admin.sdmpengembang.index', $application->id) }}" class="btn btn-primary btn-sm" title="Vendor">
@@ -114,20 +146,25 @@
                                                     </a> -->
 
                                                     @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
-                                                        <a href="{{ route('admin.application.show', $application->id) }}" class="btn btn-dark btn-sm" title="Detail">
+                                                        <a href="{{ route('admin.application.show', $application->id) }}"
+                                                            class="btn btn-dark btn-sm" title="Detail">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                     @endrole
                                                     @role('superadmin|admin-aplikasi|operator-aplikasi')
-                                                        <a href="{{ route('admin.application.edit', $application->id) }}" class="btn btn-light btn-sm" title="Edit">
+                                                        <a href="{{ route('admin.application.edit', $application->id) }}"
+                                                            class="btn btn-light btn-sm" title="Edit">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                     @endrole
                                                     @role('superadmin|admin-aplikasi')
-                                                        <form action="{{ route('admin.application.destroy', $application->id) }}" method="POST" style="display: inline-block;">
+                                                        <form
+                                                            action="{{ route('admin.application.destroy', $application->id) }}"
+                                                            method="POST" style="display: inline-block;">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-light btn-sm show_confirm" title="Delete">
+                                                            <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                                title="Delete">
                                                                 <i class="fas fa-trash"></i>
                                                             </button>
                                                         </form>
@@ -167,13 +204,14 @@
 @endpush
 
 @push('scripts')
-<!-- SweetAlert2 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
-<!-- DataTables -->
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
 
+<<<<<<< HEAD
 <!-- JS -->
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 
@@ -186,14 +224,19 @@
     });
 
     let table;
+=======
+    <script>
+        let table;
+>>>>>>> 79b67cbdcb3ee9a69d91980f7f9428db18ff281b
 
-    function applyCustomFilter() {
-        let filterTahun = $('#filterTahun').val();
-        let filterStatus = $('#filterStatus').val().toLowerCase();
-        let filterOPD = $('#filterOPD').val().toLowerCase();
-        let filterLayanan = $('#filterLayanan').val().toLowerCase();
-        let searchText = $('#customSearch').val().toLowerCase();
+        function applyCustomFilter() {
+            let filterTahun = $('#filterTahun').val();
+            let filterStatus = $('#filterStatus').val().toLowerCase();
+            let filterOPD = $('#filterOPD').val().toLowerCase();
+            let filterLayanan = $('#filterLayanan').val().toLowerCase();
+            let searchText = $('#customSearch').val().toLowerCase();
 
+<<<<<<< HEAD
         let visibleCount = 0;
 
         table.rows().every(function () {
@@ -203,14 +246,25 @@
             let tahun = row.data('tahun') || '';
             let status = row.data('status') || '';
             let text = row.text().toLowerCase();
+=======
+            table.rows().every(function() {
+                let row = $(this.node());
 
-            let match =
-                (filterTahun === "" || tahun == filterTahun) &&
-                (filterStatus === "" || status == filterStatus) &&
-                (filterOPD === "" || opd.includes(filterOPD)) &&
-                (filterLayanan === "" || layanan.includes(filterLayanan)) &&
-                (searchText === "" || text.includes(searchText));
+                let opd = row.data('opd') || '';
+                let layanan = row.data('layanan') || '';
+                let tahun = row.data('tahun') || '';
+                let status = row.data('status') || '';
+                let text = row.text().toLowerCase();
+>>>>>>> 79b67cbdcb3ee9a69d91980f7f9428db18ff281b
 
+                let match =
+                    (filterTahun === "" || tahun == filterTahun) &&
+                    (filterStatus === "" || status == filterStatus) &&
+                    (filterOPD === "" || opd.includes(filterOPD)) &&
+                    (filterLayanan === "" || layanan.includes(filterLayanan)) &&
+                    (searchText === "" || text.includes(searchText));
+
+<<<<<<< HEAD
             if (match) {
                 row.show();
                 visibleCount++;
@@ -227,25 +281,37 @@
 
         table.draw(false);
     }
+=======
+                if (match) {
+                    row.show();
+                } else {
+                    row.hide();
+                }
+            });
 
-    $(document).ready(function () {
-        table = $('#myTable').DataTable({
-            paging: true,
-            searching: false,
-            lengthChange: false,
-            info: false
-        });
+            table.draw(false);
+        }
+>>>>>>> 79b67cbdcb3ee9a69d91980f7f9428db18ff281b
 
-        $('#customLength').on('change', function () {
-            let selectedLength = parseInt($(this).val());
-            table.page.len(selectedLength).draw();
-        });
+        $(document).ready(function() {
+            table = $('#myTable').DataTable({
+                paging: true,
+                searching: false,
+                lengthChange: false,
+                info: false
+            });
 
-        $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
+            $('#customLength').on('change', function() {
+                let selectedLength = parseInt($(this).val());
+                table.page.len(selectedLength).draw();
+            });
+
+            $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change',
+            function() {
+                applyCustomFilter();
+            });
+
             applyCustomFilter();
         });
-
-        applyCustomFilter();
-    });
-</script>
+    </script>
 @endpush
