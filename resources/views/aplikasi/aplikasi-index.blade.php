@@ -106,97 +106,6 @@
                                             <option value="Tidak Aktif">Tidak Aktif</option>
                                         </select>
                                     </div>
-
-                                    <div class="form-group mb-0">
-                                        <input type="text" id="customSearch" class="form-control form-control-sm" style="min-width: 200px;" placeholder="Cari...">
-                                    </div>
-                                </div>
-                            </div>
-                                <a href="{{ route('admin.application.create') }}" class="btn btn-primary mb-3">
-                                    <i class="fas fa-plus"></i> Add
-                                </a>
-
-                                <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                                    <div class="form-inline mb-2">
-                                        <label for="customLength" class="mr-2 mb-0">Tampilkan</label>
-                                        <select id="customLength" class="form-control form-control-sm" style="height: 40px;">
-                                            <option value="5">5</option>
-                                            <option value="10" selected>10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="d-flex flex-wrap mb-2 justify-content-end" style="gap: 0.5rem;">
-                                        <select id="filterOPD" class="form-control form-control-sm" style="width: 180px;">
-                                            <option value="">-- Semua OPD --</option>
-                                            @foreach ($opds as $opd)
-                                                <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
-                                            @endforeach
-                                        </select>
-
-                                        <select id="filterLayanan" class="form-control form-control-sm" style="width: 180px;">
-                                            <option value="">-- Semua Layanan --</option>
-                                            @foreach ($layanans as $layanan)
-                                                <option value="{{ strtolower($layanan->layanan_app) }}">
-                                                    {{ $layanan->layanan_app }}</option>
-                                            @endforeach
-                                        </select>
-
-                                        <select id="filterTahun" class="form-control form-control-sm" style="width: 180px;">
-                                            <option value="">-- Semua Tahun --</option>
-                                            @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
-                                                <option value="{{ $tahun }}">{{ $tahun }}</option>
-                                            @endforeach
-                                        </select>
-
-                                        <select id="filterStatus" class="form-control form-control-sm" style="width: 180px;">
-                                            <option value="">-- Semua Status --</option>
-                                            <option value="Aktif">Aktif</option>
-                                            <option value="Tidak Aktif">Tidak Aktif</option>
-                                        </select>
-
-                                        <input type="text" id="customSearch" class="form-control form-control-sm"
-                                            style="width: 250px;" placeholder="Cari...">
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-wrap mb-2 justify-content-end align-items-center" style="gap: 0.5rem;">
-                                    <div class="form-group mb-0">
-                                        <select id="filterOPD" class="form-control form-control-sm select2" style="min-width: 180px;">
-                                            <option value="">-- Semua OPD --</option>
-                                            @foreach ($opds as $opd)
-                                                <option value="{{ strtolower($opd->nama) }}">{{ $opd->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group mb-0">
-                                        <select id="filterLayanan" class="form-control form-control-sm select2" style="min-width: 180px;">
-                                            <option value="">-- Semua Layanan --</option>
-                                            @foreach ($layanans as $layanan)
-                                                <option value="{{ strtolower($layanan->layanan_app) }}">{{ $layanan->layanan_app }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group mb-0">
-                                        <select id="filterTahun" class="form-control form-control-sm select2" style="min-width: 140px;">
-                                            <option value="">-- Semua Tahun --</option>
-                                            @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
-                                                <option value="{{ $tahun }}">{{ $tahun }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group mb-0">
-                                        <select id="filterStatus" class="form-control form-control-sm select2" style="min-width: 140px;">
-                                            <option value="">-- Semua Status --</option>
-                                            <option value="Aktif">Aktif</option>
-                                            <option value="Tidak Aktif">Tidak Aktif</option>
-                                        </select>
-                                    </div>
-
                                     <div class="form-group mb-0">
                                         <input type="text" id="customSearch" class="form-control form-control-sm" style="min-width: 200px;" placeholder="Cari...">
                                     </div>
@@ -295,11 +204,13 @@
     <style>
         .select2-selection__rendered {
         line-height: 36px !important; /* atur sesuai tinggi */
+        width: 200px !important;
         }
 
         .select2-container .select2-selection--single {
             height: 40px !important;       /* sesuaikan tinggi */
             display: flex !important;
+            width: 200px !important;
             align-items: center !important;
         }
     </style>
