@@ -33,6 +33,7 @@
                                     <label>{{ __('Desa *)') }}</label>
                                     <select class="form-control select2 @error('opd_id') is-invalid @enderror"
                                         name="opd_id" required autocomplete="opd_id">
+                                        <option value="">-</option>
                                         @forelse ($opds as $opd)
                                             <option value="{{ $opd['id'] }}"
                                                 {{ $appdesa->opd_id == $opd['id'] ? 'selected' : '' }}>
