@@ -211,7 +211,6 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
 
-<<<<<<< HEAD
 <!-- JS -->
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 
@@ -224,10 +223,6 @@
     });
 
     let table;
-=======
-    <script>
-        let table;
->>>>>>> 79b67cbdcb3ee9a69d91980f7f9428db18ff281b
 
         function applyCustomFilter() {
             let filterTahun = $('#filterTahun').val();
@@ -236,7 +231,6 @@
             let filterLayanan = $('#filterLayanan').val().toLowerCase();
             let searchText = $('#customSearch').val().toLowerCase();
 
-<<<<<<< HEAD
         let visibleCount = 0;
 
         table.rows().every(function () {
@@ -246,16 +240,6 @@
             let tahun = row.data('tahun') || '';
             let status = row.data('status') || '';
             let text = row.text().toLowerCase();
-=======
-            table.rows().every(function() {
-                let row = $(this.node());
-
-                let opd = row.data('opd') || '';
-                let layanan = row.data('layanan') || '';
-                let tahun = row.data('tahun') || '';
-                let status = row.data('status') || '';
-                let text = row.text().toLowerCase();
->>>>>>> 79b67cbdcb3ee9a69d91980f7f9428db18ff281b
 
                 let match =
                     (filterTahun === "" || tahun == filterTahun) &&
@@ -264,7 +248,6 @@
                     (filterLayanan === "" || layanan.includes(filterLayanan)) &&
                     (searchText === "" || text.includes(searchText));
 
-<<<<<<< HEAD
             if (match) {
                 row.show();
                 visibleCount++;
@@ -281,17 +264,6 @@
 
         table.draw(false);
     }
-=======
-                if (match) {
-                    row.show();
-                } else {
-                    row.hide();
-                }
-            });
-
-            table.draw(false);
-        }
->>>>>>> 79b67cbdcb3ee9a69d91980f7f9428db18ff281b
 
         $(document).ready(function() {
             table = $('#myTable').DataTable({
