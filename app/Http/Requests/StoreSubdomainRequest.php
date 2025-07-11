@@ -23,7 +23,6 @@ class StoreSubdomainRequest extends FormRequest
     {
         return [
             'url' => ['required', 'url:http,https', 'max:255'],
-            'status' => ['required'],
             'op_teknis' => ['nullable', 'string', 'max:255'],
             'kontak_teknis' => ['nullable', 'regex:/^[0-9]{9,14}$/'],
             'opd_id' => ['required', 'max:255'],

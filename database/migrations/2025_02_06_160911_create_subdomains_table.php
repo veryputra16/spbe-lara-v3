@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('subdomains', function (Blueprint $table) {
             $table->id();
             $table->string('url');
-            $table->integer('status');
             $table->string('op_teknis')->nullable();
             $table->string('kontak_teknis')->nullable();
             $table->foreignId('opd_id')->constrained()->onDelete('cascade');
