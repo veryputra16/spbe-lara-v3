@@ -19,7 +19,7 @@ return new class extends Migration
         });
 
         // Tabel pivot antara OPD dan User
-        Schema::create('opd_users', function (Blueprint $table) {
+        Schema::create('opd_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('opd_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');

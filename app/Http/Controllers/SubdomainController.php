@@ -8,6 +8,7 @@ use App\Http\Requests\StoreSubdomainRequest;
 use App\Http\Requests\UpdateSubdomainRequest;
 use App\Models\Opd;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SubdomainController extends Controller
@@ -17,7 +18,15 @@ class SubdomainController extends Controller
      */
     public function index()
     {
-        $subdomains = Subdomain::all();
+        $user = Auth::user();
+
+        if (auth()->user()->hasAnyRole(['operator-aplikasi', 'viewer-aplikasi'])) {
+            $subdomains = Subdomain::whereHas('opd.users', function ($query) use ($user) {
+                $query->where('users.id', $user->id);
+            })->get();
+        } else {
+            $subdomains = Subdomain::all();
+        }
 
         return view('subdomain.subdomain-index', compact('subdomains'), [
             'title' => 'Data Portal CMS'

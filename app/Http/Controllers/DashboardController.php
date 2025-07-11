@@ -19,30 +19,39 @@ class DashboardController extends Controller
     public function aplikasi()
     {
         $applications = Application::all();
+
+        // Hanya aplikasi dengan katapp Lokal atau Pusat
+        $filteredApps = Application::whereHas('katapp', function ($q) {
+            $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
+        })->get();
+
+        // Hitung total, aktif, dan nonaktif hanya dari yang Lokal atau Pusat
+        $total = $filteredApps->count();
+        $aktif = $filteredApps->where('status', 1)->count();
+        $nonaktif = $filteredApps->where('status', 0)->count();
+
         $opds = Opd::withCount([
             'applications as lokal_count' => function ($query) {
                 $query->whereHas('katapp', function ($q) {
-                    $q->where('nama', 'Lokal');
+                    $q->where('kategori_aplikasi', 'Lokal');
                 });
             },
             'applications as pusat_count' => function ($query) {
                 $query->whereHas('katapp', function ($q) {
-                    $q->where('nama', 'Pusat');
+                    $q->where('kategori_aplikasi', 'Pusat');
                 });
             },
             'applications as aktif_count' => function ($query) {
-                $query->where('status', 1);
+                $query->where('status', 1)->whereHas('katapp', function ($q) {
+                    $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
+                });
             },
             'applications as nonaktif_count' => function ($query) {
-                $query->where('status', 0);
+                $query->where('status', 0)->whereHas('katapp', function ($q) {
+                    $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
+                });
             }
         ])->get();
-
-        // Tambahan hitungan total
-        $total = $applications->count();
-        $aktif = $applications->where('status', 1)->count();
-        $nonaktif = $applications->where('status', 0)->count();
-
 
         return view('dashboard.aplikasi.d-app', compact('applications', 'opds', 'total', 'aktif', 'nonaktif'), [
             'title' => 'Dashboard Aplikasi',

@@ -37,7 +37,6 @@
                                                 <th>Action</th>
                                             @endrole
                                             <th>URL</th>
-                                            <th>Status</th>
                                             <th>Operator Teknis</th>
                                             <th>Kontak Teknis</th>
                                             <th>Perangkat Daerah</th>
@@ -71,13 +70,6 @@
                                                 @endrole
                                                 <td><a href="{{ $subdomain->url }}"
                                                         target="_blank">{{ $subdomain->url }}</a></td>
-                                                <td>
-                                                    @if ($subdomain->status == 1)
-                                                        <span class="badge badge-success">Aktif</span>
-                                                    @else
-                                                        <span class="badge badge-danger">Tidak Aktif</span>
-                                                    @endif
-                                                </td>
                                                 <td>
                                                     @if ($subdomain->op_teknis)
                                                         {{ $subdomain->op_teknis }}

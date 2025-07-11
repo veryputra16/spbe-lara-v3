@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -47,8 +48,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function opdPivot()
+    public function opdPivot(): BelongsToMany
     {
-        return $this->belongsToMany(Opd::class, 'opd_users', 'user_id', 'opd_id');
+        return $this->belongsToMany(Opd::class, 'opd_user', 'user_id', 'opd_id')->withTimestamps();
     }
 }

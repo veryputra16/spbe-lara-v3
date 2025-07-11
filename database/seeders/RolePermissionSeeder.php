@@ -23,7 +23,6 @@ class RolePermissionSeeder extends Seeder
         $opspbe = Role::create(['name' => 'operator-spbe']);
         $ekse = Role::create(['name' => 'eksekutif']); // fitur evaluasi SPBE]);
         $guestApp = Role::create(['name' => 'viewer-aplikasi']);
-        $guestSPBE = Role::create(['name' => 'viewer-spbe']);
         $guestall = Role::create(['name' => 'viewer-all']); // fitur penilaian SPBE dan data aplikasi , portal cms dll]);
 
         // membuat permission

@@ -57,8 +57,8 @@
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->username }}</td>
                                                 <td>
-                                                    @if ($user->opds->isNotEmpty())
-                                                        @foreach ($user->opds as $opd)
+                                                    @if ($user->opdPivot->isNotEmpty())
+                                                        @foreach ($user->opdPivot as $opd)
                                                             {{ $opd->nama }}
                                                         @endforeach
                                                     @else
@@ -68,7 +68,7 @@
                                                 <td>
                                                     @if ($user->roles->isNotEmpty())
                                                         @foreach ($user->getRoleNames() as $role)
-                                                            {{ $role }}
+                                                            {{ strtoupper(Str::headline($role)) }}
                                                         @endforeach
                                                     @else
                                                         <span class="text-muted">-</span>

@@ -12,12 +12,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        $opds = $user->opds;
-        // dd($user->load('opdPivot'));
-
         return view('profile.edit', [
             'user' => $user,
-            'opds' => $opds,
             'title' => 'Profile'
         ]);
     }
