@@ -2,38 +2,8 @@
 
 @section('title', $title)
 
-@push('style')
-    <!-- Data Tables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap4.min.css" />
-@endpush
-
 @section('content')
     <section class="section">
-      
-            <div class="col-lg-12">
-                <div class="card card-statistic-2">
-                    <div class="col-lg-12">
-                        <div class="card-header">
-                            <h4>Budget vs Sales</h4>
-                        </div>
-                        <div class="card-body d-flex justify-content-around text-center">
-                            <div>
-                                <h3 class="font-weight-bold">{{ $totalAplikasi }}</h3>
-                                <span class="badge badge-pill badge-primary px-3 py-2">Total Aplikasi</span>
-                            </div>
-                            <div>
-                                <h3 class="font-weight-bold">{{ $aplikasiAktif }}</h3>
-                                <span class="badge badge-pill badge-success px-3 py-2">Aplikasi Aktif</span>
-                            </div>
-                            <div>
-                                <h3 class="font-weight-bold">{{ $aplikasiNonAktif }}</h3>
-                                <span class="badge badge-pill badge-danger px-3 py-2">Aplikasi Non Aktif</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -410,8 +380,13 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
     <script>
-        $("#myTable").dataTable({
+        $("#myTable").DataTable({
             "searching": true
         });
     </script>
+@endpush
+
+@push('style')
+    <!-- Data Tables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap4.min.css" />
 @endpush
