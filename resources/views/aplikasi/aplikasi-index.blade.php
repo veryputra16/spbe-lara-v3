@@ -106,7 +106,8 @@
                                             <option value="Tidak Aktif">Tidak Aktif</option>
                                         </select>
                                     </div>
-                                                                        <div class="form-group mb-0">
+
+                                    <div class="form-group mb-0">
                                         <input type="text" id="customSearch" class="form-control form-control-sm" style="min-width: 200px;" placeholder="Cari...">
                                     </div>
                                 </div>
@@ -197,7 +198,6 @@
     </section>
 @endsection
 
-
 @push('css')
     <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 
@@ -210,94 +210,102 @@
         .select2-container .select2-selection--single {
             height: 40px !important;       /* sesuaikan tinggi */
             display: flex !important;
-            width: 200px !important;
+            width: 195px !important;
             align-items: center !important;
         }
     </style>
 @endpush
 
 @push('scripts')
-<!-- SweetAlert2 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-
-<!-- DataTables -->
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
-
 <!-- JS -->
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 
-<script>
 
-    $('#filterOPD, #filterLayanan, #filterTahun, #filterStatus').select2({
+<script>
+        $('#filterOPD, #filterLayanan, #filterTahun, #filterStatus').select2({
         width: 'style',
-        placeholder: "-- Pilih --",
+        // placeholder: "-- Pilih --",
         allowClear: true
     });
-
+    
     let table;
+    let currentLimit = 10;
 
-        function applyCustomFilter() {
-            let filterTahun = $('#filterTahun').val();
-            let filterStatus = $('#filterStatus').val().toLowerCase();
-            let filterOPD = $('#filterOPD').val().toLowerCase();
-            let filterLayanan = $('#filterLayanan').val().toLowerCase();
-            let searchText = $('#customSearch').val().toLowerCase();
+    function applyCustomFilterAndLimit() {
+        let filterTahun = $('#filterTahun').val();
+        let filterStatus = $('#filterStatus').val().toLowerCase();
+        let filterOPD = $('#filterOPD').val().toLowerCase();
+        let filterLayanan = $('#filterLayanan').val().toLowerCase();
+        let searchText = $('#customSearch').val().toLowerCase();
+        let limit = parseInt($('#customLength').val());
 
         let visibleCount = 0;
+        let shownCount = 0;
 
-        table.rows().every(function () {
-            let row = $(this.node());
+        $('#myTable tbody tr').each(function () {
+            let row = $(this);
             let opd = row.data('opd') || '';
             let layanan = row.data('layanan') || '';
             let tahun = row.data('tahun') || '';
             let status = row.data('status') || '';
             let text = row.text().toLowerCase();
 
-                let match =
-                    (filterTahun === "" || tahun == filterTahun) &&
-                    (filterStatus === "" || status == filterStatus) &&
-                    (filterOPD === "" || opd.includes(filterOPD)) &&
-                    (filterLayanan === "" || layanan.includes(filterLayanan)) &&
-                    (searchText === "" || text.includes(searchText));
+            let match =
+                (filterTahun === "" || tahun == filterTahun) &&
+                (filterStatus === "" || status == filterStatus) &&
+                (filterOPD === "" || opd.includes(filterOPD)) &&
+                (filterLayanan === "" || layanan.includes(filterLayanan)) &&
+                (searchText === "" || text.includes(searchText));
 
             if (match) {
-                row.show();
                 visibleCount++;
+                if (shownCount < limit) {
+                    row.show();
+                    shownCount++;
+                } else {
+                    row.hide();
+                }
             } else {
                 row.hide();
             }
         });
 
-        if (visibleCount === 0) {
-            $('#noDataRow').show();
-        } else {
-            $('#noDataRow').hide();
-        }
-
-        table.draw(false);
+        $('#noDataRow').toggle(visibleCount === 0);
     }
 
-        $(document).ready(function() {
-            table = $('#myTable').DataTable({
-                paging: true,
-                searching: false,
-                lengthChange: false,
-                info: false
-            });
-
-            $('#customLength').on('change', function() {
-                let selectedLength = parseInt($(this).val());
-                table.page.len(selectedLength).draw();
-            });
-
-            $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change',
-            function() {
-                applyCustomFilter();
-            });
-
-            applyCustomFilter();
+    $(document).ready(function () {
+        // Nonaktifkan pagination & fitur lainnya dari DataTables
+        table = $('#myTable').DataTable({
+            paging: false,
+            searching: false,
+            lengthChange: false,
+            info: false
         });
-    </script>
 
+        // Trigger saat filter berubah
+        $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
+            applyCustomFilterAndLimit();
+        });
+
+        // Trigger saat limit baris diubah
+        $('#customLength').on('change', function () {
+            currentLimit = parseInt($(this).val());
+            applyCustomFilterAndLimit();
+        });
+
+        // Initial render
+        applyCustomFilterAndLimit();
+
+        // Kirim filter ke input hidden saat submit export
+        $('#exportForm').on('submit', function () {
+            $('#exportOPD').val($('#filterOPD').val());
+            $('#exportLayanan').val($('#filterLayanan').val());
+            $('#exportTahun').val($('#filterTahun').val());
+            $('#exportStatus').val($('#filterStatus').val());
+            $('#exportSearch').val($('#customSearch').val());
+        });
+    });
+</script>
 @endpush
