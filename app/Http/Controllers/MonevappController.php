@@ -61,7 +61,11 @@ class MonevappController extends Controller
      */
     public function show(Monevapp $monevapp)
     {
-        //
+        // $applications = Application::whereIn('katapp_id', [1, 2])->get();
+
+        return view('monevapp.monevapp-detail', compact('monevapp'), [
+            'title' => 'Detail Monev Aplikasi'
+        ]);
     }
 
     /**

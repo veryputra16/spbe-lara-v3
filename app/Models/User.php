@@ -50,6 +50,6 @@ class User extends Authenticatable
 
     public function opdPivot(): BelongsToMany
     {
-        return $this->belongsToMany(Opd::class, 'opd_users', 'user_id', 'opd_id')->withTimestamps();
+        return $this->belongsToMany(Opd::class, 'opd_user', 'user_id', 'opd_id')->withTimestamps();
     }
 }
