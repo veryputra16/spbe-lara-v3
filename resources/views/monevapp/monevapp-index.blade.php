@@ -43,16 +43,24 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.monevapp.edit', $monevapp->id) }}"
-                                                        class="btn btn-light btn-sm" title="Edit"><i
-                                                            class="fas fa-edit"></i></a>
-                                                    <form action="{{ route('admin.monevapp.destroy', $monevapp->id) }}"
-                                                        method="POST" style="display: inline-block;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-light btn-sm show_confirm"
-                                                            title="Delete"><i class="fas fa-trash"></i></button>
-                                                    </form>
+                                                    @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
+                                                        <a href="{{ route('admin.monevapp.show', $monevapp->id) }}"
+                                                            class="btn btn-dark btn-sm" title="Detail">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                    @endrole
+                                                    @role('superadmin|admin-aplikasi|operator-aplikasi')
+                                                        <a href="{{ route('admin.monevapp.edit', $monevapp->id) }}"
+                                                            class="btn btn-light btn-sm" title="Edit"><i
+                                                                class="fas fa-edit"></i></a>
+                                                        <form action="{{ route('admin.monevapp.destroy', $monevapp->id) }}"
+                                                            method="POST" style="display: inline-block;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-light btn-sm show_confirm"
+                                                                title="Delete"><i class="fas fa-trash"></i></button>
+                                                        </form>
+                                                    @endrole
                                                 </td>
                                                 <td>{{ $monevapp->app->nama_app }}</td>
                                                 <td>{{ $monevapp->tgl_monev->locale('id')->translatedFormat('d F Y') }}
