@@ -28,6 +28,6 @@ class Opd extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'opd_user')->withTimestamps();
+        return $this->belongsToMany(User::class, 'opd_users')->withTimestamps();
     }
 }
