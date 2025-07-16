@@ -156,7 +156,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <a href="#" class="btn btn-secondary">
+                                                            <a href="{{ route('admin.application.index', ['opd' => strtolower($opd->nama)]) }}" class="btn btn-secondary">
                                                                 <i class="fas fa-info-circle text-dark"></i>
                                                             </a>
                                                         </td>
