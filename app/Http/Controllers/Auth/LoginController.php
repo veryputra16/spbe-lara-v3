@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use \Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class LoginController extends Controller
 {
@@ -43,7 +44,19 @@ class LoginController extends Controller
         $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'h-captcha-response' => 'required|HCaptcha',
+            'h-captcha-response' => 'required',
         ]);
+
+        $response = Http::asForm()->post('https://hcaptcha.com/siteverify', [
+            'secret' => env('HCAPTCHA_SECRET'),
+            'response' => $request->input('h-captcha-response'),
+        ]);
+
+        if (!($response->json()['success'] ?? false)) {
+            return back()
+                ->withErrors(['h-captcha-response' => 'Captcha tidak valid.'])
+                ->withInput($request->except('password'));
+        }
     }
+
 }
