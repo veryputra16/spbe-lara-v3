@@ -5,6 +5,15 @@
 @push('style')
     <!-- Data Tables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap4.min.css" />
+
+    <style>
+        .card-height-fix {
+            min-height: 450px; /* Sesuaikan tinggi ini dengan chart di kiri */
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+
 @endpush
 
 @section('content')
@@ -33,84 +42,97 @@
                     </div>
                 </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="text-primary">Data Aplikasi Apa Ni ?</h4>
+            <div class="row d-flex align-items-stretch">
+                <div class="col-lg-8 d-flex">
+                    <div class="card card-height-fix w-100">
+                        <div class="card-header">
+                            <h4>Perangkat Daerah Pengelola Aplikasi</h4>
+                        </div>
+                    <div class="card-body">
+                        <div class="table-responsive table-invoice">                                
+                            <div id="chartTahun" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
+                    
+                <div class="col-lg-4 d-flex">
+                    <div class="card card-height-fix w-100">
+                        <div class="card-header"></div>
+                        <div class="card-body">
+                            <!-- Layanan -->
+                            <div class="mb-4 section">
+                                <h6 class="text-muted">Layanan</h6>
+                                {{-- <br>
+                                    <div class="section">Layanan</div>
+                                <hr> --}}
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    @foreach ($layananCounts as $layanan)
+                                        <span class="badge bg-success text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
+                                            style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
+                                            {{ $layanan['nama'] ?? 'Tanpa Nama' }}
+                                        <span class="d-inline-block text-white rounded-circle fw-bold"
+                                            style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
+                                            {{ $layanan['jumlah'] }}
+                                        </span>
+                                        </span>
+                                    @endforeach
+                                </div>
+                                <hr>
+                            </div>
+                            <!-- Kategori Aplikasi -->
+                            <div class="mb-4">
+                                <h6 class="text-muted">Kategori</h6>
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    @foreach ($kategoriAppCounts as $kategori)
+                                        <span class="badge bg-dark text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
+                                            style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
+                                            {{ $kategori['nama'] }}
+                                        <span class="d-inline-block text-white rounded-circle fw-bold"
+                                            style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
+                                            {{ $kategori['jumlah'] }}
+                                        </span>
+                                        </span>
+                                    @endforeach
+                                </div>
+                                <hr>
+                            </div>
 
-                    <!-- Layanan -->
-                    <div class="mb-4 section">
-                        <h6 class="text-muted">Layanan</h6>
-                        {{-- <br>
-                            <div class="section">Layanan</div>
-                        <hr> --}}
-                        <div class="d-flex flex-wrap justify-content-center">
-                            @foreach ($layananCounts as $layanan)
-                                <span class="badge bg-success text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
-                                    style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
-                                    {{ $layanan['nama'] ?? 'Tanpa Nama' }}
-                                    <span class="d-inline-block text-white rounded-circle fw-bold"
-                                        style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
-                                        {{ $layanan['jumlah'] }}
-                                    </span>
-                                </span>
-                            @endforeach
-                        </div>
-                        <hr>
-                    </div>
+                            <!-- Klasifikasi / Kategori Pengguna -->
+                            <div class="mb-4">
+                                <h6 class="text-muted">Klasifikasi</h6>
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    @foreach ($kategoriPenggunaCounts as $klasifikasi)
+                                        <span class="badge bg-info text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
+                                            style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
+                                            {{ $klasifikasi['nama'] }}
+                                        <span class="d-inline-block text-white rounded-circle fw-bold"
+                                            tyle="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
+                                            {{ $klasifikasi['jumlah'] }}
+                                        </span>
+                                        </span>
+                                    @endforeach
+                                </div>
+                                <hr>
+                            </div>
 
-                    <!-- Kategori Aplikasi -->
-                    <div class="mb-4">
-                        <h6 class="text-muted">Kategori</h6>
-                        <div class="d-flex flex-wrap justify-content-center">
-                            @foreach ($kategoriAppCounts as $kategori)
-                                <span class="badge bg-dark text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
-                                    style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
-                                    {{ $kategori['nama'] }}
-                                    <span class="d-inline-block text-white rounded-circle fw-bold"
-                                        style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
-                                        {{ $kategori['jumlah'] }}
-                                    </span>
-                                </span>
-                            @endforeach
-                        </div>
-                        <hr>
-                    </div>
-
-                    <!-- Klasifikasi / Kategori Pengguna -->
-                    <div class="mb-4">
-                        <h6 class="text-muted">Klasifikasi</h6>
-                        <div class="d-flex flex-wrap justify-content-center">
-                            @foreach ($kategoriPenggunaCounts as $klasifikasi)
-                                <span class="badge bg-info text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
-                                    style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
-                                    {{ $klasifikasi['nama'] }}
-                                    <span class="d-inline-block text-white rounded-circle fw-bold"
-                                        style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
-                                        {{ $klasifikasi['jumlah'] }}
-                                    </span>
-                                </span>
-                            @endforeach
-                        </div>
-                        <hr>
-                    </div>
-
-                    <!-- Jaringan -->
-                    <div class="mb-2">
-                        <h6 class="text-muted">Jaringan</h6>
-                        <div class="d-flex flex-wrap justify-content-center">
-                            @foreach ($jaringanCounts as $jaringan)
-                                <span class="badge bg-warning text-dark d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
-                                    style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
-                                    {{ $jaringan['nama'] }}
-                                    <span class="d-inline-block text-dark rounded-circle fw-bold"
-                                        style="background-color: rgba(255,255,255,0.5); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
-                                        {{ $jaringan['jumlah'] }}
-                                    </span>
-                                </span>
-                            @endforeach
-                        </div>
+                            <!-- Jaringan -->
+                            <div class="mb-2">
+                                <h6 class="text-muted">Jaringan</h6>
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    @foreach ($jaringanCounts as $jaringan)
+                                        <span class="badge bg-warning text-dark d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
+                                            style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
+                                            {{ $jaringan['nama'] }}
+                                        <span class="d-inline-block text-dark rounded-circle fw-bold"
+                                            style="background-color: rgba(255,255,255,0.5); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
+                                            {{ $jaringan['jumlah'] }}
+                                        </span>
+                                        </span>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>        
                     </div>
                 </div>
             </div>
@@ -142,7 +164,12 @@
                                                         <td>{{ $opd->applications->count() }}</td>
                                                         <td>
                                                             <div class="badge badge-secondary text-dark">
-                                                                {{ $opd->pusat_count ?? 0 }} | {{ $opd->lokal_count ?? 0 }}
+                                                                {{ $opd->pusat_count ?? 0 }}
+                                                                <i class="fas fa-building"></i>
+                                                            </div>
+                                                            <div class="badge badge-secondary text-dark">
+                                                                {{ $opd->lokal_count ?? 0 }}
+                                                                <i class="fas fa-home"></i>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -171,8 +198,6 @@
                 </div>
             </div>
         </div>
-
-        <div id="chartTahun" style="height: 400px;"></div>
     </section>
 @endsection
 
