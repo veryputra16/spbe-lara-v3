@@ -155,7 +155,12 @@
                                                         <td>{{ $opd->applications->count() }}</td>
                                                         <td>
                                                             <div class="badge badge-secondary text-dark">
-                                                                {{ $opd->pusat_count ?? 0 }} | {{ $opd->lokal_count ?? 0 }}
+                                                                {{ $opd->pusat_count ?? 0 }}
+                                                                <i class="fas fa-building"></i>
+                                                            </div>
+                                                            <div class="badge badge-secondary text-dark">
+                                                                {{ $opd->lokal_count ?? 0 }}
+                                                                <i class="fas fa-home"></i>
                                                             </div>
                                                         </td>
                                                         <td>
