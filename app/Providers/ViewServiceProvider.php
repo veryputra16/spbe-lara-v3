@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Opd;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
