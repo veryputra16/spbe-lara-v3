@@ -36,9 +36,9 @@
             <div class="row d-flex align-items-stretch">
                 <div class="col-lg-8 d-flex">
                     <div class="card card-height-fix w-100">
-                        <div class="card-header">
+                        {{-- <div class="card-header">
                             <h4>Perangkat Daerah Pengelola Aplikasi</h4>
-                        </div>
+                        </div> --}}
                     <div class="card-body">
                         <div class="table-responsive table-invoice">                                
                             <div id="chartTahun" style="height: 400px;"></div>
@@ -49,14 +49,14 @@
                     
                 <div class="col-lg-4 d-flex">
                     <div class="card card-height-fix w-100">
-                        <div class="card-header"></div>
+                        <div class="card-header">
+                            <h4 class="text-primary">Aplikasi Berdasarkan Wilayah</h4>
+                        </div>
                         <div class="card-body">
                             <!-- Layanan -->
                             <div class="mb-4 section">
                                 <h6 class="text-muted">Layanan</h6>
-                                {{-- <br>
-                                    <div class="section">Layanan</div>
-                                <hr> --}}
+
                                 <div class="d-flex flex-wrap justify-content-center">
                                     @foreach ($layananCounts as $layanan)
                                         <span class="badge bg-success text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
