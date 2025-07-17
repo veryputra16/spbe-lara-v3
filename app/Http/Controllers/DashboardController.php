@@ -23,7 +23,7 @@ class DashboardController extends Controller
     {
         $applications = Application::all();
 
-        // Hanya aplikasi dengan katapp Lokal atau Pusat
+       // Hanya aplikasi dengan katapp Lokal atau Pusat
         $filteredApps = Application::whereHas('katapp', function ($q) {
             $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
         })->get();
@@ -116,30 +116,42 @@ class DashboardController extends Controller
             ];
         });
 
-        // Prepare data for yearly statistics
-        $years = range(2010, now()->year);
+        // mapping year lenght for 10 years
+        $years = range(now()->year - 9, now()->year);
         // Get yearly statistics
         $yearlyData = collect($years)->map(function ($year) {
             return [
                 'tahun' => $year,
-                'semua' => Application::where('tahun_buat', $year)->count(),
+                'semua' => Application::where('tahun_buat', $year)
+                    ->whereHas('katapp', function ($q) {
+                        $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
+                    })->count(),
+
                 'lokal' => Application::where('tahun_buat', $year)
                     ->whereHas('katapp', fn($q) => $q->where('kategori_aplikasi', 'Lokal'))
                     ->count(),
+
                 'pusat' => Application::where('tahun_buat', $year)
                     ->whereHas('katapp', fn($q) => $q->where('kategori_aplikasi', 'Pusat'))
                     ->count(),
+
                 'aktif' => Application::where('tahun_buat', $year)
-                    ->where('status', 1)->count(),
+                    ->where('status', 1)
+                    ->whereHas('katapp', function ($q) {
+                        $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
+                    })->count(),
+
                 'nonaktif' => Application::where('tahun_buat', $year)
-                    ->where('status', 0)->count(),
+                    ->where('status', 0)
+                    ->whereHas('katapp', function ($q) {
+                        $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
+                    })->count(),
             ];
         });
 
         // Return the view with the data
-         return view('dashboard.aplikasi.d-app', compact(
-            'applications', 'opds', 
-            'total', 'aktif', 'nonaktif', 'totalDesa', 'aktifDesa', 'nonaktifDesa', 'totalLainnya', 'aktifLainnya', 'nonaktifLainnya',
+        return view('dashboard.aplikasi.d-app', compact(
+            'applications', 'opds', 'total', 'aktif', 'nonaktif',
             'layananCounts', 'kategoriAppCounts', 'kategoriPenggunaCounts', 'jaringanCounts',
             'yearlyData'
         ), [

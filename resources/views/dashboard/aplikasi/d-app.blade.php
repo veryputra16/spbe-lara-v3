@@ -18,7 +18,7 @@
 
 @section('content')
     <section class="section">
-            <div class="row d-flex align-items-stretch">
+        <div class="row d-flex align-items-stretch">
                 <div class="col-lg-4 d-flex">
                     <div class="card card-height-fix w-100">
                         <div class="card-header">
@@ -114,9 +114,9 @@
             <div class="row d-flex align-items-stretch">
                 <div class="col-lg-8 d-flex">
                     <div class="card card-height-fix w-100">
-                        <div class="card-header">
+                        {{-- <div class="card-header">
                             <h4>Perangkat Daerah Pengelola Aplikasi</h4>
-                        </div>
+                        </div> --}}
                     <div class="card-body">
                         <div class="table-responsive table-invoice">                                
                             <div id="chartTahun" style="height: 400px;"></div>
@@ -127,14 +127,14 @@
                     
                 <div class="col-lg-4 d-flex">
                     <div class="card card-height-fix w-100">
-                        <div class="card-header"></div>
+                        <div class="card-header">
+                            <h4 class="text-primary">Aplikasi Berdasarkan Wilayah</h4>
+                        </div>
                         <div class="card-body">
                             <!-- Layanan -->
                             <div class="mb-4 section">
                                 <h6 class="text-muted">Layanan</h6>
-                                {{-- <br>
-                                    <div class="section">Layanan</div>
-                                <hr> --}}
+
                                 <div class="d-flex flex-wrap justify-content-center">
                                     @foreach ($layananCounts as $layanan)
                                         <span class="badge bg-success text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
@@ -176,10 +176,11 @@
                                             style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
                                             {{ $klasifikasi['nama'] }}
                                         <span class="d-inline-block text-white rounded-circle fw-bold"
-                                            Style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
+                                            style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
                                             {{ $klasifikasi['jumlah'] }}
                                         </span>
                                         </span>
+                                        
                                     @endforeach
                                 </div>
                                 <hr>
@@ -219,45 +220,51 @@
                                     <table class="table table-bordered table-hover" id="myTable">
                                         <thead>
                                             <tr>
-                                                <th>Nama Perangkat Daerah</th>
-                                                <th>Aplikasi</th>
-                                                <th>Pusat | Lokal</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                                <th class="text-center">Nama Perangkat Daerah</th>
+                                                <th class="text-center">Aplikasi</th>
+                                                <th class="text-center">Wilayah</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                @foreach ($opds as $opd)
-                                                    <tr>
-                                                        <td>{{ $opd->nama }}</td>
-                                                        <td>{{ $opd->applications->count() }}</td>
-                                                        <td>
-                                                            <div class="badge badge-secondary text-dark">
-                                                                {{ $opd->pusat_count ?? 0 }}
-                                                                <i class="fas fa-building"></i>
-                                                            </div>
-                                                            <div class="badge badge-secondary text-dark">
-                                                                {{ $opd->lokal_count ?? 0 }}
-                                                                <i class="fas fa-home"></i>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="badge badge-secondary text-dark">
-                                                                {{ $opd->aktif_count ?? 0 }}
-                                                                <i class="fas fa-check-circle text-success"></i>
-                                                            </div>
-                                                            <div class="badge badge-secondary text-dark">
-                                                                {{ $opd->nonaktif_count ?? 0 }}
-                                                                <i class="fas fa-times-circle text-danger"></i>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ route('admin.application.index', ['opd' => strtolower($opd->nama)]) }}" class="btn btn-secondary">
-                                                                <i class="fas fa-info-circle text-dark"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                        @foreach ($opds as $opd)
+                                            <tr>
+                                                <td class="text-center">{{ $opd->nama }}</td>
+                                                <td class="text-center">
+                                                    {{ $opd->applications->filter(function($app) {
+                                                        return in_array($app->katapp->kategori_aplikasi ?? '', ['Lokal', 'Pusat']);
+                                                    })->count() }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="justify-content-center gap-2">
+                                                        <div class="badge badge-secondary text-dark">
+                                                            Pusat : {{ $opd->pusat_count ?? 0 }}
+                                                            <i class="fas fa-building"></i>
+                                                        </div>
+                                                        <div class="badge badge-secondary text-dark">
+                                                            Lokal : {{ $opd->lokal_count ?? 0 }}
+                                                            <i class="fas fa-home"></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="badge badge-secondary text-dark">
+                                                        {{ $opd->aktif_count ?? 0 }}
+                                                        <i class="fas fa-check-circle text-success"></i>
+                                                    </div>
+                                                    <div class="badge badge-secondary text-dark">
+                                                        {{ $opd->nonaktif_count ?? 0 }}
+                                                        <i class="fas fa-times-circle text-danger"></i>
+                                                    </div>
+                                                </td>
+                                                <td class="d-flex justify-content-center">
+                                                    <a href="{{ route('admin.application.index', ['opd' => strtolower($opd->nama)]) }}" class="btn btn-secondary">
+                                                        <i class="fas fa-info-circle text-dark"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -283,6 +290,9 @@
 
     <!-- Highcharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             Highcharts.chart('chartTahun', {
