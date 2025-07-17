@@ -98,10 +98,11 @@
                                             style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
                                             {{ $klasifikasi['nama'] }}
                                         <span class="d-inline-block text-white rounded-circle fw-bold"
-                                            tyle="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
+                                            style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
                                             {{ $klasifikasi['jumlah'] }}
                                         </span>
                                         </span>
+                                        
                                     @endforeach
                                 </div>
                                 <hr>

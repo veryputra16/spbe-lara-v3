@@ -96,8 +96,8 @@ class DashboardController extends Controller
             ];
         });
 
-        // Prepare data for yearly statistics
-        $years = range(2010, now()->year);
+        // mapping year lenght for 10 years
+        $years = range(now()->year - 9, now()->year);
         // Get yearly statistics
         $yearlyData = collect($years)->map(function ($year) {
             return [
