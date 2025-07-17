@@ -28,10 +28,30 @@ class DashboardController extends Controller
             $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
         })->get();
 
-        // Hitung total, aktif, dan nonaktif hanya dari yang Lokal atau Pusat
+         // Hitung total, aktif, dan nonaktif hanya dari yang Lokal atau Pusat
         $total = $filteredApps->count();
         $aktif = $filteredApps->where('status', 1)->count();
         $nonaktif = $filteredApps->where('status', 0)->count();
+
+        // Hanya aplikasi dengan katapp Desa
+        $filteredAppsDesa = Application::whereHas('katapp', function ($q) {
+            $q->whereIn('kategori_aplikasi', ['Desa']);
+        })->get();
+
+        // Hitung total, aktif, dan nonaktif hanya dari yang Desa
+        $totalDesa = $filteredAppsDesa->count();
+        $aktifDesa = $filteredAppsDesa->where('status', 1)->count();
+        $nonaktifDesa = $filteredAppsDesa->where('status', 0)->count();
+
+        // Hanya aplikasi dengan katapp Lainnya
+        $filteredAppsLainnya = Application::whereHas('katapp', function ($q) {
+            $q->whereIn('kategori_aplikasi', ['Lainnya']);
+        })->get();
+
+        // Hitung total, aktif, dan nonaktif hanya dari yang Lainnya
+        $totalLainnya = $filteredAppsLainnya->count();
+        $aktifLainnya = $filteredAppsLainnya->where('status', 1)->count();
+        $nonaktifLainnya = $filteredAppsLainnya->where('status', 0)->count();
 
         $opds = Opd::withCount([
             'applications as lokal_count' => function ($query) {
@@ -131,7 +151,7 @@ class DashboardController extends Controller
 
         // Return the view with the data
         return view('dashboard.aplikasi.d-app', compact(
-            'applications', 'opds', 'total', 'aktif', 'nonaktif',
+            'applications', 'opds', 'total', 'aktif', 'nonaktif', 'totalDesa', 'aktifDesa', 'nonaktifDesa', 'totalLainnya', 'aktifLainnya', 'nonaktifLainnya',
             'layananCounts', 'kategoriAppCounts', 'kategoriPenggunaCounts', 'jaringanCounts',
             'yearlyData'
         ), [
