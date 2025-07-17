@@ -22,7 +22,7 @@
                 <div class="col-lg-4 d-flex">
                     <div class="card card-height-fix w-100">
                         <div class="card-header">
-                            <h4>Aplikasi</h4>
+                            <h4>Lokal & Pusat</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-invoice">                                
@@ -52,7 +52,7 @@
                 <div class="col-lg-4 d-flex">
                     <div class="card card-height-fix w-100">
                         <div class="card-header">
-                            <h4>Lokal & Pusat</h4>
+                            <h4>Desa</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-invoice">                                
