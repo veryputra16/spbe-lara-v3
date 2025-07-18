@@ -212,7 +212,7 @@ class ApplicationController extends Controller
         $sdmteknics = Sdmteknic::where('application_id', $application->id)->get();
         $interops = Interop::where('application_id', $application->id)->get();
         $pengembangans = Pengembangan::where('application_id', $application->id)->orderBy('tahun_pengembangan', 'desc')->get();
-        $keamanans = Keamanan::where('application_id', $application->id)->get();
+        $keamanans = Keamanan::where('application_id', $application->id)->orderBy('updated_at', 'desc')->get();
         $datas = Data::where('application_id', $application->id)->get();
 
         return view('aplikasi.aplikasi-detail', compact('application', 'monevapps', 'sdmteknics', 'interops', 'pengembangans', 'keamanans', 'datas'), [

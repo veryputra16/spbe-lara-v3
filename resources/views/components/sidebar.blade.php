@@ -41,12 +41,27 @@
                                 CMS</span></a>
                     </li>
                 @endrole
-                @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
-                    <li class="{{ Request::is('admin/appdesa*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.appdesa.index') }}"><i
-                                class="fas fa-window-maximize"></i><span>Aplikasi Desa</span></a>
-                    </li>
-                @endrole
+                @if (auth()->user()->opdPivot->isNotEmpty())
+                    @foreach (auth()->user()->opdPivot as $opd)
+                        @if (Str::startsWith(strtolower($opd->nama), 'desa'))
+                            {{-- Tampilkan menu khusus desa --}}
+                            @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
+                                <li class="{{ Request::is('admin/appdesa*') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('admin.appdesa.index') }}"><i
+                                            class="fas fa-window-maximize"></i><span>Aplikasi Desa</span></a>
+                                </li>
+                            @endrole
+                        @endif
+                    @endforeach
+                @else
+                    @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
+                        <li class="{{ Request::is('admin/appdesa*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.appdesa.index') }}"><i
+                                    class="fas fa-window-maximize"></i><span>Aplikasi Desa</span></a>
+                        </li>
+                    @endrole
+                @endif
+
                 @role('superadmin|admin-aplikasi|operator-aplikasi|viewer-aplikasi')
                     <li class="{{ Request::is('admin/applain*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.applain.index') }}"><i class="fas fa-box"></i><span>Aplikasi

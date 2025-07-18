@@ -18,11 +18,11 @@ class KeamananController extends Controller
      */
     public function index()
     {
-        $keamanans = Keamanan::all();
+        // $keamanans = Keamanan::orderBy('id', 'desc')->get();
 
-        return view('keamanan.keamanan-index', compact('keamanans'), [
-            'title' => 'Keamanan Aplikasi'
-        ]);
+        // return view('keamanan.keamanan-index', compact('keamanans'), [
+        //     'title' => 'Keamanan Aplikasi'
+        // ]);
     }
 
     /**
