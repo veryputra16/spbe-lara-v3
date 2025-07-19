@@ -29,6 +29,7 @@ use Illuminate\Support\Str;
 
 //  export class
 use App\Exports\ApplicationExport;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -41,7 +42,17 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $applications = Application::with(['opd', 'layananapp'])->whereIn('katapp_id', [1, 2])->get();
+        $user = Auth::user();
+
+        if (auth()->user()->hasAnyRole(['operator-aplikasi', 'viewer-aplikasi'])) {
+            $applications = Application::where('katapp_id', [1, 2])
+                ->whereHas('opd.users', function ($query) use ($user) {
+                    $query->where('users.id', $user->id);
+                })
+                ->get();
+        } else {
+            $applications = Application::whereIn('katapp_id', [1, 2])->get();
+        }
 
         $opds = Opd::all();
         $layanans = Layananapp::all();

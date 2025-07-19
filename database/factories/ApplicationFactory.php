@@ -21,7 +21,7 @@ class ApplicationFactory extends Factory
             'fungsi_app' => $this->faker->text(20),
             'url' => $this->faker->url(),
             'dasar_hukum' => fake()->randomElement(['aplikasi/dasar-hukums/QgrF3IKnU0iMpyC4FForEobe2gz4eht3OnGPtIgl.pdf']),
-            'opd_id' => $this->faker->numberBetween(1, 2),
+            'opd_id' => $this->faker->numberBetween(1, 65),
             'tahun_buat' => $this->faker->year(),
             'repositori' => $this->faker->url(),
             'aset_takberwujud' => $this->faker->numberBetween(0, 1),

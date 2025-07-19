@@ -40,7 +40,7 @@
                                     </h4>
                                     <p>{{ $appdesa->opd->nama }}</p>
                                     <div><span><i class="fas fa-th"></i>
-                                            {{ $appdesa->katapp->kategori_aplikasi ? $appdesa->katapp->kategori_aplikasi : 'Kategori Aplikasi Null' }}</span>
+                                            {{ $appdesa->katapp->kategori_aplikasi ? $appdesa->katapp->kategori_aplikasi : 'Kategori Wilayah Null' }}</span>
                                         &bull; <span><i class="fas fa-server"></i>
                                             {{ $appdesa->katserver->kategori_server ? $appdesa->katserver->kategori_server : 'Server Null' }}</span>
                                         &bull; <span><i class="fas fa-link"></i>

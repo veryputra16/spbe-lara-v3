@@ -244,7 +244,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-2 col-12">
-                                    <label>{{ __('Kategori Aplikasi *)') }}</label>
+                                    <label>{{ __('Kategori Wilayah *)') }}</label>
                                     <select class="form-control select2 @error('katapp_id') is-invalid @enderror"
                                         name="katapp_id" required autocomplete="katapp_id">
                                         <option value="">-</option>
@@ -313,7 +313,8 @@
                                 <div class="card-body">
                                     <input type="hidden" name="user_id"
                                         value="{{ old('user_id', auth()->user()->id) }}" required readonly>
-                                    <input type="hidden" id="tahun_pengembangan" name="tahun_pengembangan" value="{{ old('tahun_buat') }}">
+                                    <input type="hidden" id="tahun_pengembangan" name="tahun_pengembangan"
+                                        value="{{ old('tahun_buat') }}">
 
                                     <div id="riwayat_pengembangan" class="form-group col-md-8 col-12">
                                         <label>{{ __('Riwayat Pengembangan') }}</label>

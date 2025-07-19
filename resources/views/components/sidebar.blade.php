@@ -85,7 +85,7 @@
                             <span>Master Aplikasi</span></a>
                         <ul class="dropdown-menu">
                             <li class="{{ Request::is('masterapp/katapp*') ? 'active' : '' }}"><a class="nav-link"
-                                    href="{{ route('masterapp.katapp.index') }}">Kategori Aplikasi</a>
+                                    href="{{ route('masterapp.katapp.index') }}">Kategori Wilayah</a>
                             </li>
                             <li class="{{ Request::is('masterapp/katdb*') ? 'active' : '' }}"><a class="nav-link"
                                     href="{{ route('masterapp.katdb.index') }}">Kategori Database</a>
