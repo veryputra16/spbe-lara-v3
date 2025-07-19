@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             // $table->foreignId('opd_id')->constrained()->onDelete('cascade');
             // $table->string('role')->default('user');
-            // $table->string('status')->default(1);
+            $table->string('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

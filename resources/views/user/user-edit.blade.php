@@ -71,10 +71,10 @@
                                 <div class="form-group col-md-6 col-12">
                                     <label>{{ __('Konfirmasi Passsword') }}</label>
                                     <input type="password"
-                                        class="form-control @error('confirm_password') is-invalid @enderror"
-                                        name="confirm_password" value="" autocomplete="confirm_password"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        name="password_confirmation" value="" autocomplete="password_confirmation"
                                         placeholder="{{ __('Konfirmasi Password') }}">
-                                    @error('confirm_password')
+                                    @error('password_confirmation')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -111,6 +111,23 @@
                                         @endforelse
                                     </select>
                                     @error('role_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-2 col-12">
+                                    <label>{{ __('Status') }}</label>
+                                    <select class="form-control select2 @error('status') is-invalid @enderror"
+                                        name="status" id="status" required autocomplete="status">
+                                        {{-- <option value="">-</option> --}}
+                                        <option value="1"{{ old('status', $user->status) == '1' ? 'selected' : '' }}>
+                                            Aktif</option>
+                                        <option value="0"{{ old('status', $user->status) == '0' ? 'selected' : '' }}>
+                                            Tidak Aktif
+                                        </option>
+                                    </select>
+                                    @error('status')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

@@ -25,8 +25,17 @@ class StoreUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'min:4', 'max:255', 'unique:users'],
             'email' => ['nullable', 'email:dns',  'max:255', 'unique:users'],
-            'password' => ['required', 'required_with:confirm_password', 'same:confirm_password', 'min:8', 'max:255'],
-            'confirm_password' => ['required', 'min:8', 'max:255'],
+            'password' => ['required', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', 'confirmed'],
+            'status' => ['required'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'password.min' => 'Password harus terdiri dari minimal 8 karakter.',
+            'password.regex' => 'Password harus mengandung huruf kecil, huruf besar, dan angka.',
+            'password.confirmed' => 'Konfirmasi Password tidak sesuai.',
         ];
     }
 }
