@@ -248,7 +248,7 @@
                                     <select
                                         class="form-control select2 @error('pernah_audit_keamanan') is-invalid @enderror"
                                         name="pernah_audit_keamanan" required autocomplete="pernah_audit_keamanan">
-                                        <option value="">-</option>
+                                        {{-- <option value="">-</option> --}}
                                         <option value="sudah"
                                             {{ old('pernah_audit_keamanan', $keamanan->pernah_audit_keamanan) == 'pernah' ? 'selected' : '' }}>
                                             Pernah
@@ -264,13 +264,18 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 col-12">
+                                <div class="form-group col-md-4 col-12" style="display: none"
+                                    id="siapa_melakukan_audit_keamanan">
                                     <label>{{ __('Siapa Melakukan Audit Keamanan') }}</label>
                                     <select
                                         class="form-control select2 @error('siapa_melakukan_audit_keamanan') is-invalid @enderror"
                                         name="siapa_melakukan_audit_keamanan"
                                         autocomplete="siapa_melakukan_audit_keamanan">
-                                        <option value="">-</option>
+                                        {{-- <option value="">-</option> --}}
+                                        {{-- <option value="belum-dilaksanakan-audit"
+                                            {{ old('siapa_melakukan_audit_keamanan', $keamanan->siapa_melakukan_audit_keamanan) == 'belum-dilaksanakan-audit' ? 'selected' : '' }}>
+                                            Belum Dilaksanakan Audit
+                                        </option> --}}
                                         <option value="mandiri"
                                             {{ old('siapa_melakukan_audit_keamanan', $keamanan->siapa_melakukan_audit_keamanan) == 'mandiri' ? 'selected' : '' }}>
                                             Mandiri
@@ -283,12 +288,32 @@
                                             {{ old('siapa_melakukan_audit_keamanan', $keamanan->siapa_melakukan_audit_keamanan) == 'pihak-lainnya' ? 'selected' : '' }}>
                                             Pihak Lainnya
                                         </option>
-                                        <option value="belum-dilaksanakan-audit"
-                                            {{ old('siapa_melakukan_audit_keamanan', $keamanan->siapa_melakukan_audit_keamanan) == 'belum-dilaksanakan-audit' ? 'selected' : '' }}>
-                                            Belum Dilaksanakan Audit
-                                        </option>
                                     </select>
                                     @error('siapa_melakukan_audit_keamanan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-8 col-12" id="bukti_dukung_audit_keamanan"
+                                    style="display: none">
+                                    <label>{{ __('Bukti Dukung Audit Keamanan') }}</label>
+                                    @if ($keamanan->bukti_dukung_audit_keamanan != '')
+                                        <div class="mb-0 d-block">
+                                            <a href="{{ asset(Storage::url($keamanan->bukti_dukung_audit_keamanan)) }}"
+                                                target="_blank">
+                                                <i class="fas fa-file-alt"></i> View Dokumen
+                                            </a>
+                                        </div>
+                                    @endif
+                                    <input type="file"
+                                        class="form-control @error('bukti_dukung_audit_keamanan') is-invalid @enderror"
+                                        name="bukti_dukung_audit_keamanan" id="bukti_dukung_audit_keamanan"
+                                        autocomplete="bukti_dukung_audit_keamanan">
+                                    <small id="bukti_dukung_audit_keamanan" class="form-text text-muted">
+                                        file ekstensi pdf dengan maksimal size 10MB
+                                    </small>
+                                    @error('bukti_dukung_audit_keamanan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -315,4 +340,18 @@
 @push('scripts')
     <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('library/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#pernah_audit_keamanan').change(function() {
+                if ($(this).val() === 'pernah') {
+                    $('#siapa_melakukan_audit_keamanan').show();
+                    $('#bukti_dukung_audit_keamanan').show();
+                } else {
+                    $('#siapa_melakukan_audit_keamanan').hide();
+                    $('#bukti_dukung_audit_keamanan').hide();
+                }
+            });
+        });
+    </script>
 @endpush

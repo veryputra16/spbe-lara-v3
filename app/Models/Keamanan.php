@@ -27,6 +27,7 @@ class Keamanan extends Model
         'penanganan_serangan_cyber',
         'pernah_audit_keamanan',
         'siapa_melakukan_audit_keamanan',
+        'bukti_dukung_audit_keamanan',
         'user_id',
     ];
 

@@ -30,8 +30,9 @@ class KeamananFactory extends Factory
             'menerapkan_size_file' => fake()->numberBetween(0, 1),
             'pernah_mengalami_serangan_cyber' => fake()->numberBetween(0, 1),
             'penanganan_serangan_cyber' => fake()->randomElement(['aplikasi/keamanan/penanganan-serangan-cybers/wdkXiHEGfZZV4MII87PO9OS0XEGl0JfU41rz2kJh.pdf']),
-            'pernah_audit_keamanan' => fake()->word(),
-            'siapa_melakukan_audit_keamanan' => fake()->word(),
+            'pernah_audit_keamanan' => fake()->randomElement(['belum', 'pernah']),
+            'siapa_melakukan_audit_keamanan' => fake()->randomElement(['belum-dilaksanakan-audit', 'mandiri', 'dinas-kominfos', 'pihak-lainnya']),
+            'bukti_dukung_audit_keamanan' => fake()->randomElement(['aplikasi/keamanan/buktidukung-audits/FUXzibcwZUbLHKGpKDu0ZMXL9MTmdfm79bjIZOBQ.pdf']),
             'user_id' => $this->faker->numberBetween(1, 2),
         ];
     }
