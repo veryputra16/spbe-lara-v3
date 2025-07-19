@@ -1,3 +1,4 @@
   <div class="simple-footer">
-      Copyright &copy; {{ env('APP_NAME') }} 2018 - {{ date('Y') }}
+      Copyright &copy; {{ date('Y') }} &mdash; <b>{{ env('APP_NAME') }}</b><br>
+      <div>Development by <a href="https://spbe.denpasarkota.go.id/">Tim SPBE Kominfo Denpasar</a></div>
   </div>
