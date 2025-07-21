@@ -93,9 +93,12 @@
                                     <div class="form-group mb-0">
                                         <select id="filterTahun" class="form-control form-control-sm select2" style="min-width: 140px;">
                                             <option value="">-- Semua Tahun --</option>
-                                            @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
-                                                <option value="{{ $tahun }}">{{ $tahun }}</option>
-                                            @endforeach
+                                            @php
+                                                $currentYear = now()->year;
+                                            @endphp
+                                            @for ($year = $currentYear; $year >= 2005; $year--)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endfor
                                         </select>
                                     </div>
 
@@ -278,7 +281,7 @@
     $(document).ready(function () {
         // Nonaktifkan pagination & fitur lainnya dari DataTables
         table = $('#myTable').DataTable({
-            paging: false,
+            paging: true,
             searching: false,
             lengthChange: false,
             info: false
