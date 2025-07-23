@@ -32,7 +32,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Action</th>
-                                            <th>Kategori Aplikasi</th>
+                                            <th>Kategori Wilayah</th>
                                         </tr>
                                     </thead>
                                     <tbody>

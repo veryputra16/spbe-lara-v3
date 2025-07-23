@@ -19,7 +19,7 @@ class KatappController extends Controller
         $katapps = Katapp::all();
 
         return view('katapp.katapp-index', compact('katapps'), [
-            'title' => 'Kategori Aplikasi'
+            'title' => 'Kategori Wilayah'
         ]);
     }
 
@@ -29,7 +29,7 @@ class KatappController extends Controller
     public function create()
     {
         return view('katapp.katapp-create', [
-            'title' => 'Kategori Aplikasi'
+            'title' => 'Kategori Wilayah'
         ]);
     }
 
@@ -61,7 +61,7 @@ class KatappController extends Controller
     public function edit(Katapp $katapp)
     {
         return view('katapp.katapp-edit', compact('katapp'), [
-            'title' => 'Kategori Aplikasi'
+            'title' => 'Kategori Wilayah'
         ]);
     }
 

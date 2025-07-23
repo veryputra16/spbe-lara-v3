@@ -42,7 +42,7 @@
                                     <div><span><i class="fas fa-tag"></i>
                                             {{ $application->no_regis_app ? $application->no_regis_app : 'No Regis Tidak Ada' }}</span>
                                         &bull; <span><i class="fas fa-th"></i>
-                                            {{ $application->katapp->kategori_aplikasi ? $application->katapp->kategori_aplikasi : 'Kategori Aplikasi Null' }}</span>
+                                            {{ $application->katapp->kategori_aplikasi ? $application->katapp->kategori_aplikasi : 'Kategori Wilayah Null' }}</span>
                                         &bull; <span><i class="fas fa-server"></i>
                                             {{ $application->katserver->kategori_server ? $application->katserver->kategori_server : 'Server Null' }}</span>
                                         &bull; <span><i class="fas fa-link"></i>
@@ -275,4 +275,3 @@
         });
     </script>
 @endpush
-

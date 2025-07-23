@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('penanganan_serangan_cyber')->nullable();
             $table->string('pernah_audit_keamanan')->nullable();
             $table->string('siapa_melakukan_audit_keamanan')->nullable();
+            $table->text('bukti_dukung_audit_keamanan')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

@@ -37,6 +37,7 @@ class StoreKeamananRequest extends FormRequest
             'penanganan_serangan_cyber' => ['nullable', 'file', 'mimes:pdf', 'max:10000'],
             'pernah_audit_keamanan' => ['required', 'string', 'in:pernah,belum'],
             'siapa_melakukan_audit_keamanan' => ['required', 'string', 'in:mandiri,dinas-kominfos,pihak-lainnya,belum-dilaksanakan-audit'],
+            'bukti_dukung_audit_keamanan' => ['nullable', 'file', 'mimes:pdf', 'max:10000'],
             'user_id' => ['required'],
         ];
     }

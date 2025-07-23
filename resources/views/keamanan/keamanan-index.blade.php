@@ -19,11 +19,12 @@
                 <th>Penanganan Serangan Cyber</th>
                 <th>Pernah Audit Keamanan</th>
                 <th>Siapa Melakukan Audit Keamanan</th>
+                <th>Bukti Dukung Audit Keamanan</th>
                 <th>Updated At</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($keamanans as $keamanan) 
+            @forelse ($keamanans as $keamanan)
                 <tr>
                     <td>
                         <a href="{{ route('admin.keamanan.edit', ['application' => $application->id, 'keamanan' => $keamanan->id]) }}"
@@ -71,7 +72,7 @@
                             class="{{ $keamanan->pernah_mengalami_serangan_cyber == 1 ? 'fas fa-check text-success' : 'fas fa-times text-danger' }}"></i>
                     </td>
                     <td>
-                        @if ($keamanan->penanganan_serangan_cyber)
+                        @if ($keamanan->bukti_dukung_audit_keamanan)
                             <a href="{{ asset(Storage::url($keamanan->penanganan_serangan_cyber)) }}"
                                 target="_blank">View Dokumen
                                 Penanganan Serangan Cyber</a>
@@ -83,6 +84,15 @@
                     <td>
                         @if ($keamanan->siapa_melakukan_audit_keamanan)
                             {{ ucwords(str_replace('-', ' ', strtolower($keamanan->siapa_melakukan_audit_keamanan))) }}
+                        @else
+                            <span class="text-muted">-</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($keamanan->bukti_dukung_audit_keamanan)
+                            <a href="{{ asset(Storage::url($keamanan->bukti_dukung_audit_keamanan)) }}"
+                                target="_blank">View Dokumen
+                                Bukti Dukung Audit Keamanan</a>
                         @else
                             <span class="text-muted">-</span>
                         @endif

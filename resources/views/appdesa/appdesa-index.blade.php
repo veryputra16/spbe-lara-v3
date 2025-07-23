@@ -28,7 +28,7 @@
                                 <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
                                 <div class="alert-body">
                                     <div class="alert-title">Attention</div>
-                                    Fitur ini berfungsi untuk mendata aset digital tak berwujud yang terhubung dengan domain
+                                    Fitur ini berfungsi untuk mendata aplikasi desa dengan domain
                                     <code>.desa.id</code>, seperti website desa dan sistem informasi desa yang dimiliki oleh
                                     Pemerintah Desa.
                                 </div>

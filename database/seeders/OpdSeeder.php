@@ -127,7 +127,11 @@ class OpdSeeder extends Seeder
             ]);
         }
 
-        $user = User::find(4);
-        $user->opdPivot()->attach(10);
+        // add User with opd
+        $userAplikasi = User::role(['operator-aplikasi', 'viewer-aplikasi'])->get();
+        $randomOpdId = Opd::inRandomOrder()->value('id');
+        foreach ($userAplikasi as $userApp) {
+            $userApp->opdPivot()->attach($randomOpdId);
+        }
     }
 }
