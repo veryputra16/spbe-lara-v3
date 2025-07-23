@@ -93,9 +93,12 @@
                                     <div class="form-group mb-0">
                                         <select id="filterTahun" class="form-control form-control-sm select2" style="min-width: 140px;">
                                             <option value="">-- Semua Tahun --</option>
-                                            @foreach ($applications->pluck('tahun_buat')->unique()->sort() as $tahun)
-                                                <option value="{{ $tahun }}">{{ $tahun }}</option>
-                                            @endforeach
+                                            @php
+                                                $currentYear = now()->year;
+                                            @endphp
+                                            @for ($year = $currentYear; $year >= 2005; $year--)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endfor
                                         </select>
                                     </div>
 
@@ -231,89 +234,72 @@
     });
     
     let table;
+    let allRows = [];
     let currentLimit = 10;
 
     function applyCustomFilterAndLimit() {
-        let filterTahun = $('#filterTahun').val();
-        let filterStatus = $('#filterStatus').val().toLowerCase();
-        let filterOPD = $('#filterOPD').val().toLowerCase();
-        let filterLayanan = $('#filterLayanan').val().toLowerCase();
-        let searchText = $('#customSearch').val().toLowerCase();
-        let limit = parseInt($('#customLength').val());
+    let filterTahun = $('#filterTahun').val();
+    let filterStatus = $('#filterStatus').val().toLowerCase();
+    let filterOPD = $('#filterOPD').val().toLowerCase();
+    let filterLayanan = $('#filterLayanan').val().toLowerCase();
+    let searchText = $('#customSearch').val().toLowerCase();
 
-        let visibleCount = 0;
-        let shownCount = 0;
+    let filteredRows = [];
 
-        $('#myTable tbody tr').each(function () {
-            let row = $(this);
-            let opd = row.data('opd') || '';
-            let layanan = row.data('layanan') || '';
-            let tahun = row.data('tahun') || '';
-            let status = row.data('status') || '';
-            let text = row.text().toLowerCase();
+    allRows.each(function () {
+        let row = $(this);
+        let opd = row.data('opd') || '';
+        let layanan = row.data('layanan') || '';
+        let tahun = row.data('tahun') || '';
+        let status = row.data('status') || '';
+        let text = row.text().toLowerCase();
 
-            let match =
-                (filterTahun === "" || tahun == filterTahun) &&
-                (filterStatus === "" || status == filterStatus) &&
-                (filterOPD === "" || opd.includes(filterOPD)) &&
-                (filterLayanan === "" || layanan.includes(filterLayanan)) &&
-                (searchText === "" || text.includes(searchText));
+        let match =
+            (filterTahun === "" || tahun == filterTahun) &&
+            (filterStatus === "" || status == filterStatus) &&
+            (filterOPD === "" || opd.includes(filterOPD)) &&
+            (filterLayanan === "" || layanan.includes(filterLayanan)) &&
+            (searchText === "" || text.includes(searchText));
 
-            if (match) {
-                visibleCount++;
-                if (shownCount < limit) {
-                    row.show();
-                    shownCount++;
-                } else {
-                    row.hide();
-                }
-            } else {
-                row.hide();
-            }
-        });
-
-        $('#noDataRow').toggle(visibleCount === 0);
-    }
-
-    $(document).ready(function () {
-        // Nonaktifkan pagination & fitur lainnya dari DataTables
-        table = $('#myTable').DataTable({
-            paging: false,
-            searching: false,
-            lengthChange: false,
-            info: false
-        });
-
-        // Trigger saat filter berubah
-        $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
-            applyCustomFilterAndLimit();
-        });
-
-        // Trigger saat limit baris diubah
-        $('#customLength').on('change', function () {
-            currentLimit = parseInt($(this).val());
-            applyCustomFilterAndLimit();
-        });
-
-        // Initial render
-        applyCustomFilterAndLimit();
-
-        // Kirim filter ke input hidden saat submit export
-        $('#exportForm').on('submit', function () {
-            $('#exportOPD').val($('#filterOPD').val());
-            $('#exportLayanan').val($('#filterLayanan').val());
-            $('#exportTahun').val($('#filterTahun').val());
-            $('#exportStatus').val($('#filterStatus').val());
-            $('#exportSearch').val($('#customSearch').val());
-        });
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const opdParam = urlParams.get('opd');
-
-        if (opdParam) {
-            $('#filterOPD').val(opdParam).trigger('change');
-            applyCustomFilterAndLimit();
+        if (match) {
+            filteredRows.push(row[0]); // row[0] = DOM element
         }
     });
+
+    table.clear().rows.add(filteredRows).draw();
+
+    $('#noDataRow').toggle(filteredRows.length === 0);
+}
+
+    $(document).ready(function () {
+    table = $('#myTable').DataTable({
+        paging: true,
+        searching: false,
+        lengthChange: false,
+        info: false
+    });
+
+    // Simpan semua baris awal
+    allRows = $('#myTable tbody tr').clone();
+
+    $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
+        applyCustomFilterAndLimit();
+    });
+
+    $('#customLength').on('change', function () {
+        table.page.len(parseInt($(this).val())).draw();
+        applyCustomFilterAndLimit();
+    });
+
+    applyCustomFilterAndLimit();
+});
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const opdParam = urlParams.get('opd');
+
+    if (opdParam) {
+        $('#filterOPD').val(opdParam).trigger('change');
+        applyCustomFilterAndLimit();
+    }
 </script>
 @endpush
