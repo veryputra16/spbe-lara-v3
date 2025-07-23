@@ -276,7 +276,7 @@
         paging: true,
         searching: false,
         lengthChange: false,
-        info: false
+        info: true
     });
 
     // Simpan semua baris awal
