@@ -230,7 +230,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-2 col-12">
-                                    <label>{{ __('Kategori Aplikasi *)') }}</label>
+                                    <label>{{ __('Kategori Wilayah *)') }}</label>
                                     <select class="form-control select2 @error('katapp_id') is-invalid @enderror"
                                         name="katapp_id" required autocomplete="katapp_id">
                                         @forelse ($katapps as $katapp)

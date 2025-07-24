@@ -18,85 +18,14 @@
 
 @section('content')
     <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="text-primary">Data Aplikasi</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row text-center">
-                            <div class="col-md-4 mb-3">
-                                <h2 class="text-dark">{{ $total }}</h2>
-                                <span class="badge badge-pill badge-primary">Total Aplikasi</span>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <h2 class="text-dark">{{ $aktif }}</h2>
-                                <span class="badge badge-pill badge-success">Aplikasi Aktif</span>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <h2 class="text-dark">{{ $nonaktif }}</h2>
-                                <span class="badge badge-pill badge-danger">Aplikasi Non Aktif</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="row d-flex align-items-stretch">
+            @include('dashboard.aplikasi.total-dataApps')
+            @include('dashboard.aplikasi.total-appDesa')
+            @include('dashboard.aplikasi.total-appLain')
+        </div>
 
-            <div class="row d-flex align-items-stretch">
-                <div class="col-lg-8 d-flex">
-                    <div class="card card-height-fix w-100">
-                        <div class="card-header">
-                            <h4>Perangkat Daerah Pengelola Aplikasi</h4>
-                        </div>
-                    <div class="card-body">
-                        <div class="table-responsive table-invoice">                                
-                            <div id="chartTahun" style="height: 400px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    
-                <div class="col-lg-4 d-flex">
-                    <div class="card card-height-fix w-100">
-                        <div class="card-header"></div>
-                        <div class="card-body">
-                            <!-- Layanan -->
-                            <div class="mb-4 section">
-                                <h6 class="text-muted">Layanan</h6>
-                                {{-- <br>
-                                    <div class="section">Layanan</div>
-                                <hr> --}}
-                                <div class="d-flex flex-wrap justify-content-center">
-                                    @foreach ($layananCounts as $layanan)
-                                        <span class="badge bg-success text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
-                                            style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
-                                            {{ $layanan['nama'] ?? 'Tanpa Nama' }}
-                                        <span class="d-inline-block text-white rounded-circle fw-bold"
-                                            style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
-                                            {{ $layanan['jumlah'] }}
-                                        </span>
-                                        </span>
-                                    @endforeach
-                                </div>
-                                <hr>
-                            </div>
-                            <!-- Kategori Aplikasi -->
-                            <div class="mb-4">
-                                <h6 class="text-muted">Kategori</h6>
-                                <div class="d-flex flex-wrap justify-content-center">
-                                    @foreach ($kategoriAppCounts as $kategori)
-                                        <span class="badge bg-dark text-white d-inline-flex align-items-center px-4 py-2 rounded shadow-sm"
-                                            style="height: 34px; line-height: 1; margin-right: 12px; margin-bottom: 12px;">
-                                            {{ $kategori['nama'] }}
-                                        <span class="d-inline-block text-white rounded-circle fw-bold"
-                                            style="background-color: rgba(255,255,255,0.3); min-width: 28px; height: 28px; line-height: 28px; text-align: center; margin-left: 16px;">
-                                            {{ $kategori['jumlah'] }}
-                                        </span>
-                                        </span>
-                                    @endforeach
-                                </div>
-                                <hr>
-                            </div>
+        <div class="row d-flex align-items-stretch">
+            @include('dashboard.aplikasi.app-tahun')
 
                             <!-- Klasifikasi / Kategori Pengguna -->
                             <div class="mb-4">

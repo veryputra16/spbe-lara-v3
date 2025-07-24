@@ -26,7 +26,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-4 col-12">
-                                        <label>{{ __('Kategori Aplikasi') }}</label>
+                                        <label>{{ __('Kategori Wilayah') }}</label>
                                         <input type="text"
                                             class="form-control @error('kategori_aplikasi') is-invalid @enderror"
                                             name="kategori_aplikasi"

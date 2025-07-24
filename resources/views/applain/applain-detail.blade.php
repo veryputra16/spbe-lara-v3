@@ -40,7 +40,7 @@
                                     </h4>
                                     <p>{{ $applain->opd->nama }}</p>
                                     <div><span><i class="fas fa-th"></i>
-                                            {{ $applain->katapp->kategori_aplikasi ? $applain->katapp->kategori_aplikasi : 'Kategori Aplikasi Null' }}</span>
+                                            {{ $applain->katapp->kategori_aplikasi ? $applain->katapp->kategori_aplikasi : 'Kategori Wilayah Null' }}</span>
                                         &bull; <span><i class="fas fa-server"></i>
                                             {{ $applain->katserver->kategori_server ? $applain->katserver->kategori_server : 'Server Null' }}</span>
                                         &bull; <span><i class="fas fa-link"></i>
@@ -62,10 +62,6 @@
                                     <a class="nav-link" id="pengembanganApp-tab" data-toggle="tab" href="#pengembanganApp"
                                         role="tab" aria-controls="pengembanganApp"
                                         aria-selected="false">Pengembangan</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="monevApp-tab" data-toggle="tab" href="#monevApp" role="tab"
-                                        aria-controls="monevApp" aria-selected="false">Monev Aplikasi</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="tenagaKelola-tab" data-toggle="tab" href="#tenagaKelola"
@@ -185,10 +181,6 @@
                                     facilis natus nesciunt quis illum provident quod iusto quas recusandae cupiditate?
                                     Corrupti quo quas fugiat reprehenderit. Minima sed nulla, doloremque quam dignissimos
                                     placeat ea architecto dicta consequatur soluta?
-                                </div>
-                                <div class="tab-pane fade" id="monevApp" role="tabpanel"
-                                    aria-labelledby="monevApp-tab">
-                                    {{-- @include('monevapp.monevapp-index') --}}
                                 </div>
                                 <div class="tab-pane fade" id="tenagaKelola" role="tabpanel"
                                     aria-labelledby="tenagaKelola-tab">

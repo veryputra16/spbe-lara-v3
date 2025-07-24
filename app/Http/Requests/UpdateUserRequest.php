@@ -23,10 +23,19 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['sometimes', 'min:4', 'max:255'],
+            'username' => ['sometimes', 'min:4', 'max:255', 'unique:users'],
             'email' => ['nullable', 'email:dns',  'max:255', 'unique:users'],
-            'password' => ['nullable', 'required_with:confirm_password', 'same:confirm_password', 'max:255'],
-            'confirm_password' => ['nullable', 'max:255'],
+            'password' => ['nullable', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', 'confirmed'],
+            'status' => ['required'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'password.min' => 'Password harus terdiri dari minimal 8 karakter.',
+            'password.regex' => 'Password harus mengandung huruf kecil, huruf besar, dan angka.',
+            'password.confirmed' => 'Konfirmasi Password tidak sesuai.',
         ];
     }
 }

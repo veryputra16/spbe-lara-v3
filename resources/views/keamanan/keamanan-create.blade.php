@@ -237,15 +237,16 @@
                                     <label>{{ __('Pernah Audit Keamanan') }}</label>
                                     <select
                                         class="form-control select2 @error('pernah_audit_keamanan') is-invalid @enderror"
-                                        name="pernah_audit_keamanan" required autocomplete="pernah_audit_keamanan">
-                                        <option value="">-</option>
-                                        <option value="sudah"
-                                            {{ old('pernah_audit_keamanan') == 'pernah' ? 'selected' : '' }}>
-                                            Pernah
-                                        </option>
+                                        name="pernah_audit_keamanan" id="pernah_audit_keamanan" required
+                                        autocomplete="pernah_audit_keamanan">
+                                        {{-- <option value="">-</option> --}}
                                         <option value="belum"
                                             {{ old('pernah_audit_keamanan') == 'belum' ? 'selected' : '' }}>
                                             Belum
+                                        </option>
+                                        <option value="pernah"
+                                            {{ old('pernah_audit_keamanan') == 'pernah' ? 'selected' : '' }}>
+                                            Pernah
                                         </option>
                                     </select>
                                     @error('pernah_audit_keamanan')
@@ -254,13 +255,18 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 col-12">
+                                <div id="siapa_melakukan_audit_keamanan_group" class="form-group col-md-4 col-12"
+                                    style="display: none">
                                     <label>{{ __('Siapa Melakukan Audit Keamanan') }}</label>
                                     <select
                                         class="form-control select2 @error('siapa_melakukan_audit_keamanan') is-invalid @enderror"
-                                        name="siapa_melakukan_audit_keamanan"
+                                        name="siapa_melakukan_audit_keamanan" id="siapa_melakukan_audit_keamanan"
                                         autocomplete="siapa_melakukan_audit_keamanan">
-                                        <option value="">-</option>
+                                        {{-- <option value="">-</option> --}}
+                                        {{-- <option value="belum-dilaksanakan-audit"
+                                            {{ old('siapa_melakukan_audit_keamanan') == 'belum-dilaksanakan-audit' ? 'selected' : '' }}>
+                                            Belum Dilaksanakan Audit
+                                        </option> --}}
                                         <option value="mandiri"
                                             {{ old('siapa_melakukan_audit_keamanan') == 'mandiri' ? 'selected' : '' }}>
                                             Mandiri
@@ -273,12 +279,24 @@
                                             {{ old('siapa_melakukan_audit_keamanan') == 'pihak-lainnya' ? 'selected' : '' }}>
                                             Pihak Lainnya
                                         </option>
-                                        <option value="belum-dilaksanakan-audit"
-                                            {{ old('siapa_melakukan_audit_keamanan') == 'belum-dilaksanakan-audit' ? 'selected' : '' }}>
-                                            Belum Dilaksanakan Audit
-                                        </option>
                                     </select>
                                     @error('siapa_melakukan_audit_keamanan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div id="bukti_dukung_audit_keamanan_group" class="form-group col-md-8 col-12"
+                                    style="display: none">
+                                    <label>{{ __('Bukti Dukung Audit Keamanan') }}</label>
+                                    <input type="file"
+                                        class="form-control @error('bukti_dukung_audit_keamanan') is-invalid @enderror"
+                                        name="bukti_dukung_audit_keamanan" id="bukti_dukung_audit_keamanan"
+                                        autocomplete="bukti_dukung_audit_keamanan">
+                                    <small id="bukti_dukung_audit_keamanan" class="form-text text-muted">
+                                        file ekstensi pdf dengan maksimal size 10MB
+                                    </small>
+                                    @error('bukti_dukung_audit_keamanan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -305,4 +323,21 @@
 @push('scripts')
     <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('library/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            function toggleAuditFields() {
+                if ($('#pernah_audit_keamanan').val() === 'pernah') {
+                    $('#siapa_melakukan_audit_keamanan_group').show();
+                    $('#bukti_dukung_audit_keamanan').show();
+                } else {
+                    $('#siapa_melakukan_audit_keamanan_group').hide();
+                    $('#bukti_dukung_audit_keamanan').hide();
+                }
+            }
+
+            $('#pernah_audit_keamanan').change(toggleAuditFields);
+            toggleAuditFields(); // Panggil saat halaman pertama kali dimuat
+        });
+    </script>
 @endpush

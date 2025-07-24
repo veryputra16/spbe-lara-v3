@@ -18,11 +18,11 @@ class KeamananController extends Controller
      */
     public function index()
     {
-        $keamanans = Keamanan::all();
+        // $keamanans = Keamanan::orderBy('id', 'desc')->get();
 
-        return view('keamanan.keamanan-index', compact('keamanans'), [
-            'title' => 'Keamanan Aplikasi'
-        ]);
+        // return view('keamanan.keamanan-index', compact('keamanans'), [
+        //     'title' => 'Keamanan Aplikasi'
+        // ]);
     }
 
     /**
@@ -43,9 +43,19 @@ class KeamananController extends Controller
         DB::transaction(function () use ($request) {
             $validated = $request->validated();
 
+            // dd($validated);
+            if ($validated['pernah_audit_keamanan'] == 'belum') {
+                $validated['siapa_melakukan_audit_keamanan'] = 'belum-dilaksanakan-audit';
+            }
+
             if ($request->hasFile('penanganan_serangan_cyber')) {
                 $penanganan_serangan_cyberPath = $request->file('penanganan_serangan_cyber')->store('aplikasi/keamanan/penanganan-serangan-cybers', 'public');
                 $validated['penanganan_serangan_cyber'] = $penanganan_serangan_cyberPath;
+            }
+
+            if ($request->hasFile('bukti_dukung_audit_keamanan')) {
+                $bukti_dukung_audit_keamananPath = $request->file('bukti_dukung_audit_keamanan')->store('aplikasi/keamanan/buktidukung-audits', 'public');
+                $validated['bukti_dukung_audit_keamanan'] = $bukti_dukung_audit_keamananPath;
             }
 
             $newKeamanan = Keamanan::create($validated);

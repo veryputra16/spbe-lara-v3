@@ -36,6 +36,7 @@
                                             <th>Username</th>
                                             <th>OPD/Perumda/Kelurahan/Desa</th>
                                             <th>Role</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -72,6 +73,13 @@
                                                         @endforeach
                                                     @else
                                                         <span class="text-muted">-</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($user->status == 1)
+                                                        <span class="badge badge-success">Aktif</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Tidak Aktif</span>
                                                     @endif
                                                 </td>
                                             </tr>
