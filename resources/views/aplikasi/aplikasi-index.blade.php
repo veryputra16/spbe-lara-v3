@@ -180,7 +180,17 @@
                                                 <td>{{ $application->aset_takberwujud == 1 ? 'Ya' : 'Tidak' }}</td>
                                             </tr>
                                         @endforeach
+                                            <tfoot>
+                                                <tr id="noDataRow" style="display: none;">
+                                                    <td colspan="7" class="text-center">No data available in table</td>
+                                                </tr>
+                                            </tfoot>
                                     </tbody>
+                                    <tfoot>
+                                        <tr id="noDataRow" style="display: none;">
+                                            <td colspan="7" class="text-center">No data available in table</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -266,24 +276,36 @@
     // Simpan semua baris awal
     allRows = $('#myTable tbody tr').clone();
 
-    $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
-        applyCustomFilterAndLimit();
-    });
+        // Trigger saat filter berubah
+        $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
+            applyCustomFilterAndLimit();
+        });
 
-    $('#customLength').on('change', function () {
+        // Trigger saat limit baris diubah
+        $('#customLength').on('change', function () {
         table.page.len(parseInt($(this).val())).draw();
         applyCustomFilterAndLimit();
-    });
+        });
 
-    applyCustomFilterAndLimit();
-});
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const opdParam = urlParams.get('opd');
-
-    if (opdParam) {
-        $('#filterOPD').val(opdParam).trigger('change');
+        // Initial render
         applyCustomFilterAndLimit();
-    }
+
+        // Kirim filter ke input hidden saat submit export
+        $('#exportForm').on('submit', function () {
+            $('#exportOPD').val($('#filterOPD').val());
+            $('#exportLayanan').val($('#filterLayanan').val());
+            $('#exportTahun').val($('#filterTahun').val());
+            $('#exportStatus').val($('#filterStatus').val());
+            $('#exportSearch').val($('#customSearch').val());
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const opdParam = urlParams.get('opd');
+
+        if (opdParam) {
+            $('#filterOPD').val(opdParam).trigger('change');
+            applyCustomFilterAndLimit();
+        }
+    });
 </script>
 @endpush
