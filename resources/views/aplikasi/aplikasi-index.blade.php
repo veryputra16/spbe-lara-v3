@@ -180,17 +180,7 @@
                                                 <td>{{ $application->aset_takberwujud == 1 ? 'Ya' : 'Tidak' }}</td>
                                             </tr>
                                         @endforeach
-                                            <tfoot>
-                                                <tr id="noDataRow" style="display: none;">
-                                                    <td colspan="7" class="text-center">No data available in table</td>
-                                                </tr>
-                                            </tfoot>
                                     </tbody>
-                                    <tfoot>
-                                        <tr id="noDataRow" style="display: none;">
-                                            <td colspan="7" class="text-center">No data available in table</td>
-                                        </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -244,9 +234,7 @@
     let filterLayanan = $('#filterLayanan').val().toLowerCase();
     let searchText = $('#customSearch').val().toLowerCase();
 
-    let filteredRows = [];
-
-    allRows.each(function () {
+    $('#myTable tbody tr').each(function () {
         let row = $(this);
         let opd = row.data('opd') || '';
         let layanan = row.data('layanan') || '';
@@ -261,10 +249,34 @@
             (filterLayanan === "" || layanan.includes(filterLayanan)) &&
             (searchText === "" || text.includes(searchText));
 
-        if (match) {
-            filteredRows.push(row[0]); // row[0] = DOM element
-        }
+        row.toggle(match);
     });
+
+    table.draw(); // tetap perbarui pagination
+    }
+
+    $(document).ready(function () {
+    table = $('#myTable').DataTable({
+        paging: true,
+        searching: false,
+        lengthChange: false,
+        info: true
+    });
+
+    // Simpan semua baris awal
+    allRows = $('#myTable tbody tr').clone();
+
+    $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
+        applyCustomFilterAndLimit();
+    });
+
+    $('#customLength').on('change', function () {
+        table.page.len(parseInt($(this).val())).draw();
+        applyCustomFilterAndLimit();
+    });
+
+    applyCustomFilterAndLimit();
+});
 
     const urlParams = new URLSearchParams(window.location.search);
     const opdParam = urlParams.get('opd');
