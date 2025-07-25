@@ -14,7 +14,6 @@
                                     <th class="text-center">Aplikasi</th>
                                     <th class="text-center">Wilayah</th>
                                     <th class="text-center">Status</th>
-                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,6 +33,14 @@
                                                     Lokal : {{ $opd->lokal_count ?? 0 }}
                                                     <i class="fas fa-home"></i>
                                                 </div>
+                                                <div class="badge badge-secondary text-dark">
+                                                    Desa : {{ $opd->desa_count ?? 0 }}
+                                                    <i class="fas fa-tree"></i>
+                                                </div>
+                                                <div class="badge badge-secondary text-dark">
+                                                    Lainnya : {{ $opd->lainnya_count ?? 0 }}
+                                                    <i class="fas fa-globe"></i>
+                                                </div>
                                             </div>
                                         </td>
                                         <td class="text-center">
@@ -45,12 +52,6 @@
                                                 {{ $opd->nonaktif_count ?? 0 }}
                                                 <i class="fas fa-times-circle text-danger"></i>
                                             </div>
-                                        </td>
-                                        <td class="d-flex justify-content-center">
-                                            <a href="{{ route('admin.application.index', ['opd' => strtolower($opd->nama)]) }}"
-                                                class="btn btn-secondary">
-                                                <i class="fas fa-info-circle text-dark"></i>
-                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

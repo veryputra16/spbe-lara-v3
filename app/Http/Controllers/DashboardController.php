@@ -64,6 +64,16 @@ class DashboardController extends Controller
                     $q->where('kategori_aplikasi', 'Pusat');
                 });
             },
+            'applications as desa_count' => function ($query) {
+                $query->whereHas('katapp', function ($q) {
+                    $q->where('kategori_aplikasi', 'Desa');
+                });
+            },
+            'applications as lainnya_count' => function ($query) {
+                $query->whereHas('katapp', function ($q) {
+                    $q->where('kategori_aplikasi', 'Lainnya');
+                });
+            },
             'applications as aktif_count' => function ($query) {
                 $query->where('status', 1)->whereHas('katapp', function ($q) {
                     $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
