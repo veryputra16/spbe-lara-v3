@@ -100,6 +100,14 @@
                                                             Lokal : {{ $opd->lokal_count ?? 0 }}
                                                             <i class="fas fa-home"></i>
                                                         </div>
+                                                        <div class="badge badge-secondary text-dark">
+                                                            Desa : {{ $opd->desa_count ?? 0 }}
+                                                            <i class="fas fa-tree"></i>
+                                                        </div>
+                                                        <div class="badge badge-secondary text-dark">
+                                                            Lainnya : {{ $opd->lainnya_count ?? 0 }}
+                                                            <i class="fas fa-globe"></i>
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
