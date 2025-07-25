@@ -122,10 +122,7 @@ class DashboardController extends Controller
         $yearlyData = collect($years)->map(function ($year) {
             return [
                 'tahun' => $year,
-                'semua' => Application::where('tahun_buat', $year)
-                    ->whereHas('katapp', function ($q) {
-                        $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
-                    })->count(),
+                'semua' => Application::where('tahun_buat', $year)->count(),
 
                 'lokal' => Application::where('tahun_buat', $year)
                     ->whereHas('katapp', fn($q) => $q->where('kategori_aplikasi', 'Lokal'))
@@ -137,15 +134,11 @@ class DashboardController extends Controller
 
                 'aktif' => Application::where('tahun_buat', $year)
                     ->where('status', 1)
-                    ->whereHas('katapp', function ($q) {
-                        $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
-                    })->count(),
+                    ->count(),
 
                 'nonaktif' => Application::where('tahun_buat', $year)
                     ->where('status', 0)
-                    ->whereHas('katapp', function ($q) {
-                        $q->whereIn('kategori_aplikasi', ['Lokal', 'Pusat']);
-                    })->count(),
+                    ->count(),
             ];
         });
 
