@@ -262,11 +262,7 @@
         row.toggle(match);
     });
 
-<<<<<<< HEAD
     table.draw(); // tetap perbarui pagination
-=======
-    table.draw(); // perbarui pagination
->>>>>>> 984ff8956bcaba99ed2f40821034ef82a03ee554
     }
 
     $(document).ready(function () {
