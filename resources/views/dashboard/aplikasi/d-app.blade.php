@@ -83,7 +83,6 @@
                                                 <th class="text-center">Aplikasi</th>
                                                 <th class="text-center">Wilayah</th>
                                                 <th class="text-center">Status</th>
-                                                <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -112,11 +111,6 @@
                                                         {{ $opd->nonaktif_count ?? 0 }}
                                                         <i class="fas fa-times-circle text-danger"></i>
                                                     </div>
-                                                </td>
-                                                <td class="d-flex justify-content-center">
-                                                    <a href="{{ route('admin.application.index', ['opd' => strtolower($opd->nama)]) }}" class="btn btn-secondary">
-                                                        <i class="fas fa-info-circle text-dark"></i>
-                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach
