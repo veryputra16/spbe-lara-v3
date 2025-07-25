@@ -22,9 +22,7 @@
                                     <tr>
                                         <td class="text-center">{{ $opd->nama }}</td>
                                         <td class="text-center">
-                                            {{ $opd->applications->filter(function ($app) {
-                                                    return in_array($app->katapp->kategori_aplikasi ?? '', ['Lokal', 'Pusat']);
-                                                })->count() }}
+                                            {{ $opd->applications->count() }}
                                         </td>
                                         <td class="text-center">
                                             <div class="justify-content-center gap-2">
