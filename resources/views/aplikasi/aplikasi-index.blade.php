@@ -234,58 +234,47 @@
     });
     
     let table;
+    let allRows = [];
     let currentLimit = 10;
 
     function applyCustomFilterAndLimit() {
-        let filterTahun = $('#filterTahun').val();
-        let filterStatus = $('#filterStatus').val().toLowerCase();
-        let filterOPD = $('#filterOPD').val().toLowerCase();
-        let filterLayanan = $('#filterLayanan').val().toLowerCase();
-        let searchText = $('#customSearch').val().toLowerCase();
-        let limit = parseInt($('#customLength').val());
+    let filterTahun = $('#filterTahun').val();
+    let filterStatus = $('#filterStatus').val().toLowerCase();
+    let filterOPD = $('#filterOPD').val().toLowerCase();
+    let filterLayanan = $('#filterLayanan').val().toLowerCase();
+    let searchText = $('#customSearch').val().toLowerCase();
 
-        let visibleCount = 0;
-        let shownCount = 0;
+    $('#myTable tbody tr').each(function () {
+        let row = $(this);
+        let opd = row.data('opd') || '';
+        let layanan = row.data('layanan') || '';
+        let tahun = row.data('tahun') || '';
+        let status = row.data('status') || '';
+        let text = row.text().toLowerCase();
 
-        $('#myTable tbody tr').each(function () {
-            let row = $(this);
-            let opd = row.data('opd') || '';
-            let layanan = row.data('layanan') || '';
-            let tahun = row.data('tahun') || '';
-            let status = row.data('status') || '';
-            let text = row.text().toLowerCase();
+        let match =
+            (filterTahun === "" || tahun == filterTahun) &&
+            (filterStatus === "" || status == filterStatus) &&
+            (filterOPD === "" || opd.includes(filterOPD)) &&
+            (filterLayanan === "" || layanan.includes(filterLayanan)) &&
+            (searchText === "" || text.includes(searchText));
 
-            let match =
-                (filterTahun === "" || tahun == filterTahun) &&
-                (filterStatus === "" || status == filterStatus) &&
-                (filterOPD === "" || opd.includes(filterOPD)) &&
-                (filterLayanan === "" || layanan.includes(filterLayanan)) &&
-                (searchText === "" || text.includes(searchText));
+        row.toggle(match);
+    });
 
-            if (match) {
-                visibleCount++;
-                if (shownCount < limit) {
-                    row.show();
-                    shownCount++;
-                } else {
-                    row.hide();
-                }
-            } else {
-                row.hide();
-            }
-        });
-
-        $('#noDataRow').toggle(visibleCount === 0);
+    table.draw(); // perbarui pagination
     }
 
     $(document).ready(function () {
-        // Nonaktifkan pagination & fitur lainnya dari DataTables
-        table = $('#myTable').DataTable({
-            paging: true,
-            searching: false,
-            lengthChange: false,
-            info: false
-        });
+    table = $('#myTable').DataTable({
+        paging: true,
+        searching: false,
+        lengthChange: false,
+        info: true
+    });
+
+    // Simpan semua baris awal
+    allRows = $('#myTable tbody tr').clone();
 
         // Trigger saat filter berubah
         $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
@@ -294,8 +283,8 @@
 
         // Trigger saat limit baris diubah
         $('#customLength').on('change', function () {
-            currentLimit = parseInt($(this).val());
-            applyCustomFilterAndLimit();
+        table.page.len(parseInt($(this).val())).draw();
+        applyCustomFilterAndLimit();
         });
 
         // Initial render
