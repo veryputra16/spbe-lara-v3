@@ -244,9 +244,7 @@
     let filterLayanan = $('#filterLayanan').val().toLowerCase();
     let searchText = $('#customSearch').val().toLowerCase();
 
-    let filteredRows = [];
-
-    allRows.each(function () {
+    $('#myTable tbody tr').each(function () {
         let row = $(this);
         let opd = row.data('opd') || '';
         let layanan = row.data('layanan') || '';
@@ -261,38 +259,54 @@
             (filterLayanan === "" || layanan.includes(filterLayanan)) &&
             (searchText === "" || text.includes(searchText));
 
-        if (match) {
-            filteredRows.push(row[0]); // row[0] = DOM element
-        }
+        row.toggle(match);
     });
 
-    table.clear().rows.add(filteredRows).draw();
-
-    $('#noDataRow').toggle(filteredRows.length === 0);
-}
+    table.draw(); // perbarui pagination
+    }
 
     $(document).ready(function () {
     table = $('#myTable').DataTable({
         paging: true,
         searching: false,
         lengthChange: false,
-        info: false
+        info: true
     });
 
     // Simpan semua baris awal
     allRows = $('#myTable tbody tr').clone();
 
-    $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
-        applyCustomFilterAndLimit();
-    });
+        // Trigger saat filter berubah
+        $('#filterTahun, #filterStatus, #filterOPD, #filterLayanan, #customSearch').on('input change', function () {
+            applyCustomFilterAndLimit();
+        });
 
-    $('#customLength').on('change', function () {
+        // Trigger saat limit baris diubah
+        $('#customLength').on('change', function () {
         table.page.len(parseInt($(this).val())).draw();
         applyCustomFilterAndLimit();
-    });
+        });
 
-    applyCustomFilterAndLimit();
-});
+        // Initial render
+        applyCustomFilterAndLimit();
+
+        // Kirim filter ke input hidden saat submit export
+        $('#exportForm').on('submit', function () {
+            $('#exportOPD').val($('#filterOPD').val());
+            $('#exportLayanan').val($('#filterLayanan').val());
+            $('#exportTahun').val($('#filterTahun').val());
+            $('#exportStatus').val($('#filterStatus').val());
+            $('#exportSearch').val($('#customSearch').val());
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const opdParam = urlParams.get('opd');
+
+        if (opdParam) {
+            $('#filterOPD').val(opdParam).trigger('change');
+            applyCustomFilterAndLimit();
+        }
+    });
 
     const urlParams = new URLSearchParams(window.location.search);
     const opdParam = urlParams.get('opd');
